@@ -4,9 +4,34 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client.WPF"
+        xmlns:controls="clr-namespace:Client.WPF.Controls"
+        xmlns:pages="clr-namespace:Client.WPF.Pages"
         mc:Ignorable="d"
         Title="Auto Servicio UASD" Height="450" Width="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <ListBox Name="Navigation"
+                 Grid.Column="0" Grid.Row="1"
+                 SelectedIndex="0">
+            <ListBox.Items>
+                <controls:NavigationItem Header="Dashboard"   Icon="Resources/dashboard.png"/>
+                <controls:NavigationItem Header="Horario"     Icon="Resources/horario.png" />
+                <controls:NavigationItem Header="Reportes"    Icon="Resources/reportes.png" />
+                <controls:NavigationItem Header="Proyección"  Icon="Resources/proyeccion.png" />
+                <controls:NavigationItem Header="Información" Icon="Resources/informacion.png" />
+                <controls:NavigationItem Header="Selección"   Icon="Resources/seleccion.png" />
+            </ListBox.Items>
+        </ListBox>
         
+        <pages:ReportPage
+                          Grid.Column="1" Grid.Row="1"/>
     </Grid>
 </Window>
