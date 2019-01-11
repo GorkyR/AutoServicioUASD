@@ -20,7 +20,8 @@
 
         <ListBox Name="Navigation"
                  Grid.Column="0" Grid.Row="1"
-                 SelectedIndex="0">
+                 SelectedIndex="1"
+                 SelectionChanged="Navigation_SelectionChanged">
             <ListBox.Items>
                 <controls:NavigationItem Header="Dashboard"   Icon="Resources/dashboard.png"/>
                 <controls:NavigationItem Header="Horario"     Icon="Resources/horario.png" />
@@ -30,8 +31,7 @@
                 <controls:NavigationItem Header="Selección"   Icon="Resources/seleccion.png" />
             </ListBox.Items>
         </ListBox>
-        
-        <pages:ReportPage x:Name="PReportes"
-                          Grid.Column="1" Grid.Row="1"/>
+
+        <UserControl Name="Page" Grid.Column="1" Grid.Row="1"/>
     </Grid>
 </Window>

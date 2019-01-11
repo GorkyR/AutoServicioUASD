@@ -12,29 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using UASD;
 
-namespace Client.WPF
+namespace Client.WPF.Controls
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for ProjectionCourseItem.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ProjectionCourseItem : UserControl
     {
-        public MainWindow()
+        public ProjectionCourseItem()
         {
             InitializeComponent();
-            Test();
-        }
-
-        async void Test()
-        {
-
-        }
-
-        private void Navigation_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
     }
 }

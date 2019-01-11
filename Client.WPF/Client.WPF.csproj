@@ -66,6 +66,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\ProjectionCourseItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Reporte.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -84,6 +88,9 @@
     </Compile>
     <Compile Include="Controls\GradeStateConverter.cs" />
     <Compile Include="Controls\GradeStringConverter.cs" />
+    <Compile Include="Controls\ProjectionCourseItem.xaml.cs">
+      <DependentUpon>ProjectionCourseItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\CourseCollectionConverter.cs" />
     <Compile Include="Controls\CourseGradeItem.xaml.cs">
       <DependentUpon>CourseGradeItem.xaml</DependentUpon>
@@ -101,12 +108,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\ProjectionPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\ReportPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Pages\ProjectionPage.xaml.cs">
+      <DependentUpon>ProjectionPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\ReportPage.xaml.cs">
       <DependentUpon>ReportPage.xaml</DependentUpon>
     </Compile>
