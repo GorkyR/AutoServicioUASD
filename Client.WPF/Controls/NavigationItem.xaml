@@ -15,6 +15,6 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Image Name="INav" Margin="4, 0" Source="{Binding Icon}" Width="18" VerticalAlignment="Center"/>
-        <TextBlock Name="TBHeader" Text="{Binding Header}" Grid.Column="2" VerticalAlignment="Center" FontSize="14" FontWeight="Bold"/>
+        <TextBlock Name="TBHeader" Text="{Binding PageName}" Grid.Column="2" VerticalAlignment="Center" FontSize="14" FontWeight="Bold"/>
     </Grid>
 </UserControl>

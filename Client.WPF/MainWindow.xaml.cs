@@ -24,6 +24,7 @@ namespace Client.WPF
         public MainWindow()
         {
             InitializeComponent();
+            // Page.Content = new Pages.DashboardPage();
             Test();
         }
 
@@ -34,7 +35,17 @@ namespace Client.WPF
 
         private void Navigation_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            if (Page is null)
+                return;
+            switch (NavigationPanel.SelectedIndex) {
+                case 1:
+                    Page.Content = new Pages.SchedulePage(); break;
+                case 2:
+                    Page.Content = new Pages.ReportPage(); break;
+                case 3:
+                    Page.Content = new Pages.ProjectionPage(); break;
+            }
+            return;
         }
     }
 }

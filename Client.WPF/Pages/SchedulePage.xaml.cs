@@ -13,17 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Client.WPF.Controls
+namespace Client.WPF.Pages
 {
     /// <summary>
-    /// Interaction logic for NavigationItem.xaml
+    /// Interaction logic for SchedulePage.xaml
     /// </summary>
-    public partial class NavigationItem : UserControl
+    public partial class SchedulePage : UserControl
     {
-        public ImageSource Icon   { get; set; }
-        public string      PageName { get; set; } = "[Navigation Item]";
-
-        public NavigationItem()
+        public SchedulePage()
         {
             InitializeComponent();
         }

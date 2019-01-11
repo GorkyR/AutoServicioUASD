@@ -16,14 +16,11 @@ using System.Windows.Shapes;
 namespace Client.WPF.Controls
 {
     /// <summary>
-    /// Interaction logic for NavigationItem.xaml
+    /// Interaction logic for Schedule.xaml
     /// </summary>
-    public partial class NavigationItem : UserControl
+    public partial class Schedule : UserControl
     {
-        public ImageSource Icon   { get; set; }
-        public string      PageName { get; set; } = "[Navigation Item]";
-
-        public NavigationItem()
+        public Schedule()
         {
             InitializeComponent();
         }
