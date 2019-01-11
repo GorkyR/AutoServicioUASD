@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="Client.WPF.Controls.CourseGradeItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Client.WPF.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="32" d:DesignWidth="350">
+    <UserControl.Resources>
+        <local:GradeStateConverter x:Key="StateConverter"/>
+        <local:GradeStringConverter x:Key="GradeConverter"/>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="160"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="40"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="{Binding Title}" FontFamily="Consolas" FontWeight="Medium" FontSize="14"
+                   Grid.ColumnSpan="2"/>
+        <TextBlock Text="{Binding Code}"  FontFamily="Consolas" Foreground="DarkSlateGray"
+                   Grid.Row="1"/>
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Grid.Row="1">
+            <TextBlock Text="{Binding Credits}" Foreground="DarkSlateGray"/>
+            <TextBlock Text=" créditos"         Foreground="DarkSlateGray"/>
+        </StackPanel>
+
+        <TextBlock Text="{Binding Grade, Converter={StaticResource GradeConverter}}" FontSize="16" FontWeight="Medium"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Grid.Column="2" Grid.RowSpan="2"/>
+        <local:SwitchableImage x:Name="SIEstado"
+                               Width="18"
+                               Estado="{Binding State, Converter={StaticResource StateConverter}}"
+                               SecondSource="/Client.WPF;component/Resources/waiting.png" 
+                               ThirdSource="/Client.WPF;component/Resources/ausente.png"
+                               Grid.Column="2" Grid.RowSpan="2" />
+    </Grid>
+</UserControl>

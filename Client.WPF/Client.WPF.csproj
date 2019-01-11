@@ -58,6 +58,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\CourseGradeItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\NavigationItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -66,7 +70,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\ToggleableImage.xaml">
+    <Page Include="Controls\SwitchableImage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -78,14 +82,20 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controls\GradeStateConverter.cs" />
+    <Compile Include="Controls\GradeStringConverter.cs" />
+    <Compile Include="Pages\CourseCollectionConverter.cs" />
+    <Compile Include="Controls\CourseGradeItem.xaml.cs">
+      <DependentUpon>CourseGradeItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\NavigationItem.xaml.cs">
       <DependentUpon>NavigationItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Reporte.xaml.cs">
       <DependentUpon>Reporte.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ToggleableImage.xaml.cs">
-      <DependentUpon>ToggleableImage.xaml</DependentUpon>
+    <Compile Include="Controls\SwitchableImage.xaml.cs">
+      <DependentUpon>SwitchableImage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -140,6 +150,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="uasdclient.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Client.Core\Client.Core.csproj">
+      <Project>{70097ee5-7b90-4070-9ed6-eb707f6c9b56}</Project>
+      <Name>Client.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ausente.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UASD;
 
 namespace Client.WPF.Pages
 {
@@ -20,6 +21,13 @@ namespace Client.WPF.Pages
     /// </summary>
     public partial class ReportPage : UserControl
     {
+        public IEnumerable<AcademicPeriod> Periodos {
+            get => (IEnumerable<AcademicPeriod>)GetValue(PeriodosProperty);
+            set => SetValue(PeriodosProperty, value);
+        }
+        public static readonly DependencyProperty PeriodosProperty = DependencyProperty.Register(
+            "Periodos", typeof(IEnumerable<AcademicPeriod>), typeof(ReportPage), new PropertyMetadata());
+
         public ReportPage()
         {
             InitializeComponent();

@@ -6,11 +6,20 @@
              xmlns:local="clr-namespace:Client.WPF.Pages"
              xmlns:controls="clr-namespace:Client.WPF.Controls"
              mc:Ignorable="d"
-             Background="White"
              d:DesignHeight="450" d:DesignWidth="800">
-    <ListView Name="LVPeriodos">
-        <ListViewItem>
-            <controls:Reporte/>
-        </ListViewItem>
-    </ListView>
+    <UserControl.Resources>
+        <local:CourseCollectionConverter x:Key="CourseConverter"/>
+    </UserControl.Resources>
+    <ScrollViewer
+         DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}">
+        <ItemsControl ItemsSource="{Binding Periodos}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <controls:Reporte Periodo="{Binding Title}"
+                                      Activo ="{Binding IsActive}"
+                                      Notas  ="{Binding Courses, Converter={StaticResource CourseConverter}}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </ScrollViewer>
 </UserControl>

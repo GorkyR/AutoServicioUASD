@@ -5,27 +5,38 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Client.WPF.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
-             Background="WhiteSmoke">
+             d:DesignHeight="450" d:DesignWidth="800">
     <Grid
-        DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}">
+        DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"
+        Margin="8">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" MinWidth="40"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="240"/>
             <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition />
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBlock Name="TBPeriodo" Text="{Binding Periodo}"
-                   Grid.ColumnSpan="2"/>
-        <local:ToggleableImage x:Name="TIEstado" Width="16"
-                               Image="/Client.WPF;component/Resources/done.png"
-                               AlternativeImage="/Client.WPF;component/Resources/waiting.png"
-                               Grid.Column="2"/>
-        <ListView Name="LVNotas"
-            Grid.Column="1" Grid.Row="1">
-        </ListView>
+        
+        <TextBlock Name="TBPeriodo" Text="{Binding Periodo}" FontSize="16" FontWeight="SemiBold"/>
+        <local:SwitchableImage x:Name="SIEstado" Width="18"
+                               FirstSource="/Client.WPF;component/Resources/waiting.png"
+                               SecondSource="/Client.WPF;component/Resources/done2.png"
+                               Grid.Column="1"/>
+        
+        <ItemsControl Name="ICNotas" ItemsSource="{Binding Notas}"
+                      Margin="24, 8, 0, 0"
+                      Grid.ColumnSpan="3" Grid.Row="1">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <local:CourseGradeItem Margin="0, 4"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <Separator Margin="0, 16, 0, 0"
+                   Grid.Row="2" Grid.ColumnSpan="100"/>
     </Grid>
 </UserControl>
