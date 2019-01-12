@@ -21,10 +21,20 @@ namespace Client.WPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        public UserControl[] Pages =
+        {
+            new Pages.DashboardPage(),
+            new Pages.SchedulePage(),
+            new Pages.ReportPage(),
+            new Pages.ProjectionPage(),
+            new Pages.InformationPage(),
+            new Pages.SelectionPage()
+        };
+
         public MainWindow()
         {
             InitializeComponent();
-            // Page.Content = new Pages.DashboardPage();
+            Page.Content = Pages[0];
             Test();
         }
 
@@ -35,16 +45,8 @@ namespace Client.WPF
 
         private void Navigation_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (Page is null)
-                return;
-            switch (NavigationPanel.SelectedIndex) {
-                case 1:
-                    Page.Content = new Pages.SchedulePage(); break;
-                case 2:
-                    Page.Content = new Pages.ReportPage(); break;
-                case 3:
-                    Page.Content = new Pages.ProjectionPage(); break;
-            }
+            if (Page != null)
+                Page.Content = Pages[NavigationPanel.SelectedIndex];
             return;
         }
     }
