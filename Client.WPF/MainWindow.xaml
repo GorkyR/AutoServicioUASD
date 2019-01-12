@@ -7,7 +7,7 @@
         xmlns:controls="clr-namespace:Client.WPF.Controls"
         xmlns:pages="clr-namespace:Client.WPF.Pages"
         mc:Ignorable="d"
-        Title="Auto Servicio UASD" Height="450" Width="800">
+        Title="Auto Servicio UASD" Height="550" Width="900">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -20,7 +20,7 @@
 
         <ListBox Name="NavigationPanel"
                  Grid.Column="0" Grid.Row="1"
-                 SelectedIndex="1" SelectionMode="Single"
+                 SelectedIndex="0" SelectionMode="Single"
                  SelectionChanged="Navigation_SelectionChanged">
             <ListBox.Items>
                 <controls:NavigationItem PageName="Dashboard"   Icon="Resources/dashboard.png"/>

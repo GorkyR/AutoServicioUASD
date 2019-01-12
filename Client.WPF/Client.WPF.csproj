@@ -94,8 +94,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controls\GradeStateConverter.cs" />
-    <Compile Include="Controls\GradeStringConverter.cs" />
     <Compile Include="Controls\ProjectionCourseItem.xaml.cs">
       <DependentUpon>ProjectionCourseItem.xaml</DependentUpon>
     </Compile>
@@ -105,7 +103,6 @@
     <Compile Include="Controls\ScheduleItem.xaml.cs">
       <DependentUpon>ScheduleItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\CourseCollectionConverter.cs" />
     <Compile Include="Controls\CourseGradeItem.xaml.cs">
       <DependentUpon>CourseGradeItem.xaml</DependentUpon>
     </Compile>
