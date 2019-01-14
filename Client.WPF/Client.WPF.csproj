@@ -61,6 +61,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\AcademicPeriodModel.cs" />
+    <Compile Include="Models\Global.cs" />
+    <Compile Include="Models\SessionInformation.cs" />
     <Compile Include="StateService.cs" />
     <Page Include="Controls\CourseGradeItem.xaml">
       <SubType>Designer</SubType>
@@ -202,9 +205,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\done.png" />
-    <Resource Include="Resources\done2.png" />
-    <Resource Include="Resources\waiting.png" />
+    <Resource Include="Resources\completo.png" />
+    <Resource Include="Resources\completo2.png" />
+    <Resource Include="Resources\esperando.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\dashboard.png" />
@@ -225,6 +228,17 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\ausente.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\uasd.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\nip.png" />
+    <Resource Include="Resources\usuario.png" />
+    <Resource Include="Resources\usuario2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\login.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

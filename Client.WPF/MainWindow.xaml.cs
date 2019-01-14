@@ -21,33 +21,72 @@ namespace Client.WPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        public UserControl[] Pages =
+        public Type[] Pages =
         {
-            new Pages.DashboardPage(),
-            new Pages.SchedulePage(),
-            new Pages.ReportPage(),
-            new Pages.ProjectionPage(),
-            new Pages.InformationPage(),
-            new Pages.SelectionPage()
+            typeof(Pages.DashboardPage),
+            typeof(Pages.SchedulePage),
+            typeof(Pages.ReportPage),
+            typeof(Pages.ProjectionPage),
+            typeof(Pages.InformationPage),
+            typeof(Pages.SelectionPage)
         };
 
         public MainWindow()
         {
             InitializeComponent();
-            Page.Content = Pages[0];
-            Test();
+            Init();
         }
 
-        async void Test()
+        async void Init()
         {
+            if (!StateService.IsLoggedIn)
+            {
+                var loginWindow = new LoginWindow();
+                if (!(loginWindow.ShowDialog() ?? false))
+                    this.Close();
+            }
+            else
+            {
+                void LogoutAndTryAgain() {
+                    StateService.IsLoggedIn = false;
+                    StateService.ResetSession();
+                    Init();
+                }
+
+                try {
+                    await ClientService.AutoServicio.LoginAsync(
+                        StateService.CurrentSession.ID,
+                        StateService.CurrentSession.NIP
+                    );
+                    if (!ClientService.AutoServicio.IsLoggedIn)
+                    {
+                        LogoutAndTryAgain();
+                        return;
+                    }
+                    Console.WriteLine($"[i] Already logged in. ID: {StateService.CurrentSession.ID}");
+                }
+                catch { LogoutAndTryAgain(); return; }
+            }
+            Page.Content = Pages[0].New();
 
         }
 
         private void Navigation_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (Page != null)
-                Page.Content = Pages[NavigationPanel.SelectedIndex];
+            if (Page != null) {
+                Page.Content = Pages[NavigationPanel.SelectedIndex].New();
+            }
             return;
+        }
+
+
+    }
+
+    internal static class TypeExtension
+    {
+        public static UserControl New(this Type type, params object[] parameters)
+        {
+            return type.GetConstructors()[0].Invoke(parameters ?? null) as UserControl;
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using LiteDB;
-using UASD.MaterialWPF.Models;
+using Client.WPF.Models;
 
-namespace UASD.MaterialWPF
+namespace Client.WPF
 {
     public static class StateService
     {
@@ -33,23 +33,16 @@ namespace UASD.MaterialWPF
         }
 
         public static bool IsLoggedIn {
-            get =>
-                (bool)GetGlobal(nameof(IsLoggedIn));
-            set =>
-                UpdateGlobal(nameof(IsLoggedIn), value);
+            get => (bool)GetGlobal(nameof(IsLoggedIn));
+            set => UpdateGlobal(nameof(IsLoggedIn), value);
         }
         public static string LastIDUsed {
-            get =>
-                (string)GetGlobal(nameof(LastIDUsed));
-            set {
-                UpdateGlobal(nameof(LastIDUsed), value);
-            }
+            get => (string)GetGlobal(nameof(LastIDUsed));
+            set => UpdateGlobal(nameof(LastIDUsed), value);
         }
         public static SessionInformation CurrentSession {
-            get =>
-                (SessionInformation)GetGlobal(nameof(CurrentSession));
-            set => 
-                UpdateGlobal(nameof(CurrentSession), value);
+            get => (SessionInformation)GetGlobal(nameof(CurrentSession));
+            set => UpdateGlobal(nameof(CurrentSession), value);
         }
     }
 }
