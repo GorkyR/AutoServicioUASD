@@ -33,6 +33,13 @@ namespace Client.WPF.Pages
         {
             InitializeComponent();
         }
+
+        private async void DidLoad(object sender, RoutedEventArgs e)
+        {
+            Cursor = Cursors.AppStarting;
+            Periodos = (await ClientService.ReportAsync())?.Periods;
+            Cursor = Cursors.Arrow;
+        }
     }
 
     public class CourseCollectionConverter : IValueConverter

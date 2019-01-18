@@ -22,11 +22,19 @@ namespace Client.WPF.Pages
     /// </summary>
     public partial class SchedulePage : UserControl
     {
-        public ObservableCollection<Course> Courses { get => (ObservableCollection<Course>)this.GetValue(CoursesProperty); set => this.SetValue(CoursesProperty, value); }
-        public static readonly DependencyProperty CoursesProperty = DependencyProperty.Register(
-            "Courses", typeof(ObservableCollection<Course>), typeof(SchedulePage), new PropertyMetadata(
+        public ObservableCollection<Course> Materias {
+            get => (ObservableCollection<Course>)this.GetValue(MateriasProperty);
+            set {
+                this.SetValue(MateriasProperty, value);
+                Refresh(value);
+                value.CollectionChanged += (s, args) => Refresh(value);
+            }
+        }
+        public static readonly DependencyProperty MateriasProperty = DependencyProperty.Register(
+            "Materias", typeof(ObservableCollection<Course>), typeof(SchedulePage), new PropertyMetadata(
                 new ObservableCollection<Course>(),
-                (d, args) => {
+                (d, args) =>
+                {
                     var courses = (IEnumerable<Course>)args.NewValue;
                     var schedulePage = (SchedulePage)d;
                     schedulePage.Refresh(courses);
@@ -34,13 +42,17 @@ namespace Client.WPF.Pages
             )
         );
 
-        public ObservableCollection<Course> TemporaryCourses
+        public ObservableCollection<Course> MateriasTemporales
         {
-            get => (ObservableCollection<Course>)this.GetValue(TemporaryCoursesProperty);
-            set => this.SetValue(TemporaryCoursesProperty, value);
+            get => (ObservableCollection<Course>)this.GetValue(MateriasTemporalesProperty);
+            set {
+                this.SetValue(MateriasTemporalesProperty, value);
+                Refresh(value, true);
+                value.CollectionChanged += (s, args) => Refresh(value, true);
+            }
         }
-        public static readonly DependencyProperty TemporaryCoursesProperty = DependencyProperty.Register(
-            "TemporaryCourses", typeof(ObservableCollection<Course>), typeof(SchedulePage), new PropertyMetadata(
+        public static readonly DependencyProperty MateriasTemporalesProperty = DependencyProperty.Register(
+            "MateriasTemporales", typeof(ObservableCollection<Course>), typeof(SchedulePage), new PropertyMetadata(
                 new ObservableCollection<Course>(),
                 (d, args) => {
                     var temporaryCourses = (IEnumerable<Course>)args.NewValue;
@@ -65,7 +77,8 @@ namespace Client.WPF.Pages
                         Titulo = course.Title,
                         Codigo = course.Code,
                         Lugar = UASD.Utilities.Convert.Place(courseInstance.Place),
-                        IsShadow = isShadow
+                        IsShadow = isShadow,
+                        ToolTip = $"{course.Title}\n{course.Code}\nNRC: {course.NRC}\n{course.Credits} creditos\nLugar: {courseInstance.Place}\nProf.: {course.Professor}"
                     };
                     Schedule.AddItem(item,
                         courseInstance.Weekday,
@@ -80,8 +93,15 @@ namespace Client.WPF.Pages
         public SchedulePage()
         {
             InitializeComponent();
-            Courses.CollectionChanged          += (s, args) => Refresh(Courses);
-            TemporaryCourses.CollectionChanged += (s, args) => Refresh(TemporaryCourses, true);
+            Materias.CollectionChanged += (s, args) => Refresh(Materias);
+            MateriasTemporales.CollectionChanged += (s, args) => Refresh(MateriasTemporales, true);
+        }
+
+        private async void DidLoad(object sender, RoutedEventArgs e)
+        {
+            Cursor = Cursors.AppStarting;
+            Materias = new ObservableCollection<Course>(await ClientService.ScheduleAsync());
+            Cursor = Cursors.Arrow;
         }
     }
 }

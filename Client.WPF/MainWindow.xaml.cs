@@ -21,6 +21,7 @@ namespace Client.WPF
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public Type[] Pages =
         {
             typeof(Pages.DashboardPage),
@@ -67,24 +68,19 @@ namespace Client.WPF
                 }
                 catch { LogoutAndTryAgain(); return; }
             }
-            Page.Content = Pages[0].New();
-
+            Page.Content = InitPage(Pages[0]);
         }
 
         private void Navigation_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            int index = NavigationPanel.SelectedIndex;
             if (Page != null) {
-                Page.Content = Pages[NavigationPanel.SelectedIndex].New();
+                Page.Content = InitPage(Pages[index]);
             }
             return;
         }
 
-
-    }
-
-    internal static class TypeExtension
-    {
-        public static UserControl New(this Type type, params object[] parameters)
+        private UserControl InitPage(Type type, params object[] parameters)
         {
             return type.GetConstructors()[0].Invoke(parameters ?? null) as UserControl;
         }

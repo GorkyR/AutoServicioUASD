@@ -29,5 +29,11 @@ namespace Client.WPF.Pages
         {
             InitializeComponent();
         }
+
+        private async void DidLoad(object sender, RoutedEventArgs e)
+        {
+            try { Proyeccion = await ClientService.ProjectionAsync(); }
+            catch (NoProyectionAvailableException){ MessageBox.Show("No hay proyeccion disponible", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
+        }
     }
 }

@@ -115,6 +115,7 @@ namespace Client.WPF {
         private static async Task CacheReportAsync()
         {
             report = await AutoServicio?.FetchAcademicReportAsync();
+            report.Periods.Reverse();
             var updatedSession = StateService.CurrentSession;
             var repModel = new List<Models.AcademicPeriodModel>();
             foreach (var period in report.Periods)
