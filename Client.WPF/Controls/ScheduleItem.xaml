@@ -18,11 +18,11 @@
             <TextBlock Text="{Binding Titulo}" FontWeight="Medium" FontSize="12"
                        Foreground="{Binding IsShadow, Converter={StaticResource ForegroundConverter}}"
                        TextWrapping="Wrap"/>
-            <TextBlock Text="{Binding Codigo}" FontFamily="Consolas" FontSize="12"
-                       Foreground="{Binding IsShadow, Converter={StaticResource ForegroundConverter}}"/>
             <TextBlock Text="{Binding Lugar}"
                        Foreground="{Binding IsShadow, Converter={StaticResource ForegroundConverter}}"
                        TextWrapping="Wrap"/>
+            <TextBlock Text="{Binding Codigo}" FontFamily="Consolas" FontSize="12"
+                       Foreground="{Binding IsShadow, Converter={StaticResource ForegroundConverter}}"/>
         </StackPanel>
     </Border>
 </UserControl>
