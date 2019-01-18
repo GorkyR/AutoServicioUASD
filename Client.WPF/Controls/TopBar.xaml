@@ -5,8 +5,54 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Client.WPF.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="24" d:DesignWidth="800">
-    <Grid>
+             d:DesignHeight="32" d:DesignWidth="800">
+    <Grid
+        DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"
+        Background="White">
+        <Grid.Effect>
+            <DropShadowEffect BlurRadius="20" ShadowDepth="0" Opacity=".25"/>
+        </Grid.Effect>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        
+        <TextBlock Name="TBName" Text="{Binding Nombre}"
+                   FontSize="16" FontWeight="Medium" FontFamily="Fira"
+                   VerticalAlignment="Center"
+                   Margin="8, 0"/>
+
+        <StackPanel Orientation="Horizontal"
+                    Grid.Column="2">
+            <Button VerticalAlignment="Center"
+                    Margin="0, 0, 4, 0"
+                    ToolTip="Actualizar">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Client.WPF;component/Resources/actualizar.png"
+                           Width="20" Margin="4, 2"/>
+                    <!--<TextBlock Text="Actualizar"/>-->
+                </StackPanel>
+            </Button>
+            <Button VerticalAlignment="Center"
+                    Margin="0, 0, 4, 0"
+                    ToolTip="Desconectar">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Client.WPF;component/Resources/logout.png"
+                           Width="20" Margin="4, 2"/>
+                    <!--<TextBlock Text="Desconectar"/>-->
+                </StackPanel>
+            </Button>
+            <Button VerticalAlignment="Center"
+                    Margin="0, 0, 4, 0"
+                    ToolTip="Acerca de">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Client.WPF;component/Resources/acerca de.png"
+                           Width="20" Margin="4, 2"/>
+                    <!--<TextBlock Text="Acerca de"/>-->
+                </StackPanel>
+            </Button>
+        </StackPanel>
         
     </Grid>
 </UserControl>

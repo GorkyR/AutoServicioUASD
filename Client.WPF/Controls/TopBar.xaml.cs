@@ -20,6 +20,13 @@ namespace Client.WPF.Controls
     /// </summary>
     public partial class TopBar : UserControl
     {
+        public string Nombre {
+            get => (string)this.GetValue(NombreProperty);
+            set => this.SetValue(NombreProperty, value);
+        }
+        public static readonly DependencyProperty NombreProperty = DependencyProperty.Register(
+            "Nombre", typeof(string), typeof(TopBar), new PropertyMetadata());
+
         public TopBar()
         {
             InitializeComponent();

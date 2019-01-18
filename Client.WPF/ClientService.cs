@@ -102,19 +102,37 @@ namespace Client.WPF {
 
         public static async Task<List<CourseCollection>> AvailableCoursesAsync()
         {
-            return await AutoServicio?.FetchAvailableCoursesAsync();
+            List<CourseCollection> availableCourses = null;
+            try {
+                availableCourses = await AutoServicio?.FetchAvailableCoursesAsync();
+            }
+            catch(NotLoggedInException) {
+                if (StateService.IsLoggedIn)
+                {
+                    var matricula = StateService.CurrentSession.ID;
+                    var nip = StateService.CurrentSession.NIP;
+
+                    if (await AutoServicio.LoginAsync(matricula, nip))
+                        return await AvailableCoursesAsync();
+                }
+                StateService.IsLoggedIn = false;
+                throw new NotLoggedInException();
+            }
+            return availableCourses;
         }
 
         private static async Task CacheScheduleAsync()
         {
-            schedule = await AutoServicio?.FetchScheduleDetailAsync();
+            try { schedule = await AutoServicio?.FetchScheduleDetailAsync(); }
+            catch (NotLoggedInException) { await ReLoginThen(CacheScheduleAsync); return;  }
             var updatedSession = StateService.CurrentSession;
             updatedSession.Schedule = schedule;
             StateService.CurrentSession = updatedSession;
         }
         private static async Task CacheReportAsync()
         {
-            report = await AutoServicio?.FetchAcademicReportAsync();
+            try { report = await AutoServicio?.FetchAcademicReportAsync(); }
+            catch (NotLoggedInException) { await ReLoginThen(CacheReportAsync); return; }
             report.Periods.Reverse();
             var updatedSession = StateService.CurrentSession;
             var repModel = new List<Models.AcademicPeriodModel>();
@@ -131,17 +149,35 @@ namespace Client.WPF {
         }
         private static async Task CacheProjectionAsync()
         {
-            projection = await AutoServicio?.FetchCourseProjectionAsync();
+            try { projection = await AutoServicio?.FetchCourseProjectionAsync(); }
+            catch(NotLoggedInException) { await ReLoginThen(CacheProjectionAsync); return; }
             var updatedSession = StateService.CurrentSession;
             updatedSession.Projection = projection;
             StateService.CurrentSession = updatedSession;
         }
         private static async Task CacheCareerInformationAsync()
         {
-            information = await AutoServicio?.FetchCareerInformationAsync();
+            try { information = await AutoServicio?.FetchCareerInformationAsync(); }
+            catch(NotLoggedInException) { await ReLoginThen(CacheCareerInformationAsync); return; }
             var updatedSession = StateService.CurrentSession;
             updatedSession.Information = information;
             StateService.CurrentSession = updatedSession;
+        }
+
+        public static async Task ReLoginThen(Func<Task> callback)
+        {
+            if (StateService.IsLoggedIn)
+            {
+                var matricula = StateService.CurrentSession.ID;
+                var nip = StateService.CurrentSession.NIP;
+
+                if (await AutoServicio.LoginAsync(matricula, nip)) {
+                    await callback();
+                    return;
+                }
+            }
+            StateService.IsLoggedIn = false;
+            throw new NotLoggedInException();
         }
     }
 }

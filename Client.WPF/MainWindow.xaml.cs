@@ -68,6 +68,7 @@ namespace Client.WPF
                 }
                 catch { LogoutAndTryAgain(); return; }
             }
+            TopBar.Nombre = ClientService.AutoServicio.Username;
             Page.Content = InitPage(Pages[0]);
         }
 

@@ -88,7 +88,7 @@ namespace Client.WPF.Pages
             {
                 var nrcMaterias = MateriasSeleccionadas.Select(materia => materia.NRC).ToArray();
                 await ClientService.AutoServicio.RegisterCoursesAsync(nrcMaterias);
-            } catch (NoSelectionAvailableException nsae) {
+            } catch (NoSelectionAvailableException) {
                 MessageBox.Show(
                     "No es posible realizar la seleccion en estos momentos",
                     "Seleccion no disponible",
@@ -100,6 +100,9 @@ namespace Client.WPF.Pages
                     "Errores en seleccion",
                     MessageBoxButton.OK,
                     MessageBoxImage.Exclamation);
+            } catch (NotLoggedInException) {
+                await ClientService.ReLoginThen(() => new Task(() => this.Registrar(null, null)));
+                return;
             }
         }
     }

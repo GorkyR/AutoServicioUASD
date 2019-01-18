@@ -18,12 +18,18 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
+        <controls:TopBar x:Name="TopBar" Grid.ColumnSpan="100" Panel.ZIndex="2"/>
+
         <ListBox Name="NavigationPanel"
                  Grid.Column="0" Grid.Row="1"
                  SelectedIndex="0" SelectionMode="Single"
-                 SelectionChanged="Navigation_SelectionChanged">
+                 SelectionChanged="Navigation_SelectionChanged"
+                 Panel.ZIndex="1">
+            <ListBox.Effect>
+                <DropShadowEffect BlurRadius="20" ShadowDepth="1" Opacity=".25"/>
+            </ListBox.Effect>
             <ListBox.Items>
-                <controls:NavigationItem PageName="Dashboard"   Icon="Resources/dashboard.png"/>
+                <controls:NavigationItem PageName="Dashboard"   Icon="Resources/dashboard.png" />
                 <controls:NavigationItem PageName="Horario"     Icon="Resources/horario.png" />
                 <controls:NavigationItem PageName="Reportes"    Icon="Resources/reportes.png" />
                 <controls:NavigationItem PageName="Proyección"  Icon="Resources/proyeccion.png" />

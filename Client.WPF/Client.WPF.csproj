@@ -265,5 +265,10 @@
     <Resource Include="Resources\agregar.png" />
     <Resource Include="Resources\remover.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\acerca de.png" />
+    <Resource Include="Resources\actualizar.png" />
+    <Resource Include="Resources\logout.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

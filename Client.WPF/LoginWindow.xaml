@@ -54,12 +54,16 @@
                     </Grid.ColumnDefinitions>
                     <ProgressBar Name="PBar" IsIndeterminate="True"
                                  Grid.ColumnSpan="100"
+                                 Width="150"
                                  Visibility="Hidden"/>
-                    <Image Source="Resources/login.png" Height="16" VerticalAlignment="Bottom"
+                    <Image Source="Resources/login.png" Height="16"
+                           HorizontalAlignment="Right" VerticalAlignment="Bottom"
                            Grid.Column="0" Visibility="Hidden"/>
                     <TextBlock Text="Login" FontSize="14"
+                               HorizontalAlignment="Center"
                                Grid.Column="2"/>
-                    <Image Source="Resources/login.png" Height="16" VerticalAlignment="Bottom"
+                    <Image Source="Resources/login.png" Height="16"
+                           HorizontalAlignment="Left" VerticalAlignment="Bottom"
                            Grid.Column="4"/>
                 </Grid>
             </Button>
