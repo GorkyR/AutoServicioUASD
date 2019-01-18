@@ -40,6 +40,12 @@ namespace Client.WPF
 
         async void Init()
         {
+            void LogoutAndTryAgain() {
+                StateService.IsLoggedIn = false;
+                StateService.ResetSession();
+                Init();
+            }
+
             if (!StateService.IsLoggedIn)
             {
                 var loginWindow = new LoginWindow();
@@ -48,12 +54,6 @@ namespace Client.WPF
             }
             else
             {
-                void LogoutAndTryAgain() {
-                    StateService.IsLoggedIn = false;
-                    StateService.ResetSession();
-                    Init();
-                }
-
                 try {
                     await ClientService.AutoServicio.LoginAsync(
                         StateService.CurrentSession.ID,
@@ -68,8 +68,11 @@ namespace Client.WPF
                 }
                 catch { LogoutAndTryAgain(); return; }
             }
+
             TopBar.Nombre = ClientService.AutoServicio.Username;
+            TopBar.LogoutAction = LogoutAndTryAgain;
             Page.Content = InitPage(Pages[0]);
+            NavigationPanel.SelectedIndex = 0;
         }
 
         private void Navigation_SelectionChanged(object sender, SelectionChangedEventArgs e)

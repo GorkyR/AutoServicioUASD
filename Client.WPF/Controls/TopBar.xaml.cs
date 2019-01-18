@@ -27,9 +27,18 @@ namespace Client.WPF.Controls
         public static readonly DependencyProperty NombreProperty = DependencyProperty.Register(
             "Nombre", typeof(string), typeof(TopBar), new PropertyMetadata());
 
+        public Action ActualizarAction { get; set; }
+        public Action LogoutAction { get; set; }
+
         public TopBar()
         {
             InitializeComponent();
         }
+
+        private void ShowAbout(object sender, RoutedEventArgs e) => new AboutWindow().ShowDialog();
+
+        private void Refresh(object sender, RoutedEventArgs e) => ActualizarAction();
+
+        private void Logout(object sender, RoutedEventArgs e) => LogoutAction();
     }
 }
