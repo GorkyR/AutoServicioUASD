@@ -29,6 +29,36 @@ namespace Client.WPF.Controls
             InitializeComponent();
         }
 
+        public void LoadCourses(IEnumerable<Course> courses, bool isShadow = false)
+        {
+            if (isShadow)
+                ClearShadow();
+            else
+                ClearRegular();
+            foreach (var course in courses)
+                AddCourse(course, isShadow);
+        }
+
+        public void AddCourse(Course course, bool isShadow = false) {
+            foreach (var courseInstance in course.ScheduleInfo)
+            {
+                var item = new ScheduleItem
+                {
+                    Titulo = course.Title,
+                    Codigo = course.Code,
+                    Lugar = UASD.Utilities.Convert.Place(courseInstance.Place),
+                    IsShadow = isShadow,
+                    ToolTip = $"{course.Title}\n{course.Code}\nNRC: {course.NRC}\n{course.Credits} creditos\nLugar: {courseInstance.Place}\nProf.: {course.Professor}"
+                };
+                AddItem(item,
+                    courseInstance.Weekday,
+                    courseInstance.StartTime,
+                    courseInstance.Duration,
+                    isShadow
+                );
+            }
+        }
+
         public void AddItem(ScheduleItem item, ScheduleInfo.Day day, TimeSpan time, int duration, bool isShadow = false) {
             Grid.SetColumn (item, (int)day + 1);
             Grid.SetRow    (item, time.Hours - 6);

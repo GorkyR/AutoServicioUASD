@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="Client.WPF.Controls.OpenCourseItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Client.WPF.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="40" d:DesignWidth="180">
+    <UserControl.Resources>
+        <local:ScheduleDayConverter x:Key="DaysConverter"/>
+    </UserControl.Resources>
+
+    <Grid Margin="0, 4">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="55"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <Button Click="Add"
+                HorizontalAlignment="Center" VerticalAlignment="Center"
+                Grid.RowSpan="100" Margin="4, 0, 8, 0">
+            <Image Source="/Client.WPF;component/Resources/agregar.png" Width="12"/>
+        </Button>
+
+        <StackPanel Orientation="Horizontal"
+                    Grid.Column="1" Grid.ColumnSpan="100">
+            <TextBlock Text="NRC: "/>
+            <TextBlock Text="{Binding NRC}" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal"
+                    Grid.Column="1" Grid.Row="1">
+            <TextBlock Text="Sección: "/>
+            <TextBlock Text="{Binding Section}"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal"
+                    Grid.Column="2" Grid.Row="1">
+            <TextBlock Text="Días: "/>
+            <TextBlock Text="{Binding ScheduleInfo, Converter={StaticResource DaysConverter}}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

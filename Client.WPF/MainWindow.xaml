@@ -7,7 +7,7 @@
         xmlns:controls="clr-namespace:Client.WPF.Controls"
         xmlns:pages="clr-namespace:Client.WPF.Pages"
         mc:Ignorable="d"
-        Title="Auto Servicio UASD" Height="550" Width="900">
+        Title="Auto Servicio UASD" Height="550" Width="930">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>

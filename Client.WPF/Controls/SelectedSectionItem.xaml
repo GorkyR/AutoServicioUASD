@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="Client.WPF.Controls.SelectedSectionItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Client.WPF.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="20" d:DesignWidth="100">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Button HorizontalAlignment="Center" VerticalAlignment="Center"
+                Margin="4, 0, 8, 0" Click="Remover">
+            <Image  Width="12" Source="/Client.WPF;component/Resources/remover.png"/>
+        </Button>
+        <TextBlock Text="{Binding Title}"
+                   Grid.Column="1"/>
+        <StackPanel Orientation="Horizontal"
+                    Grid.Column="2">
+            <TextBlock Text=" - "/>
+            <TextBlock Text="{Binding NRC}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>
