@@ -19,7 +19,7 @@ namespace Client.WPF.Pages
     /// <summary>
     /// Interaction logic for ProjectionPage.xaml
     /// </summary>
-    public partial class ProjectionPage : UserControl
+    public partial class ProjectionPage : UserControl, IPage
     {
         public IEnumerable<Course> Proyeccion { get => (IEnumerable<Course>)this.GetValue(ProyeccionProperty); set => this.SetValue(ProyeccionProperty, value); }
         public static readonly DependencyProperty ProyeccionProperty = DependencyProperty.Register(
@@ -32,8 +32,17 @@ namespace Client.WPF.Pages
 
         private async void DidLoad(object sender, RoutedEventArgs e)
         {
+            Cursor = Cursors.AppStarting;
             try { Proyeccion = await ClientService.ProjectionAsync(); }
-            catch (NoProyectionAvailableException){ MessageBox.Show("No hay proyeccion disponible", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
+            catch (NoProyectionAvailableException) { MessageBox.Show("No hay proyeccion disponible", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
+            finally { Cursor = Cursors.Arrow; }
+        }
+
+        public async void Refresh()
+        {
+            Cursor = Cursors.Wait;
+            await ClientService.FetchProjectionAsync();
+            this.DidLoad(null, null);
         }
     }
 }

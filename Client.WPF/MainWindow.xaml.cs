@@ -84,9 +84,10 @@ namespace Client.WPF
             return;
         }
 
-        private UserControl InitPage(Type type, params object[] parameters)
-        {
-            return type.GetConstructors()[0].Invoke(parameters ?? null) as UserControl;
+        private UserControl InitPage(Type type, params object[] parameters) {
+            var page = type.GetConstructors()[0].Invoke(parameters ?? null) as UserControl;
+            TopBar.ActualizarAction = (page as Pages.IPage).Refresh;
+            return page;
         }
     }
 }

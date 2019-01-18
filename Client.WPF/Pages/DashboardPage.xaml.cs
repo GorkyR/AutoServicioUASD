@@ -18,11 +18,16 @@ namespace Client.WPF.Pages
     /// <summary>
     /// Interaction logic for DashboardPage.xaml
     /// </summary>
-    public partial class DashboardPage : UserControl
+    public partial class DashboardPage : UserControl, IPage
     {
         public DashboardPage()
         {
             InitializeComponent();
+        }
+
+        public void Refresh()
+        {
+            throw new NotImplementedException();
         }
     }
 }

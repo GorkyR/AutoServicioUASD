@@ -20,7 +20,7 @@ namespace Client.WPF.Pages
     /// <summary>
     /// Interaction logic for SchedulePage.xaml
     /// </summary>
-    public partial class SchedulePage : UserControl
+    public partial class SchedulePage : UserControl, IPage
     {
         public ObservableCollection<Course> Materias {
             get => (ObservableCollection<Course>)this.GetValue(MateriasProperty);
@@ -74,6 +74,13 @@ namespace Client.WPF.Pages
             Cursor = Cursors.AppStarting;
             Materias = new ObservableCollection<Course>(await ClientService.ScheduleAsync());
             Cursor = Cursors.Arrow;
+        }
+
+        public async void Refresh()
+        {
+            Cursor = Cursors.Wait;
+            await ClientService.FetchScheduleAsync();
+            this.DidLoad(null, null);
         }
     }
 }

@@ -18,11 +18,16 @@ namespace Client.WPF.Pages
     /// <summary>
     /// Interaction logic for InformationPage.xaml
     /// </summary>
-    public partial class InformationPage : UserControl
+    public partial class InformationPage : UserControl,  IPage
     {
         public InformationPage()
         {
             InitializeComponent();
+        }
+
+        public void Refresh()
+        {
+            throw new NotImplementedException();
         }
     }
 }

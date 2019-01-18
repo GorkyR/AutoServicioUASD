@@ -20,7 +20,7 @@ namespace Client.WPF.Pages
     /// <summary>
     /// Interaction logic for ReportPage.xaml
     /// </summary>
-    public partial class ReportPage : UserControl
+    public partial class ReportPage : UserControl, IPage
     {
         public IEnumerable<AcademicPeriod> Periodos {
             get => (IEnumerable<AcademicPeriod>)GetValue(PeriodosProperty);
@@ -39,6 +39,13 @@ namespace Client.WPF.Pages
             Cursor = Cursors.AppStarting;
             Periodos = (await ClientService.ReportAsync())?.Periods;
             Cursor = Cursors.Arrow;
+        }
+
+        public async void Refresh()
+        {
+            Cursor = Cursors.Wait;
+            await ClientService.FetchReportAsync();
+            this.DidLoad(null, null);
         }
     }
 

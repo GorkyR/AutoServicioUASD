@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +20,10 @@ namespace Client.WPF
     /// </summary>
     public partial class AboutWindow : Window
     {
-        public string Version { get => System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(); }
+        private static FileVersionInfo FileVersionInfo { get => FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location); }
+        public static string Version { get => FileVersionInfo.ProductVersion; }
+        public static string Description { get => FileVersionInfo.FileDescription;  }
+        public static string Copyright { get => FileVersionInfo.LegalCopyright;  }
 
         public AboutWindow()
         {

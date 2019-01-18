@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Gorky Rojas")]
 [assembly: AssemblyProduct("Client.WPF")]
-[assembly: AssemblyCopyright("Copyright ©  2018 Gorky Rojas")]
+[assembly: AssemblyCopyright("Copyright ©  2019 Gorky Rojas")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -51,6 +51,6 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.6")]
-[assembly: AssemblyFileVersion("1.6.2.0")]
-[assembly: AssemblyInformationalVersion("1.6 Alpha")]
+[assembly: AssemblyVersion("0.7")]
+[assembly: AssemblyFileVersion("0.7.0.0")]
+[assembly: AssemblyInformationalVersion("0.7 Beta")]

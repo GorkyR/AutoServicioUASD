@@ -21,7 +21,7 @@ namespace Client.WPF.Pages
     /// <summary>
     /// Interaction logic for SelectionPage.xaml
     /// </summary>
-    public partial class SelectionPage : UserControl
+    public partial class SelectionPage : UserControl, IPage
     {
         public CourseCollection MateriasSeleccionadas { get; set; } = new CourseCollection();
 
@@ -104,6 +104,12 @@ namespace Client.WPF.Pages
                 await ClientService.ReLoginThen(() => new Task(() => this.Registrar(null, null)));
                 return;
             }
+        }
+
+        public void Refresh()
+        {
+            Cursor = Cursors.Wait;
+            this.DidLoad(null, null);
         }
     }
 }

@@ -10,7 +10,7 @@
         DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"
         Background="White">
         <Grid.Effect>
-            <DropShadowEffect BlurRadius="20" ShadowDepth="0" Opacity=".25"/>
+            <DropShadowEffect BlurRadius="20" ShadowDepth="2" Opacity=".25"/>
         </Grid.Effect>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
