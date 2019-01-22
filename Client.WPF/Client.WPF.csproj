@@ -64,6 +64,9 @@
     <Compile Include="AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CurrentTimeIndicator.xaml.cs">
+      <DependentUpon>CurrentTimeIndicator.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\OpenCourseItem.xaml.cs">
       <DependentUpon>OpenCourseItem.xaml</DependentUpon>
     </Compile>
@@ -83,6 +86,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\CourseGradeItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\CurrentTimeIndicator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -277,6 +284,9 @@
     <Resource Include="Resources\acerca de.png" />
     <Resource Include="Resources\actualizar.png" />
     <Resource Include="Resources\logout.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Widgets\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

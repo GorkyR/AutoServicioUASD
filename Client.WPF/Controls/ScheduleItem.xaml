@@ -13,7 +13,7 @@
 
     <Border Name="Border" DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"
             Background="{Binding IsShadow, Converter={StaticResource BackgroundConverter}}"
-            CornerRadius="5" Margin="4, 0, 0, 2" Padding="4, 2, 0, 2">
+            CornerRadius="5" Margin="8, 0, 4, 2" Padding="4, 2, 0, 2">
         <StackPanel>
             <TextBlock Text="{Binding Titulo}" FontWeight="Medium" FontSize="12"
                        Foreground="{Binding IsShadow, Converter={StaticResource ForegroundConverter}}"
