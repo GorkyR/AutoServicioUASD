@@ -20,6 +20,8 @@ namespace Client.WPF {
             report      = null;
             projection  = null;
             information = null;
+            StateService.ResetSession();
+            StateService.IsLoggedIn = false;
         }
 
         public static async Task<CourseCollection> ScheduleAsync()

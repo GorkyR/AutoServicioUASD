@@ -72,7 +72,8 @@ namespace Client.WPF.Pages
         private async void DidLoad(object sender, RoutedEventArgs e)
         {
             Cursor = Cursors.AppStarting;
-            Materias = new ObservableCollection<Course>(await ClientService.ScheduleAsync());
+            var courses = await ClientService.ScheduleAsync();
+            Materias = new ObservableCollection<Course>(courses);
             Cursor = Cursors.Arrow;
         }
 

@@ -41,8 +41,7 @@ namespace Client.WPF
         async void Init()
         {
             void LogoutAndTryAgain() {
-                StateService.IsLoggedIn = false;
-                StateService.ResetSession();
+                ClientService.ResetClientInformation();
                 Init();
             }
 
