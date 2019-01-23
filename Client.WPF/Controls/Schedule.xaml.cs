@@ -47,7 +47,6 @@ namespace Client.WPF.Controls
         public Schedule()
         {
             InitializeComponent();
-            IndicateCurrentTime();
         }
 
         public void LoadCourses(IEnumerable<Course> courses, bool isShadow = false)
