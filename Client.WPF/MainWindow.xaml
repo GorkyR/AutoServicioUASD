@@ -33,7 +33,7 @@
                 <controls:NavigationItem PageName="Horario"     Icon="Resources/horario.png" />
                 <controls:NavigationItem PageName="Reportes"    Icon="Resources/reportes.png" />
                 <controls:NavigationItem PageName="Proyección"  Icon="Resources/proyeccion.png" />
-                <controls:NavigationItem PageName="Información" Icon="Resources/informacion.png"/>
+                <!--<controls:NavigationItem PageName="Información" Icon="Resources/informacion.png"/>-->
                 <controls:NavigationItem PageName="Selección"   Icon="Resources/seleccion.png" />
             </ListBox.Items>
         </ListBox>
