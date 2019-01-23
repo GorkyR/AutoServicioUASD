@@ -34,15 +34,24 @@ namespace Client.WPF.Pages
         {
             Cursor = Cursors.AppStarting;
             try { Proyeccion = await ClientService.ProjectionAsync(); }
-            catch (NoProyectionAvailableException) { MessageBox.Show("No hay proyeccion disponible", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
+            catch (NoProyectionAvailableException) {
+                SPUnavailable.Visibility = Visibility.Visible;
+            }
             finally { Cursor = Cursors.Arrow; }
         }
 
         public async void Refresh()
         {
             Cursor = Cursors.Wait;
-            await ClientService.FetchProjectionAsync();
-            this.DidLoad(null, null);
+            try {
+                await ClientService.FetchProjectionAsync();
+                this.DidLoad(null, null);
+            }
+            catch {
+                SPUnavailable.Visibility = Visibility.Visible;
+                ICProjection.Visibility = Visibility.Collapsed;
+                Cursor = Cursors.Arrow;
+            }
         }
     }
 }
