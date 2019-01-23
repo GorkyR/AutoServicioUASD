@@ -60,20 +60,20 @@ namespace Client.WPF.Controls
         }
 
         public void AddCourse(Course course, bool isShadow = false) {
-            foreach (var courseInstance in course.Schedule)
+            foreach (var courseClass in course.Schedule)
             {
                 var item = new ScheduleItem
                 {
                     Titulo = course.Title,
                     Codigo = course.Code,
-                    Lugar = UASD.Utilities.Convert.Place(courseInstance.Place),
+                    Lugar = UASD.Utilities.Convert.Place(courseClass.Place),
                     IsShadow = isShadow,
-                    ToolTip = $"{course.Title}\n{course.Code}\nNRC: {course.NRC}\n{course.Credits} creditos\nLugar: {courseInstance.Place}\nProf.: {course.Professor}"
+                    ToolTip = CourseClass.GetInfoString(course, courseClass)
                 };
                 AddItem(item,
-                    courseInstance.DayOfWeek,
-                    courseInstance.StartTime,
-                    courseInstance.Duration,
+                    courseClass.DayOfWeek,
+                    courseClass.StartTime,
+                    courseClass.Duration,
                     isShadow
                 );
             }

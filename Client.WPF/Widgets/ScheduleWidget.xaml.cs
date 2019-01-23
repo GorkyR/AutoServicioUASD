@@ -43,20 +43,20 @@ namespace Client.WPF.Widgets
                 (from course in courses
                     select (from instance in course.Schedule
                             where instance.DayOfWeek == today
-                            select (Course: course, Instance: instance)))
+                            select (Course: course, Class: instance)))
                 .Aggregate((a, b) => a.Concat(b)).ToList();
             todaysCourses.Sort((a, b) =>
-                (a.Instance.StartTime - b.Instance.StartTime).Hours
+                (a.Class.StartTime - b.Class.StartTime).Hours
             );
             var upcomingClasses = todaysCourses.SkipWhile(courseInstance =>
-                courseInstance.Instance.EndTime < now.TimeOfDay
+                courseInstance.Class.EndTime < now.TimeOfDay
             );
             ICClasses.ItemsSource =
                 from uC in upcomingClasses
                 select new StackPanel {
                     Children = {
                         new TextBlock {
-                            Text = $"{UASD.Utilities.Convert.Time(uC.Instance.StartTime)}",
+                            Text = $"{UASD.Utilities.Convert.Time(uC.Class.StartTime)}",
                             FontSize = 10, FontWeight = FontWeights.Medium,
                             Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#555"))
                         },
@@ -64,13 +64,8 @@ namespace Client.WPF.Widgets
                         {
                             Titulo  = uC.Course.Title,
                             Codigo  = uC.Course.Code,
-                            Lugar   = UASD.Utilities.Convert.Place(uC.Instance.Place),
-                            ToolTip = $"{uC.Course.Title}\n" +
-                                        $"{uC.Course.Code}\n"+
-                                        $"NRC: {uC.Course.NRC}\n" +
-                                        $"{uC.Course.Credits} creditos\n"+
-                                        $"Lugar: {uC.Instance.Place}\n"+
-                                        $"Prof.: {uC.Course.Professor}"
+                            Lugar   = UASD.Utilities.Convert.Place(uC.Class.Place),
+                            ToolTip = UASD.CourseClass.GetInfoString(uC.Course, uC.Class)
                         }
                     }
                 };
