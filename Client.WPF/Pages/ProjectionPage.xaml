@@ -6,11 +6,21 @@
              xmlns:local="clr-namespace:Client.WPF.Pages"
              xmlns:controls="clr-namespace:Client.WPF.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
+             d:DesignHeight="400" d:DesignWidth="400"
              Loaded="DidLoad">
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center"
           DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}">
-        <ItemsControl ItemsSource="{Binding Proyeccion}">
+        <StackPanel Name="SPUnavailable" MaxWidth="200"
+                    Visibility="Collapsed">
+            <Image Source="/Client.WPF;component/Resources/no_disponible.png"
+                   Width="128" Margin="8"/>
+            <TextBlock Text="La proyección no está disponible en estos momentos."
+                       TextAlignment="Center" TextWrapping="Wrap"
+                       FontSize="22"
+                       Foreground="#999999" FontWeight="Medium"/>
+        </StackPanel>
+        <ItemsControl Name="ICProjection"
+                      ItemsSource="{Binding Proyeccion}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <controls:ProjectionCourseItem Margin="0, 6"/>

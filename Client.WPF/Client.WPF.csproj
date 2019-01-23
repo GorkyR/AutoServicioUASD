@@ -313,6 +313,8 @@
     <Resource Include="Resources\actualizar.png" />
     <Resource Include="Resources\logout.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\no_disponible.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
