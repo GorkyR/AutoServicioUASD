@@ -81,6 +81,18 @@
     <Compile Include="Models\SessionInformation.cs" />
     <Compile Include="Pages\Page.cs" />
     <Compile Include="StateService.cs" />
+    <Compile Include="Widgets\InformationWidget.xaml.cs">
+      <DependentUpon>InformationWidget.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Widgets\ProjectionWidget.xaml.cs">
+      <DependentUpon>ProjectionWidget.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Widgets\ReportWidget.xaml.cs">
+      <DependentUpon>ReportWidget.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Widgets\ScheduleWidget.xaml.cs">
+      <DependentUpon>ScheduleWidget.xaml</DependentUpon>
+    </Compile>
     <Page Include="AboutWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -194,6 +206,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Widgets\InformationWidget.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Widgets\ProjectionWidget.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Widgets\ReportWidget.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Widgets\ScheduleWidget.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Pages\DashboardPage.xaml.cs">
@@ -285,8 +313,6 @@
     <Resource Include="Resources\actualizar.png" />
     <Resource Include="Resources\logout.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Widgets\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
