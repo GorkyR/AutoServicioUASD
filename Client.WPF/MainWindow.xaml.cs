@@ -28,7 +28,7 @@ namespace Client.WPF
             typeof(Pages.SchedulePage),
             typeof(Pages.ReportPage),
             typeof(Pages.ProjectionPage),
-            typeof(Pages.InformationPage),
+            //typeof(Pages.InformationPage),
             typeof(Pages.SelectionPage)
         };
 

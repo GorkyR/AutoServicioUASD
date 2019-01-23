@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="Client.WPF.Controls.CurrentTimeIndicator"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Client.WPF.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="200"
+             >
+    <Grid
+          DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="{Binding Slot}" Opacity=".5">
+            <DockPanel.Effect>
+                <DropShadowEffect ShadowDepth="2" BlurRadius="5" Color="#0AF"/>
+            </DockPanel.Effect>
+            <Polygon Points="0,0 5,2 5,4 0,6" Fill="#00F"
+                        VerticalAlignment="Center"
+                        DockPanel.Dock="Left"/>
+            <Rectangle Fill="#00F" Height="2"/>
+        </DockPanel>
+    </Grid>
+</UserControl>

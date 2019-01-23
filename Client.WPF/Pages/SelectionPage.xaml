@@ -8,70 +8,81 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              Loaded="DidLoad">
-    <Grid
-         DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition MinWidth="180" Width="Auto" MaxWidth="220"/>
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition />
-        </Grid.RowDefinitions>
+    <Grid DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}">
+        <StackPanel Name="SPUnavailable" MaxWidth="200"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Visibility="Collapsed">
+            <Image Source="/Client.WPF;component/Resources/no_disponible.png"
+                   Width="128" Margin="8"/>
+            <TextBlock Text="No hay materias disponibles para selección en estos momentos."
+                       TextAlignment="Center" TextWrapping="Wrap"
+                       FontSize="22"
+                       Foreground="#999999" FontWeight="Medium"/>
+        </StackPanel>
+        <Grid Name="GSeleccion">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MinWidth="180" Width="Auto" MaxWidth="220"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
 
-        <DockPanel>
-            <StackPanel Name="SPSeleccionadas"
+            <DockPanel>
+                <StackPanel Name="SPSeleccionadas"
                         DockPanel.Dock="Bottom"
                         Visibility="Collapsed">
-                <Separator/>
-                <TextBlock Text="Seleccionadas:"/>
-                <ItemsControl Name="ICSeleccionadas"/>
-                <Button Name="BRegistrar" Content="Registrar" 
+                    <Separator/>
+                    <TextBlock Text="Seleccionadas:"/>
+                    <ItemsControl Name="ICSeleccionadas"/>
+                    <Button Name="BRegistrar" Content="Registrar" 
                         Click="Registrar"/>
-            </StackPanel>
-            <StackPanel DockPanel.Dock="Top">
-                <TextBlock Text="Materias:"/>
-                <ListView Name="LVMaterias"
+                </StackPanel>
+                <StackPanel DockPanel.Dock="Top">
+                    <TextBlock Text="Materias:"/>
+                    <ListView Name="LVMaterias"
                           ItemsSource="{Binding Materias}"
                           SelectionChanged="ChangeCourseSelection">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="170"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="{Binding Name}"/>
-                                <StackPanel Orientation="Horizontal"
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="170"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding Name}"/>
+                                    <StackPanel Orientation="Horizontal"
                                             Grid.Column="1">
-                                    <TextBlock Text="["/>
-                                    <TextBlock Text="{Binding Count}"/>
-                                    <TextBlock Text="]"/>
-                                </StackPanel>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </StackPanel>
-        </DockPanel>
-        <controls:Schedule x:Name="Schedule"
+                                        <TextBlock Text="["/>
+                                        <TextBlock Text="{Binding Count}"/>
+                                        <TextBlock Text="]"/>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackPanel>
+            </DockPanel>
+            <controls:Schedule x:Name="Schedule"
                            Grid.Column="1"/>
 
-        <Separator Grid.ColumnSpan="100" Grid.Row="1"/>
+            <Separator Grid.ColumnSpan="100" Grid.Row="1"/>
 
-        <DockPanel Grid.ColumnSpan="100" Grid.Row="2">
-            <TextBlock Text="Secciones:"
+            <DockPanel Grid.ColumnSpan="100" Grid.Row="2">
+                <TextBlock Text="Secciones:"
                        DockPanel.Dock="Top"/>
-            <ListView Name="LVSeccionesDisponibles"
+                <ListView Name="LVSeccionesDisponibles"
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                       SelectionChanged="ChangeSectionSelection">
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel Orientation="Horizontal"/>
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-            </ListView>
-        </DockPanel>
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                </ListView>
+            </DockPanel>
+        </Grid>
     </Grid>
 </UserControl>

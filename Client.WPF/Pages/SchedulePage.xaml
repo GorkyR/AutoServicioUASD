@@ -9,6 +9,6 @@
              d:DesignHeight="450" d:DesignWidth="800"
              Loaded="DidLoad">
     <Grid>
-        <controls:Schedule x:Name="Schedule"/>
+        <controls:Schedule x:Name="Schedule" ShowCurrentTime="True"/>
     </Grid>
 </UserControl>

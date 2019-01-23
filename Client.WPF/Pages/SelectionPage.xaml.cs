@@ -55,8 +55,12 @@ namespace Client.WPF.Pages
         private async void DidLoad(object sender, RoutedEventArgs e)
         {
             Cursor = Cursors.AppStarting;
-            Materias = await ClientService.AvailableCoursesAsync();
-            Cursor = Cursors.Arrow;
+            try { Materias = await ClientService.AvailableCoursesAsync(); }
+            catch (NoDataReceivedException) {
+                GSeleccion.Visibility = Visibility.Collapsed;
+                SPUnavailable.Visibility = Visibility.Visible;
+            }
+            finally { Cursor = Cursors.Arrow; }
         }
 
         private void ChangeCourseSelection(object sender, SelectionChangedEventArgs e)
