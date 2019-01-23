@@ -60,7 +60,7 @@ namespace Client.WPF.Controls
         }
 
         public void AddCourse(Course course, bool isShadow = false) {
-            foreach (var courseInstance in course.ScheduleInfo)
+            foreach (var courseInstance in course.Schedule)
             {
                 var item = new ScheduleItem
                 {

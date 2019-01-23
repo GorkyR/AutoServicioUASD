@@ -39,7 +39,7 @@ namespace Client.WPF.Controls
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var scheduleCollection = (ScheduleInfoCollection)value;
+            var scheduleCollection = (List<CourseClass>)value;
             return string.Concat(
                 scheduleCollection.Select(si =>
                     UASD.Utilities.Convert.Days.First(kvp =>

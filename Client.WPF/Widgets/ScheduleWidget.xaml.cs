@@ -41,7 +41,7 @@ namespace Client.WPF.Widgets
 
             var todaysCourses =
                 (from course in courses
-                    select (from instance in course.ScheduleInfo
+                    select (from instance in course.Schedule
                             where instance.DayOfWeek == today
                             select (Course: course, Instance: instance)))
                 .Aggregate((a, b) => a.Concat(b)).ToList();
