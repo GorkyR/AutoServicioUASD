@@ -71,7 +71,7 @@ namespace Client.WPF.Controls
                     ToolTip = $"{course.Title}\n{course.Code}\nNRC: {course.NRC}\n{course.Credits} creditos\nLugar: {courseInstance.Place}\nProf.: {course.Professor}"
                 };
                 AddItem(item,
-                    courseInstance.Weekday,
+                    courseInstance.DayOfWeek,
                     courseInstance.StartTime,
                     courseInstance.Duration,
                     isShadow
@@ -79,8 +79,8 @@ namespace Client.WPF.Controls
             }
         }
 
-        public void AddItem(ScheduleItem item, ScheduleInfo.Day day, TimeSpan time, int duration, bool isShadow = false) {
-            Grid.SetColumn (item, (int)day + 1);
+        public void AddItem(ScheduleItem item, DayOfWeek day, TimeSpan time, int duration, bool isShadow = false) {
+            Grid.SetColumn (item, (int)day);
             Grid.SetRow    (item, time.Hours - 6);
             Grid.SetRowSpan(item, duration);
             if (isShadow)

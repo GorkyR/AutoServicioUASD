@@ -43,7 +43,7 @@ namespace Client.WPF.Controls
             return string.Concat(
                 scheduleCollection.Select(si =>
                     UASD.Utilities.Convert.Days.First(kvp =>
-                        kvp.Value == si.Weekday
+                        kvp.Value == si.DayOfWeek
                     ).Key
                 )
             );
