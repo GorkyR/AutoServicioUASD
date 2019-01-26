@@ -53,9 +53,9 @@ namespace Client.WPF.Pages
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var collection = (UASD.CourseCollection)value;
-            var enumerable = (IEnumerable<UASD.Course>)collection;
-            var source = enumerable.Cast<UASD.CourseGrade>();
+            var collection = (CourseCollection)value;
+            var enumerable = (IEnumerable<Course>)collection;
+            var source = enumerable.Cast<CourseGrade>();
             return source;
         }
 

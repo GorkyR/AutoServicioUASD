@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UASD;
 
 namespace Client.WPF.Widgets
 {
@@ -20,9 +21,24 @@ namespace Client.WPF.Widgets
     /// </summary>
     public partial class ReportWidget : UserControl
     {
+        public AcademicPeriod Periodo {
+            get => (AcademicPeriod)this.GetValue(PeriodoProperty);
+            set => this.SetValue(PeriodoProperty, value);
+        }
+        public static readonly DependencyProperty PeriodoProperty = DependencyProperty.Register(
+            "Periodo", typeof(AcademicPeriod), typeof(ReportWidget), new PropertyMetadata());
+
         public ReportWidget()
         {
             InitializeComponent();
+        }
+
+        private async void DidLoad(object sender, RoutedEventArgs e)
+        {
+            Cursor = Cursors.AppStarting;
+            var reporte = await ClientService.ReportAsync();
+            Periodo = reporte.Periods.First();
+            Cursor = Cursors.Arrow;
         }
     }
 }

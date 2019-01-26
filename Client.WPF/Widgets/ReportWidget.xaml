@@ -4,9 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Client.WPF.Widgets"
+             xmlns:control="clr-namespace:Client.WPF.Controls"
+             xmlns:page="clr-namespace:Client.WPF.Pages"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+             d:DesignHeight="450" d:DesignWidth="800"
+             Loaded="DidLoad">
+    <UserControl.Resources>
+        <page:CourseCollectionConverter x:Key="CollectionConverter"/>
+    </UserControl.Resources>
+    <Grid DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}">
+        <control:Reporte x:Name="Reporte"
+                         Periodo="{Binding Periodo.Title}"
+                         Activo ="{Binding Periodo.IsActive}"
+                         Notas  ="{Binding Periodo.Courses, Converter={StaticResource CollectionConverter}}"/>
     </Grid>
 </UserControl>
