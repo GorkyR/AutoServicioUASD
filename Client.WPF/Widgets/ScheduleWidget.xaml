@@ -10,16 +10,8 @@
              Loaded="DidLoad">
     <Grid DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"
           Margin="8">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <TextBlock Text="{Binding Weekday}"
-                   FontWeight="Medium" FontSize="14"
-                   Grid.Row="0"/>
-        <ScrollViewer VerticalScrollBarVisibility="Auto"
-                      Grid.Row="1" >
-            <ItemsControl Name="ICClasses"/>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <ItemsControl Name="ICAgenda"/>
         </ScrollViewer>
     </Grid>
 </UserControl>

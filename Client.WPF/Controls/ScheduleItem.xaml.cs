@@ -21,13 +21,36 @@ namespace Client.WPF.Controls
     /// </summary>
     public partial class ScheduleItem : UserControl
     {
-        public string Titulo   { get => (string)this.GetValue(TituloProperty); set => this.SetValue(TituloProperty, value); }
+        public string Titulo   {
+            get => (string)this.GetValue(TituloProperty);
+            set => this.SetValue(TituloProperty, value);
+        }
         public static readonly DependencyProperty TituloProperty = DependencyProperty.Register(
             "Titulo", typeof(string), typeof(ScheduleItem), new PropertyMetadata("[Schedule Item]"));
 
-        public string Codigo   { get; set; }
-        public string Lugar    { get; set; }
-        public bool   IsShadow { get; set; }
+        public string Codigo
+        {
+            get => (string)this.GetValue(CodigoProperty);
+            set => this.SetValue(CodigoProperty, value);
+        }
+        public static readonly DependencyProperty CodigoProperty = DependencyProperty.Register(
+            "Codigo", typeof(string), typeof(ScheduleItem), new PropertyMetadata());
+
+        public string Lugar
+        {
+            get => (string)this.GetValue(LugarProperty);
+            set => this.SetValue(LugarProperty, value);
+        }
+        public static readonly DependencyProperty LugarProperty = DependencyProperty.Register(
+            "Lugar", typeof(string), typeof(ScheduleItem), new PropertyMetadata());
+
+        public bool   IsShadow
+        {
+            get => (bool)this.GetValue(IsShadowProperty);
+            set => this.SetValue(IsShadowProperty, value);
+        }
+        public static readonly DependencyProperty IsShadowProperty = DependencyProperty.Register(
+            "IsShadow", typeof(bool), typeof(ScheduleItem), new PropertyMetadata());
 
         public ScheduleItem()
         {

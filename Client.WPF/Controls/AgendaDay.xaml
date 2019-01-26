@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="Client.WPF.Controls.AgendaDay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Client.WPF.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <local:DayOfWeekConverter x:Key="DayOfWeekConverter"/>
+        <local:TimeConverter      x:Key="TimeConverter"/>
+        <local:PlaceConverter     x:Key="PlaceConverter"/>
+        <local:ClassInfoConverter x:Key="InfoConverter"/>
+        <local:CurrentClassConverter x:Key="CurrentClassConverter"/>
+    </UserControl.Resources>
+    
+    <Grid DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"
+          Margin="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="{Binding DayOfWeek, Converter={StaticResource DayOfWeekConverter}}"
+                   FontWeight="Medium" FontSize="14"
+                   Grid.Row="0"/>
+        <TextBlock Name="TBEmpty" Text="Nada"
+                   FontWeight="Medium" Foreground="#555"
+                   Margin="16, 0, 0, 0" Grid.Row="1"/>
+        <ItemsControl Name="ICClasses"
+                      ItemsSource="{Binding Items}"
+                      Grid.Row="1">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Class, Converter={StaticResource TimeConverter}}"
+                                    FontSize="10" FontWeight="Medium"
+                                    Foreground="{Binding Class, Converter={StaticResource CurrentClassConverter}}"/>
+                        <local:ScheduleItem Titulo ="{Binding Course.Title}"
+                                            Codigo ="{Binding Course.Code}"
+                                            Lugar  ="{Binding Class.Place, Converter={StaticResource PlaceConverter}}"
+                                            ToolTip="{Binding ., Converter={StaticResource InfoConverter}}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</UserControl>
