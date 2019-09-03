@@ -40,7 +40,7 @@
         <StackPanel Orientation="Horizontal"
                     Grid.Column="2" Grid.Row="1">
             <TextBlock Text="Días: "/>
-            <TextBlock Text="{Binding ScheduleInfo, Converter={StaticResource DaysConverter}}"/>
+            <TextBlock Text="{Binding Schedule, Converter={StaticResource DaysConverter}}"/>
         </StackPanel>
     </Grid>
 </UserControl>
