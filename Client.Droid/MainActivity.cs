@@ -8,12 +8,33 @@ using Android.Support.V4.View;
 using Android.Support.V4.Widget;
 using Android.Support.V7.App;
 using Android.Views;
+using static Client.Droid.StatePersistanceService;
 
 namespace Client.Droid
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
     public class MainActivity : AppCompatActivity, NavigationView.IOnNavigationItemSelectedListener
     {
+        public const string DataBaseName = "ClientState.bin";
+
+        public MainActivity() : base() {
+            using (var db = new LiteDB.LiteDatabase(DataBaseName))
+            {
+                var globals = db.GetCollection<Models.Global>();
+                globals.EnsureIndex("key");
+
+                void setupGlobal(string key, object value)
+                {
+                    if (!globals.Exists(g => g.Key == key))
+                        globals.Insert(new Models.Global(key, value));
+                }
+
+                setupGlobal(nameof(IsLoggedIn), false);
+                setupGlobal(nameof(LastIDUsed), "");
+                setupGlobal(nameof(CurrentSession), null);
+            }
+        }
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -21,9 +42,6 @@ namespace Client.Droid
             SetContentView(Resource.Layout.activity_main);
             Android.Support.V7.Widget.Toolbar toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
-
-            FloatingActionButton fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
-            fab.Click += FabOnClick;
 
             DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
             ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, Resource.String.navigation_drawer_open, Resource.String.navigation_drawer_close);
@@ -56,7 +74,7 @@ namespace Client.Droid
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
             int id = item.ItemId;
-            if (id == Resource.Id.action_settings)
+            if (id == Resource.Id.action_about)
             {
                 return true;
             }
@@ -64,38 +82,23 @@ namespace Client.Droid
             return base.OnOptionsItemSelected(item);
         }
 
-        private void FabOnClick(object sender, EventArgs eventArgs)
-        {
-            View view = (View) sender;
-            Snackbar.Make(view, "Replace with your own action", Snackbar.LengthLong)
-                .SetAction("Action", (Android.Views.View.IOnClickListener)null).Show();
-        }
-
         public bool OnNavigationItemSelected(IMenuItem item)
         {
             int id = item.ItemId;
 
-            if (id == Resource.Id.nav_camera)
-            {
-                // Handle the camera action
-            }
-            else if (id == Resource.Id.nav_gallery)
+            if (id == Resource.Id.nav_dashboard)
             {
 
             }
-            else if (id == Resource.Id.nav_slideshow)
+            else if (id == Resource.Id.nav_schedule)
             {
 
             }
-            else if (id == Resource.Id.nav_manage)
+            else if (id == Resource.Id.nav_reports)
             {
 
             }
-            else if (id == Resource.Id.nav_share)
-            {
-
-            }
-            else if (id == Resource.Id.nav_send)
+            else if (id == Resource.Id.nav_projection)
             {
 
             }
