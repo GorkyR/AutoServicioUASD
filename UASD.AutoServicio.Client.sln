@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Core", "Client.Core\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.WPF", "Client.WPF\Client.WPF.csproj", "{789E4F0A-7413-42A8-922E-84AB7A824468}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Droid", "Client.Droid\Client.Droid.csproj", "{20448AAB-01D0-4A55-9BC8-9467B0F4CB21}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Droid", "Client.Droid\Client.Droid.csproj", "{9EAC3250-F3EB-4AC6-9F7B-FE5163FF34E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,18 +33,18 @@ Global
 		{789E4F0A-7413-42A8-922E-84AB7A824468}.Release|Any CPU.Build.0 = Release|Any CPU
 		{789E4F0A-7413-42A8-922E-84AB7A824468}.Release|x86.ActiveCfg = Release|Any CPU
 		{789E4F0A-7413-42A8-922E-84AB7A824468}.Release|x86.Build.0 = Release|Any CPU
-		{20448AAB-01D0-4A55-9BC8-9467B0F4CB21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{20448AAB-01D0-4A55-9BC8-9467B0F4CB21}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{20448AAB-01D0-4A55-9BC8-9467B0F4CB21}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{20448AAB-01D0-4A55-9BC8-9467B0F4CB21}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{20448AAB-01D0-4A55-9BC8-9467B0F4CB21}.Debug|x86.Build.0 = Debug|Any CPU
-		{20448AAB-01D0-4A55-9BC8-9467B0F4CB21}.Debug|x86.Deploy.0 = Debug|Any CPU
-		{20448AAB-01D0-4A55-9BC8-9467B0F4CB21}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{20448AAB-01D0-4A55-9BC8-9467B0F4CB21}.Release|Any CPU.Build.0 = Release|Any CPU
-		{20448AAB-01D0-4A55-9BC8-9467B0F4CB21}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{20448AAB-01D0-4A55-9BC8-9467B0F4CB21}.Release|x86.ActiveCfg = Release|Any CPU
-		{20448AAB-01D0-4A55-9BC8-9467B0F4CB21}.Release|x86.Build.0 = Release|Any CPU
-		{20448AAB-01D0-4A55-9BC8-9467B0F4CB21}.Release|x86.Deploy.0 = Release|Any CPU
+		{9EAC3250-F3EB-4AC6-9F7B-FE5163FF34E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EAC3250-F3EB-4AC6-9F7B-FE5163FF34E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EAC3250-F3EB-4AC6-9F7B-FE5163FF34E6}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{9EAC3250-F3EB-4AC6-9F7B-FE5163FF34E6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9EAC3250-F3EB-4AC6-9F7B-FE5163FF34E6}.Debug|x86.Build.0 = Debug|Any CPU
+		{9EAC3250-F3EB-4AC6-9F7B-FE5163FF34E6}.Debug|x86.Deploy.0 = Debug|Any CPU
+		{9EAC3250-F3EB-4AC6-9F7B-FE5163FF34E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EAC3250-F3EB-4AC6-9F7B-FE5163FF34E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EAC3250-F3EB-4AC6-9F7B-FE5163FF34E6}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{9EAC3250-F3EB-4AC6-9F7B-FE5163FF34E6}.Release|x86.ActiveCfg = Release|Any CPU
+		{9EAC3250-F3EB-4AC6-9F7B-FE5163FF34E6}.Release|x86.Build.0 = Release|Any CPU
+		{9EAC3250-F3EB-4AC6-9F7B-FE5163FF34E6}.Release|x86.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

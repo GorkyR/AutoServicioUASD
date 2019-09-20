@@ -37,14 +37,14 @@ namespace Client.WPF.Pages
         private async void DidLoad(object sender, RoutedEventArgs e)
         {
             Cursor = Cursors.AppStarting;
-            Periodos = (await ClientService.ReportAsync())?.Periods;
+            Periodos = (await ClientStateService.ReportAsync())?.Periods;
             Cursor = Cursors.Arrow;
         }
 
         public async void Refresh()
         {
             Cursor = Cursors.Wait;
-            await ClientService.FetchReportAsync();
+            await ClientStateService.FetchReportAsync();
             this.DidLoad(null, null);
         }
     }

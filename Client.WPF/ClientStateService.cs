@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UASD;
 
 namespace Client.WPF {
-    public static class ClientService
+    public static class ClientStateService
     {
         public static UASD.Client AutoServicio { get; } = new UASD.Client();
 
@@ -20,15 +20,15 @@ namespace Client.WPF {
             report      = null;
             projection  = null;
             information = null;
-            StateService.ResetSession();
-            StateService.IsLoggedIn = false;
+            StatePersistanceService.ResetSession();
+            StatePersistanceService.IsLoggedIn = false;
         }
 
         public static async Task<CourseCollection> ScheduleAsync()
         {
             if (schedule != null)
                 return schedule;
-            schedule = StateService.CurrentSession.Schedule;
+            schedule = StatePersistanceService.CurrentSession.Schedule;
             if (schedule != null)
                 return schedule;
             await CacheScheduleAsync();
@@ -44,7 +44,7 @@ namespace Client.WPF {
         {
             if (!(report is null))
                 return report;
-            var p = StateService.CurrentSession.Report;
+            var p = StatePersistanceService.CurrentSession.Report;
             if (!(p is null)) {
                 var rep = new AcademicReport();
                 foreach (var period in p) {
@@ -74,7 +74,7 @@ namespace Client.WPF {
         {
             if (!(projection is null))
                 return projection;
-            projection = StateService.CurrentSession.Projection;
+            projection = StatePersistanceService.CurrentSession.Projection;
             if (!(projection is null))
                 return projection;
             await CacheProjectionAsync();
@@ -90,7 +90,7 @@ namespace Client.WPF {
         {
             if (!(information is null))
                 return information;
-            information = StateService.CurrentSession.Information;
+            information = StatePersistanceService.CurrentSession.Information;
             if (!(information is null))
                 return information;
             await CacheCareerInformationAsync();
@@ -109,15 +109,15 @@ namespace Client.WPF {
                 availableCourses = await AutoServicio?.FetchAvailableCoursesAsync();
             }
             catch(NotLoggedInException) {
-                if (StateService.IsLoggedIn)
+                if (StatePersistanceService.IsLoggedIn)
                 {
-                    var matricula = StateService.CurrentSession.ID;
-                    var nip = StateService.CurrentSession.NIP;
+                    var matricula = StatePersistanceService.CurrentSession.ID;
+                    var nip = StatePersistanceService.CurrentSession.NIP;
 
                     if (await AutoServicio.LoginAsync(matricula, nip))
                         return await AvailableCoursesAsync();
                 }
-                StateService.IsLoggedIn = false;
+                StatePersistanceService.IsLoggedIn = false;
                 throw new NotLoggedInException();
             }
             return availableCourses;
@@ -127,16 +127,16 @@ namespace Client.WPF {
         {
             try { schedule = await AutoServicio?.FetchScheduleDetailAsync(); }
             catch (NotLoggedInException) { await ReLoginThen(CacheScheduleAsync); return;  }
-            var updatedSession = StateService.CurrentSession;
+            var updatedSession = StatePersistanceService.CurrentSession;
             updatedSession.Schedule = schedule;
-            StateService.CurrentSession = updatedSession;
+            StatePersistanceService.CurrentSession = updatedSession;
         }
         private static async Task CacheReportAsync()
         {
             try { report = await AutoServicio?.FetchAcademicReportAsync(); }
             catch (NotLoggedInException) { await ReLoginThen(CacheReportAsync); return; }
             report.Periods.Reverse();
-            var updatedSession = StateService.CurrentSession;
+            var updatedSession = StatePersistanceService.CurrentSession;
             var repModel = new List<Models.AcademicPeriodModel>();
             foreach (var period in report.Periods)
                 repModel.Add(
@@ -147,38 +147,38 @@ namespace Client.WPF {
                     }
                 );
             updatedSession.Report = repModel;
-            StateService.CurrentSession = updatedSession;
+            StatePersistanceService.CurrentSession = updatedSession;
         }
         private static async Task CacheProjectionAsync()
         {
             try { projection = await AutoServicio?.FetchCourseProjectionAsync(); }
             catch(NotLoggedInException) { await ReLoginThen(CacheProjectionAsync); return; }
-            var updatedSession = StateService.CurrentSession;
+            var updatedSession = StatePersistanceService.CurrentSession;
             updatedSession.Projection = projection;
-            StateService.CurrentSession = updatedSession;
+            StatePersistanceService.CurrentSession = updatedSession;
         }
         private static async Task CacheCareerInformationAsync()
         {
             try { information = await AutoServicio?.FetchCareerInformationAsync(); }
             catch(NotLoggedInException) { await ReLoginThen(CacheCareerInformationAsync); return; }
-            var updatedSession = StateService.CurrentSession;
+            var updatedSession = StatePersistanceService.CurrentSession;
             updatedSession.Information = information;
-            StateService.CurrentSession = updatedSession;
+            StatePersistanceService.CurrentSession = updatedSession;
         }
 
         public static async Task ReLoginThen(Func<Task> callback)
         {
-            if (StateService.IsLoggedIn)
+            if (StatePersistanceService.IsLoggedIn)
             {
-                var matricula = StateService.CurrentSession.ID;
-                var nip = StateService.CurrentSession.NIP;
+                var matricula = StatePersistanceService.CurrentSession.ID;
+                var nip = StatePersistanceService.CurrentSession.NIP;
 
                 if (await AutoServicio.LoginAsync(matricula, nip)) {
                     await callback();
                     return;
                 }
             }
-            StateService.IsLoggedIn = false;
+            StatePersistanceService.IsLoggedIn = false;
             throw new NotLoggedInException();
         }
     }

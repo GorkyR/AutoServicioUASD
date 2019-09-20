@@ -23,9 +23,9 @@ namespace Client.WPF
         public LoginWindow()
         {
             InitializeComponent();
-            if (!string.IsNullOrWhiteSpace(StateService.LastIDUsed))
-                Console.WriteLine($"[i] Last used ID: {StateService.LastIDUsed}");
-            TBMatricula.Text = StateService.LastIDUsed;
+            if (!string.IsNullOrWhiteSpace(StatePersistanceService.LastIDUsed))
+                Console.WriteLine($"[i] Last used ID: {StatePersistanceService.LastIDUsed}");
+            TBMatricula.Text = StatePersistanceService.LastIDUsed;
         }
 
         private void ShowError(string message)
@@ -60,16 +60,16 @@ namespace Client.WPF
 
             try {
                 ShowProgressBar();
-                await ClientService.AutoServicio.LoginAsync(matricula, nip);
+                await ClientStateService.AutoServicio.LoginAsync(matricula, nip);
                 ShowProgressBar(false);
             }
             catch { ShowError("No hay conexión a Internet"); return; }
 
-            if (ClientService.AutoServicio.IsLoggedIn) {
-                StateService.IsLoggedIn = true;
-                StateService.LastIDUsed = matricula;
-                StateService.CurrentSession = new SessionInformation(
-                    ClientService.AutoServicio.Username,
+            if (ClientStateService.AutoServicio.IsLoggedIn) {
+                StatePersistanceService.IsLoggedIn = true;
+                StatePersistanceService.LastIDUsed = matricula;
+                StatePersistanceService.CurrentSession = new SessionInformation(
+                    ClientStateService.AutoServicio.Username,
                     matricula, nip
                 );
                 this.DialogResult = true;

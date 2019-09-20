@@ -3,7 +3,7 @@ using Client.WPF.Models;
 
 namespace Client.WPF
 {
-    public static class StateService
+    public static class StatePersistanceService
     {
         private static object GetGlobal(string key) {
             using (var db = new LiteDatabase(App.DataBaseName))

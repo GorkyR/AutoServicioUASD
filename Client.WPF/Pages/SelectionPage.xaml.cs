@@ -55,7 +55,7 @@ namespace Client.WPF.Pages
         private async void DidLoad(object sender, RoutedEventArgs e)
         {
             Cursor = Cursors.AppStarting;
-            try { Materias = await ClientService.AvailableCoursesAsync(); }
+            try { Materias = await ClientStateService.AvailableCoursesAsync(); }
             catch (NoDataReceivedException) {
                 GSeleccion.Visibility = Visibility.Collapsed;
                 SPUnavailable.Visibility = Visibility.Visible;
@@ -91,7 +91,7 @@ namespace Client.WPF.Pages
             try
             {
                 var nrcMaterias = MateriasSeleccionadas.Select(materia => materia.NRC).ToArray();
-                await ClientService.AutoServicio.RegisterCoursesAsync(nrcMaterias);
+                await ClientStateService.AutoServicio.RegisterCoursesAsync(nrcMaterias);
             } catch (NoSelectionAvailableException) {
                 MessageBox.Show(
                     "No es posible realizar la seleccion en estos momentos",
@@ -105,7 +105,7 @@ namespace Client.WPF.Pages
                     MessageBoxButton.OK,
                     MessageBoxImage.Exclamation);
             } catch (NotLoggedInException) {
-                await ClientService.ReLoginThen(() => new Task(() => this.Registrar(null, null)));
+                await ClientStateService.ReLoginThen(() => new Task(() => this.Registrar(null, null)));
                 return;
             }
         }

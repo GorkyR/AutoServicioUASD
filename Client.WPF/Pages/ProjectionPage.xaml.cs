@@ -33,7 +33,7 @@ namespace Client.WPF.Pages
         private async void DidLoad(object sender, RoutedEventArgs e)
         {
             Cursor = Cursors.AppStarting;
-            try { Proyeccion = await ClientService.ProjectionAsync(); }
+            try { Proyeccion = await ClientStateService.ProjectionAsync(); }
             catch (NoProyectionAvailableException) {
                 SPUnavailable.Visibility = Visibility.Visible;
             }
@@ -44,7 +44,7 @@ namespace Client.WPF.Pages
         {
             Cursor = Cursors.Wait;
             try {
-                await ClientService.FetchProjectionAsync();
+                await ClientStateService.FetchProjectionAsync();
                 this.DidLoad(null, null);
             }
             catch {

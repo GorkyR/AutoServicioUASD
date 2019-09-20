@@ -30,7 +30,7 @@ namespace Client.WPF.Widgets
         private async void DidLoad(object sender, RoutedEventArgs e)
         {
             Cursor = Cursors.AppStarting;
-            var courses = await ClientService.ScheduleAsync();
+            var courses = await ClientStateService.ScheduleAsync();
 
             var now = DateTime.Now;
             var today = now.DayOfWeek;

@@ -41,11 +41,11 @@ namespace Client.WPF
         async void Init()
         {
             void LogoutAndTryAgain() {
-                ClientService.ResetClientInformation();
+                ClientStateService.ResetClientInformation();
                 Init();
             }
 
-            if (!StateService.IsLoggedIn)
+            if (!StatePersistanceService.IsLoggedIn)
             {
                 var loginWindow = new LoginWindow();
                 if (!(loginWindow.ShowDialog() ?? false))
@@ -54,21 +54,21 @@ namespace Client.WPF
             else
             {
                 try {
-                    await ClientService.AutoServicio.LoginAsync(
-                        StateService.CurrentSession.ID,
-                        StateService.CurrentSession.NIP
+                    await ClientStateService.AutoServicio.LoginAsync(
+                        StatePersistanceService.CurrentSession.ID,
+                        StatePersistanceService.CurrentSession.NIP
                     );
-                    if (!ClientService.AutoServicio.IsLoggedIn)
+                    if (!ClientStateService.AutoServicio.IsLoggedIn)
                     {
                         LogoutAndTryAgain();
                         return;
                     }
-                    Console.WriteLine($"[i] Already logged in. ID: {StateService.CurrentSession.ID}");
+                    Console.WriteLine($"[i] Already logged in. ID: {StatePersistanceService.CurrentSession.ID}");
                 }
                 catch { LogoutAndTryAgain(); return; }
             }
 
-            TopBar.Nombre = ClientService.AutoServicio.Username;
+            TopBar.Nombre = ClientStateService.AutoServicio.Username;
             TopBar.LogoutAction = LogoutAndTryAgain;
             Page.Content = InitPage(Pages[0]);
             NavigationPanel.SelectedIndex = 0;
