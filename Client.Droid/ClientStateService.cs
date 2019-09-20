@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using UASD;
-/*
+
 namespace Client.Droid {
     public static class ClientStateService
     {
@@ -183,4 +183,3 @@ namespace Client.Droid {
         }
     }
 }
-*/

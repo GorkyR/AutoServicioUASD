@@ -10,5 +10,8 @@
   <string name="menu_schedule">Horario</string>
   <string name="menu_reports">Reportes</string>
   <string name="menu_projection">Proyección</string>
+
+  <string name="login_user_placeholder">Matrícula</string>
+  <string name="login_password_placeholder">NIP</string>
   
 </resources>

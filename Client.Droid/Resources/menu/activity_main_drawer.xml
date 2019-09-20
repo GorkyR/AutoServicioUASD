@@ -22,9 +22,4 @@
         android:icon="@drawable/icon_projection"
         android:title="@string/menu_projection" />
     </group>
-  <group>
-    <item
-      android:id="@+id/action_logout"
-      android:title="@string/action_logout"/>
-  </group>
 </menu>
