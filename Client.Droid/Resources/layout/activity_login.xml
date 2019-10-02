@@ -82,4 +82,14 @@
         android:layout_marginStart="@dimen/login_activity_gutters"
         android:indeterminate="true"/>
 
+    <TextView
+        android:id="@+id/text_about_clickable"
+        android:text="@string/action_about"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"/>
+
 </android.support.constraint.ConstraintLayout>

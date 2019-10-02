@@ -7,6 +7,7 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
+using Android.Text.Method;
 using Android.Views;
 using Android.Widget;
 using Client.Droid.Models;
@@ -27,27 +28,40 @@ namespace Client.Droid
             var userEdit = FindViewById<EditText>(IDs.edit_user);
             var passwordEdit = FindViewById<EditText>(IDs.edit_password);
             var progressSpinner = FindViewById<ProgressBar>(IDs.progress_login);
+            var textAboutClickable = FindViewById<TextView>(IDs.text_about_clickable);
 
             userEdit.Text = StatePersistanceService.LastIDUsed;
 
+            textAboutClickable.Click += (s, e) =>
+            {
+                var aboutDialog = new Dialog(this);
+                aboutDialog.SetContentView(Resource.Layout.about_modal);
+                var textAuthor = aboutDialog.FindViewById<TextView>(Resource.Id.text_author);
+                var textVersion = aboutDialog.FindViewById<TextView>(Resource.Id.text_version);
+
+                textAuthor.MovementMethod = LinkMovementMethod.Instance;
+                string versionName = PackageManager.GetPackageInfo(PackageName, 0).VersionName;
+                textVersion.Text = $"v{versionName}";
+
+                aboutDialog.Show();
+            };
             loginButton.Click += async (s, e) => {
                 string userID = userEdit.Text;
                 string userPassword = passwordEdit.Text;
                 if (string.IsNullOrWhiteSpace(userID)) {
                     userEdit.RequestFocus();
-                    userEdit.Error = "Introduzca su matricula";
+                    userEdit.Error = GetString(Resource.String.login_error_user);
                     return;
                 }
                 else if (string.IsNullOrEmpty(userPassword))
                 {
                     passwordEdit.RequestFocus();
-                    passwordEdit.Error = "Introduzca su NIP";
+                    passwordEdit.Error = GetString(Resource.String.login_error_password);
                     return;
                 }
 
-                var toastGood  = Toast.MakeText(this, "Acceso!"                   , ToastLength.Short);
-                var toastBad   = Toast.MakeText(this, "Matricula o NIP incorrecto", ToastLength.Short);
-                var toastError = Toast.MakeText(this, "Error al intentar accesar" , ToastLength.Long);
+                var toastFail   = Toast.MakeText(this, GetString(Resource.String.login_fail), ToastLength.Short);
+                var toastException = Toast.MakeText(this, GetString(Resource.String.login_exception), ToastLength.Long);
 
                 try
                 {
@@ -58,7 +72,7 @@ namespace Client.Droid
                 catch (Exception error)
                 {
                     progressSpinner.Visibility = ViewStates.Gone;
-                    toastError.Show();
+                    toastException.Show();
                     return;
                 }
 
@@ -69,13 +83,12 @@ namespace Client.Droid
                         AutoServicio.Username,
                         userID, userPassword
                     );
-                    toastGood.Show();
                     SetResult(Result.Ok);
                     Finish();
                 }
                 else
                 {
-                    toastBad.Show();
+                    toastFail.Show();
                 }
             };
         }
