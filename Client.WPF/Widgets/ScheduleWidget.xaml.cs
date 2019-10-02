@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UASD;
+using UASD.Utilities;
 
 namespace Client.WPF.Widgets
 {
@@ -62,24 +63,6 @@ namespace Client.WPF.Widgets
 
             ICAgenda.ItemsSource = agendaDays;
             Cursor = Cursors.Arrow;
-        }
-    }
-
-    internal static class CourseCollectionExtensions
-    {
-        
-        public static List<CourseInstance> FilterByDay(this UASD.CourseCollection courseCollection, DayOfWeek dayOfWeek)
-        {
-            var thatDaysCourses =
-                (from course in courseCollection
-                 select (from instance in course.Schedule
-                         where instance.DayOfWeek == dayOfWeek
-                         select new CourseInstance { Course = course, Class = instance }))
-                .Aggregate((a, b) => a.Concat(b)).ToList();
-            thatDaysCourses.Sort((a, b) =>
-                (a.Class.StartTime - b.Class.StartTime).Hours
-            );
-            return thatDaysCourses;
         }
     }
 }

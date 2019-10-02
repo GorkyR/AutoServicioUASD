@@ -30,7 +30,7 @@ namespace UASD
         }
     }
 
-    public class CourseInstance
+    public class CourseClassInstance
     {
         public Course Course     { get; set; }
         public CourseClass Class { get; set; }
