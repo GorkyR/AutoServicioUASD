@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using static Client.WPF.StateService;
+using static Client.WPF.StatePersistanceService;
 
 namespace Client.WPF
 {

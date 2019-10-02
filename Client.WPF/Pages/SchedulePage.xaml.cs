@@ -72,7 +72,7 @@ namespace Client.WPF.Pages
         private async void DidLoad(object sender, RoutedEventArgs e)
         {
             Cursor = Cursors.AppStarting;
-            var courses = await ClientService.ScheduleAsync();
+            var courses = await ClientStateService.ScheduleAsync();
             Materias = new ObservableCollection<Course>(courses);
             Cursor = Cursors.Arrow;
         }
@@ -80,7 +80,7 @@ namespace Client.WPF.Pages
         public async void Refresh()
         {
             Cursor = Cursors.Wait;
-            await ClientService.FetchScheduleAsync();
+            await ClientStateService.FetchScheduleAsync();
             this.DidLoad(null, null);
         }
     }

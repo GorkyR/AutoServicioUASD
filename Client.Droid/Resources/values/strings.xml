@@ -1,0 +1,27 @@
+<resources>
+  <string name="app_name">Autoservicio UASD</string>
+  <string name="navigation_drawer_open">Abrir navegación</string>
+  <string name="navigation_drawer_close">Cerrar navegación</string>
+  <string name="action_about">Acerca de...</string>
+  <string name="action_logout">Logout</string>
+  <string name="action_login">Log In</string>
+
+  <string name="menu_dashboard">Dashboard</string>
+  <string name="menu_schedule">Horario</string>
+  <string name="menu_reports">Reportes</string>
+  <string name="menu_projection">Proyección</string>
+
+  <string name="login_user_placeholder">Matrícula</string>
+  <string name="login_password_placeholder">NIP</string>
+  <string name="login_error_user">Introduzca su matricula</string>
+  <string name="login_error_password">Introduzca su NIP</string>
+  <string name="login_fail">Matricula o NIP incorrecto</string>
+  <string name="login_exception">Error al intentar accesar</string>
+
+  <string name="unavailable_projection">Su proyección no se encuentra disponible en estos momentos.</string>
+
+  <string name="about_author">
+    by <a href="https://github.com/GorkyR">Gorky Rojas</a>
+  </string>
+  
+</resources>

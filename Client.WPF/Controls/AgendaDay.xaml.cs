@@ -30,18 +30,18 @@ namespace Client.WPF.Controls
         public static readonly DependencyProperty DayOfWeekProperty = DependencyProperty.Register(
             "DayOfWeek", typeof(DayOfWeek), typeof(AgendaDay), new PropertyMetadata());
 
-        public IEnumerable<CourseInstance> Items {
-            get => (IEnumerable<CourseInstance>)this.GetValue(ItemProperty);
+        public IEnumerable<CourseClassInstance> Items {
+            get => (IEnumerable<CourseClassInstance>)this.GetValue(ItemProperty);
             set => this.SetValue(ItemProperty, value);
         }
         public static readonly DependencyProperty ItemProperty = DependencyProperty.Register(
-            "Items", typeof(IEnumerable<CourseInstance>), typeof(AgendaDay), new PropertyMetadata(null,
+            "Items", typeof(IEnumerable<CourseClassInstance>), typeof(AgendaDay), new PropertyMetadata(null,
                 (obj, args) => {
                     var agendaDay = obj as AgendaDay;
                     agendaDay.TBEmpty.Visibility = Visibility.Collapsed;
                     agendaDay.ICClasses.Visibility = Visibility.Collapsed;
 
-                    var newValueIsEmpty = (args.NewValue as IEnumerable<CourseInstance>).Count() == 0;
+                    var newValueIsEmpty = (args.NewValue as IEnumerable<CourseClassInstance>).Count() == 0;
                     if (newValueIsEmpty)
                         agendaDay.TBEmpty.Visibility = Visibility.Visible;
                     else
@@ -101,7 +101,7 @@ namespace Client.WPF.Controls
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var agendaItem = (CourseInstance)value;
+            var agendaItem = (CourseClassInstance)value;
             return UASD.CourseClass.GetInfoString(agendaItem.Course, agendaItem.Class);
         }
 

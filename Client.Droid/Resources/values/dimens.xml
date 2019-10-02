@@ -1,0 +1,29 @@
+<resources>
+  <!-- Default screen margins, per the Android Design guidelines. -->
+  <dimen name="activity_horizontal_margin">16dp</dimen>
+  <dimen name="activity_vertical_margin">16dp</dimen>
+  <dimen name="nav_header_vertical_spacing">8dp</dimen>
+  <dimen name="nav_header_height">192dp</dimen>
+  <dimen name="fab_margin">16dp</dimen>
+  
+  <dimen name="logo_height">192dp</dimen>
+  <dimen name="login_icon_size">24dp</dimen>
+
+  <dimen name="login_activity_vertical_margin">64dp</dimen>
+  <dimen name="login_activity_horizontal_margin">96dp</dimen>
+  <dimen name="login_activity_gutters">16dp</dimen>
+  
+  <dimen name="agenda_gutters">16dp</dimen>
+  
+  <dimen name="period_gutters">16dp</dimen>
+  <dimen name="grade_gutter">8dp</dimen>
+  <dimen name="grade_left_margin">32dp</dimen>
+  <dimen name="grade_title_separation">2dp</dimen>
+  <dimen name="grade_credits_margin">96dp</dimen>
+  <dimen name="grade_status_image_width">34dp</dimen>
+
+  <dimen name="projection_item_margin">8dp</dimen>
+  <dimen name="projection_unavailable_icon_size">128dp</dimen>
+
+  <dimen name="about_padding">16dp</dimen>
+</resources>

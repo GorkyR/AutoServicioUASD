@@ -85,7 +85,7 @@
     <Compile Include="Models\Global.cs" />
     <Compile Include="Models\SessionInformation.cs" />
     <Compile Include="Pages\Page.cs" />
-    <Compile Include="StateService.cs" />
+    <Compile Include="StatePersistanceService.cs" />
     <Compile Include="Widgets\InformationWidget.xaml.cs">
       <DependentUpon>InformationWidget.xaml</DependentUpon>
     </Compile>
@@ -162,7 +162,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ClientService.cs" />
+    <Compile Include="ClientStateService.cs" />
     <Compile Include="Controls\ProjectionCourseItem.xaml.cs">
       <DependentUpon>ProjectionCourseItem.xaml</DependentUpon>
     </Compile>

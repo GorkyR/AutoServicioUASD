@@ -75,5 +75,19 @@ namespace UASD.Utilities
 
         public static string[] Split(this string self, string delimiter) =>
             self.Split(new[] { delimiter }, StringSplitOptions.RemoveEmptyEntries);
+
+        public static List<CourseClassInstance> FilterByDay(this UASD.CourseCollection courseCollection, DayOfWeek dayOfWeek)
+        {
+            var thatDaysCourses =
+                (from course in courseCollection
+                 select (from instance in course.Schedule
+                         where instance.DayOfWeek == dayOfWeek
+                         select new CourseClassInstance { Course = course, Class = instance }))
+                .Aggregate((a, b) => a.Concat(b)).ToList();
+            thatDaysCourses.Sort((a, b) =>
+                (a.Class.StartTime - b.Class.StartTime).Hours
+            );
+            return thatDaysCourses;
+        }
     }
 }

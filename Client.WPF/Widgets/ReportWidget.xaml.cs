@@ -36,7 +36,7 @@ namespace Client.WPF.Widgets
         private async void DidLoad(object sender, RoutedEventArgs e)
         {
             Cursor = Cursors.AppStarting;
-            var reporte = await ClientService.ReportAsync();
+            var reporte = await ClientStateService.ReportAsync();
             Periodo = reporte.Periods.First();
             Cursor = Cursors.Arrow;
         }
