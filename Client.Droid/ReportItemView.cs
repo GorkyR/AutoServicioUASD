@@ -6,11 +6,11 @@ using UASD;
 
 namespace Client.Droid
 {
-    class ReportItem : ConstraintLayout
+    class ReportItemView : ConstraintLayout
     {
-        public ReportItem(Context context, CourseGrade courseGrade) : base(context)
+        public ReportItemView(Context context, CourseGrade courseGrade) : base(context)
         {
-            Inflate(context, Resource.Layout.report_item, this);
+            Inflate(context, Resource.Layout.view_item_report, this);
             SetPadding(0, 0, 0, Resources.GetDimensionPixelOffset(Resource.Dimension.grade_gutter));
             var textTitle    = FindViewById<TextView>(Resource.Id.text_course_title);
             var textCode     = FindViewById<TextView>(Resource.Id.text_course_code);

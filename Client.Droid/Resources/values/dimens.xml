@@ -13,6 +13,10 @@
   <dimen name="login_activity_horizontal_margin">96dp</dimen>
   <dimen name="login_activity_gutters">16dp</dimen>
   
+  <dimen name="activity_margins">16dp</dimen>
+  
+  <dimen name="dashboard_gutters">24dp</dimen>
+
   <dimen name="agenda_gutters">16dp</dimen>
   
   <dimen name="period_gutters">16dp</dimen>

@@ -5,11 +5,13 @@ using Convert = UASD.Utilities.Convert;
 
 namespace Client.Droid
 {
-    public class ScheduleItem : LinearLayout
+    public class AgendaItemView : LinearLayout
     {
-        public ScheduleItem(Context context, CourseClassInstance courseInstance): base(context)
+        public AgendaItemView(Context context, CourseClassInstance courseInstance): base(context)
         {
-            Inflate(context, Resource.Layout.schedule_class_item, this);
+            Orientation = Orientation.Vertical;
+            Inflate(context, Resource.Layout.view_item_agenda, this);
+
             var textHour             = FindViewById<TextView>(Resource.Id.text_hour);
             var textClassTitle       = FindViewById<TextView>(Resource.Id.text_course_title);
             var textInstanceLocation = FindViewById<TextView>(Resource.Id.text_class_location);

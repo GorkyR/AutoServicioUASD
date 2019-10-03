@@ -13,11 +13,11 @@ using UASD;
 
 namespace Client.Droid
 {
-    class Projection : FrameLayout
+    class ProjectionView : FrameLayout
     {
-        public Projection(Context context, CourseCollection projection) : base(context)
+        public ProjectionView(Context context, CourseCollection projection) : base(context)
         {
-            Inflate(context, Resource.Layout.projection, this);
+            Inflate(context, Resource.Layout.view_projection, this);
 
             var layoutUnavailabe = FindViewById<LinearLayout>(Resource.Id.layout_unavailable);
             var layoutProjection = FindViewById<LinearLayout>(Resource.Id.layout_projection_list);
@@ -26,7 +26,7 @@ namespace Client.Droid
                 layoutUnavailabe.Visibility = ViewStates.Visible;
             else 
                 foreach (Course course in projection)
-                    layoutProjection.AddView( new ProjectionItem(context, course) );
+                    layoutProjection.AddView( new ProjectionItemView(context, course) );
         }
     }
 }

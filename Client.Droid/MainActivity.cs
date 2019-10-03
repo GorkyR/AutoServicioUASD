@@ -18,6 +18,7 @@ using Convert = UASD.Utilities.Convert;
 using System.Threading.Tasks;
 using Android.Support.V7.View.Menu;
 using Android.Text.Method;
+using System.Linq;
 
 namespace Client.Droid
 {
@@ -54,6 +55,7 @@ namespace Client.Droid
             NavigationView navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
             navigationView.SetNavigationItemSelectedListener(this);
             navigationView.SetCheckedItem(Resource.Id.nav_dashboard);
+            OnNavigationItemSelected(navigationView.Menu.FindItem(Resource.Id.nav_dashboard));
 
             var textUsername = navigationView.GetHeaderView(0).FindViewById<TextView>(Resource.Id.text_username);
             textUsername.Text = CurrentSession.Username;
@@ -143,7 +145,7 @@ namespace Client.Droid
             if (id == Resource.Id.action_about)
             {
                 var aboutDialog = new Dialog(this);
-                aboutDialog.SetContentView(Resource.Layout.about_modal);
+                aboutDialog.SetContentView(Resource.Layout.modal_about);
                 var textAuthor = aboutDialog.FindViewById<TextView>(Resource.Id.text_author);
                 var textVersion = aboutDialog.FindViewById<TextView>(Resource.Id.text_version);
 
@@ -171,7 +173,7 @@ namespace Client.Droid
 
             if (id == Resource.Id.nav_dashboard)
             {
-                Toast.MakeText(this, "Dashboard!", ToastLength.Short).Show();
+                SetupDashboard();
             }
             else if (id == Resource.Id.nav_schedule)
             {
@@ -189,6 +191,55 @@ namespace Client.Droid
             return true;
         }
 
+        async void SetupDashboard()
+        {
+            MainContent.RemoveAllViews();
+            var information = await ClientStateService.CareerInformationAsync();
+            var schedule = await ClientStateService.ScheduleAsync();
+            var report = await ClientStateService.ReportAsync();
+
+            // Today's agenda
+            {
+                var now = DateTime.Now;
+                var today = now.DayOfWeek;
+                var timeOfDay = now.TimeOfDay;
+                string title = "Hoy";
+
+                if (today == DayOfWeek.Sunday)
+                {
+                    today = DayOfWeek.Monday;
+                    timeOfDay = new TimeSpan();
+                    title = "Mañana";
+                }
+
+                var todaysCourses = schedule.FilterByDay(today);
+                var upcomingClasses = todaysCourses.SkipWhile(courseInstance =>
+                    Math.Ceiling(courseInstance.Class.EndTime.TotalHours) <= timeOfDay.Hours
+                );
+                var agendaDayView = new AgendaDayView(this, title, upcomingClasses);
+                agendaDayView.SetPadding(0, 0, 0, Resources.GetDimensionPixelOffset(Resource.Dimension.dashboard_gutters));
+                MainContent.AddView(agendaDayView);
+            }
+            // Carreer information
+            {
+                var informationView = new InformationView(this, information, report.GlobalIndex);
+                informationView.SetPadding(0, 0, 0, Resources.GetDimensionPixelOffset(Resource.Dimension.dashboard_gutters));
+                MainContent.AddView(informationView);
+            }
+            // Current period's report
+            {
+                var reportPeriodView = new ReportPeriodView(this, report.Periods.First());
+                var activePeriodLayout = new LinearLayout(this) { Orientation = Orientation.Vertical };
+                var titleText = new TextView(activePeriodLayout.Context) { Text = "Período Activo" } ;
+                titleText.SetTextAppearance(Resource.Style.TextAppearance_AppCompat_Large);
+                titleText.SetTextColor(Resources.GetColor(Resource.Color.material_grey_600));
+                titleText.Typeface = Android.Graphics.Typeface.DefaultBold;
+                activePeriodLayout.AddView( titleText );
+                activePeriodLayout.AddView( reportPeriodView );
+                MainContent.AddView(activePeriodLayout);
+            }
+        }
+
         async void SetupSchedule()
         {
             MainContent.RemoveAllViews();
@@ -196,7 +247,8 @@ namespace Client.Droid
             foreach (DayOfWeek day in Convert.Days.Values)
             {
                 var coursesInDay = schedule.FilterByDay(day);
-                MainContent.AddView(new ScheduleDay(this, day, coursesInDay));
+                var title = Convert.Day(day);
+                MainContent.AddView(new AgendaDayView(this, title, coursesInDay));
             }
         }
 
@@ -205,14 +257,14 @@ namespace Client.Droid
             MainContent.RemoveAllViews();
             var report = await ClientStateService.ReportAsync();
             foreach (AcademicPeriod academicPeriod in report.Periods)
-                MainContent.AddView( new ReportPeriod(this, academicPeriod) );
+                MainContent.AddView( new ReportPeriodView(this, academicPeriod) );
         }
 
         async void SetupProjection()
         {
             MainContent.RemoveAllViews();
             var projection = await ClientStateService.ProjectionAsync();
-            MainContent.AddView( new Projection(this, projection) );
+            MainContent.AddView( new ProjectionView(this, projection) );
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

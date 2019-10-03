@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/text0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Información"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textStyle="bold"
+        android:textColor="@color/material_grey_600"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+    />
+
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Carrera:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text0" />
+
+    <TextView
+        android:id="@+id/text_carreer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="Licenciatura en Informática"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toBottomOf="@id/text1"
+        app:layout_constraintStart_toEndOf="@id/text1" />
+
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Índice Académico:"
+        app:layout_constraintStart_toStartOf="@id/text1"
+        app:layout_constraintTop_toBottomOf="@id/text1" />
+
+    <TextView
+        android:id="@+id/text_index"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="90.1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/text2"
+        app:layout_constraintStart_toEndOf="@+id/text2" />
+
+    <TextView
+        android:id="@+id/text3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Créditos:"
+        app:layout_constraintStart_toStartOf="@id/text2"
+        app:layout_constraintTop_toBottomOf="@id/text2" />
+
+    <TextView
+        android:id="@+id/text_credits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="150/150"
+        app:layout_constraintBottom_toBottomOf="@id/text3"
+        app:layout_constraintStart_toEndOf="@id/text3" />
+
+    <TextView
+        android:id="@+id/text4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Materias:"
+        app:layout_constraintStart_toStartOf="@id/text3"
+        app:layout_constraintTop_toBottomOf="@id/text3" />
+
+    <TextView
+        android:id="@+id/text_courses"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="50/50"
+        app:layout_constraintBottom_toBottomOf="@+id/text4"
+        app:layout_constraintEnd_toEndOf="@+id/text_credits"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/text4" />
+
+    <ProgressBar
+        android:id="@+id/progress_credits"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_credits"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/text_credits_percent"
+        app:layout_constraintTop_toTopOf="@+id/text_credits" />
+
+    <ProgressBar
+        android:id="@+id/progress_courses"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/text_courses"
+        app:layout_constraintEnd_toEndOf="@+id/progress_credits"
+        app:layout_constraintStart_toStartOf="@+id/progress_credits"
+        app:layout_constraintTop_toTopOf="@+id/text_courses" />
+
+    <TextView
+        android:id="@+id/text_credits_percent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="(100%)"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_credits"
+        app:layout_constraintStart_toEndOf="@+id/text_credits"
+        app:layout_constraintTop_toTopOf="@+id/text_credits" />
+
+    <TextView
+        android:id="@+id/text_courses_percent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(100%)"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_courses"
+        app:layout_constraintEnd_toEndOf="@+id/text_credits_percent"
+        app:layout_constraintTop_toTopOf="@+id/text_courses" />
+
+
+</merge>

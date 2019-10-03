@@ -6,11 +6,11 @@ using UASD;
 
 namespace Client.Droid
 {
-    class ReportPeriod : ConstraintLayout
+    class ReportPeriodView : ConstraintLayout
     {
-        public ReportPeriod(Context context, AcademicPeriod academicPeriod) : base(context)
+        public ReportPeriodView(Context context, AcademicPeriod academicPeriod) : base(context)
         {
-            Inflate(context, Resource.Layout.report_period, this);
+            Inflate(context, Resource.Layout.view_item_report_period, this);
             SetPadding(0, 0, 0, Resources.GetDimensionPixelOffset(Resource.Dimension.period_gutters));
 
             var textPeriodName = FindViewById<TextView>(Resource.Id.text_period_name);
@@ -24,7 +24,7 @@ namespace Client.Droid
             else
                 imageDone.Visibility    = ViewStates.Visible;
             foreach(CourseGrade courseGrade in academicPeriod.Courses)
-                layoutGrades.AddView( new ReportItem(context, courseGrade) );
+                layoutGrades.AddView( new ReportItemView(context, courseGrade) );
         }
     }
 }
