@@ -35,7 +35,7 @@ namespace Client.Droid
             textAboutClickable.Click += (s, e) =>
             {
                 var aboutDialog = new Dialog(this);
-                aboutDialog.SetContentView(Resource.Layout.about_modal);
+                aboutDialog.SetContentView(Resource.Layout.modal_about);
                 var textAuthor = aboutDialog.FindViewById<TextView>(Resource.Id.text_author);
                 var textVersion = aboutDialog.FindViewById<TextView>(Resource.Id.text_version);
 

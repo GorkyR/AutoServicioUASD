@@ -6,11 +6,11 @@ using UASD;
 
 namespace Client.Droid
 {
-    class ProjectionItem : ConstraintLayout
+    class ProjectionItemView : ConstraintLayout
     {
-        public ProjectionItem(Context context, Course course) : base(context)
+        public ProjectionItemView(Context context, Course course) : base(context)
         {
-            Inflate(context, Resource.Layout.projection_item, this);
+            Inflate(context, Resource.Layout.view_item_projection, this);
             SetPadding(0, 0, 0, Resources.GetDimensionPixelOffset(Resource.Dimension.projection_item_margin));
 
             var textTitle   = FindViewById<TextView>(Resource.Id.text_course_title);

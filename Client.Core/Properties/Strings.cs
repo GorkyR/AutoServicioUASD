@@ -12,7 +12,7 @@
         public const string BuscarClasesSelection2Url   = "http://www.autoservicio.uasd.edu.do/PROD/bwckgens.p_proc_term_date";
         public const string BuscarClasesUrl             = "http://www.autoservicio.uasd.edu.do/PROD/bwskfcls.P_GetCrse";
         public const string EvaluacionSelectionUrl      = "http://www.autoservicio.uasd.edu.do/PROD/bwckcapp.P_DispCurrent";
-        public const string KardexUrl                   = "http://www.autoservicio.uasd.edu.do/PROD/bwskotrn.P_ViewTran";
+        public const string KardexUrl                   = "http://www.autoservicio.uasd.edu.do/PROD/bwskotrn.P_ViewTran"; // ?levl=&tprt=INTL
         public const string RegistroSeleccionUrl        = "http://www.autoservicio.uasd.edu.do/PROD/bwskfreg.P_AltPin";
         public const string RegistroUrl                 = "http://www.autoservicio.uasd.edu.do/PROD/bwckcoms.P_Regs";
 
