@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/text_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_span="2"
+        android:text="Título de la Materia"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    <TextView
+        android:id="@+id/text_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_span="2"
+        android:text="TST 1001 - 99"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#000" />
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:id="@+id/row_location">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:text="Aula:" />
+
+            <TextView
+                android:id="@+id/text_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lugar del Edificio (LOC) 101" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/row_hour">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:text="Hora:"/>
+            <TextView
+                android:id="@+id/text_hour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12:00 am – 12:00 pm (12 horas)"/>
+        </TableRow>
+
+        <TableRow>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="14sp"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:text="Prof.:" />
+
+            <TextView
+                android:id="@+id/text_professor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Profesor de la Materia" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:text="Créditos:" />
+
+            <TextView
+                android:id="@+id/text_credits"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5 créditos:" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:text="NRC:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"/>
+            <TextView
+                android:id="@+id/text_id"
+                android:text="123456"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </TableRow>
+    </TableLayout>
+</LinearLayout>

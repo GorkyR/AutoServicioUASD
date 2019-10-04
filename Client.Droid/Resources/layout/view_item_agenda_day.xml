@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge
+<merge 
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/text_day"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Day"
+        android:text="Día"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textStyle="bold"
         android:textColor="@color/material_grey_600"
@@ -15,7 +17,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginLeft="8dp">
 
         <TextView
@@ -23,12 +25,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nada"
-            android:visibility="invisible" />
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/layout_class_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"/>
 
     </FrameLayout>

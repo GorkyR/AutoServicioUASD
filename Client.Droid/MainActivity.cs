@@ -175,9 +175,9 @@ namespace Client.Droid
             {
                 SetupDashboard();
             }
-            else if (id == Resource.Id.nav_schedule)
+            else if (id == Resource.Id.nav_agenda)
             {
-                SetupSchedule();
+                SetupAgenda();
             }
             else if (id == Resource.Id.nav_reports)
             {
@@ -240,16 +240,60 @@ namespace Client.Droid
             }
         }
 
-        async void SetupSchedule()
+        async void SetupAgenda()
         {
             MainContent.RemoveAllViews();
             var schedule = await ClientStateService.ScheduleAsync();
+
+            var agendaLayout = new LinearLayout(this) { Orientation = Orientation.Vertical };
+            agendaLayout.SetDividerDrawable(Resources.GetDrawable(Resource.Drawable.divider));
+            agendaLayout.ShowDividers = ShowDividers.Middle;
+
+            var inPersonLayout = new LinearLayout(this) { Orientation = Orientation.Vertical };
             foreach (DayOfWeek day in Convert.Days.Values)
             {
                 var coursesInDay = schedule.FilterByDay(day);
                 var title = Convert.Day(day);
-                MainContent.AddView(new AgendaDayView(this, title, coursesInDay));
+                inPersonLayout.AddView(new AgendaDayView(this, title, coursesInDay));
             }
+            agendaLayout.AddView(inPersonLayout);
+
+            var virtualCourses = schedule.Where(c => c.Schedule.Count == 0);
+            if (virtualCourses.Count() > 0)
+            {
+                var virtualLayout = new LinearLayout(this) { Orientation = Orientation.Vertical };
+                foreach (var course in virtualCourses)
+                {
+                    var itemLayout = new FrameLayout(this);
+                    var item = LayoutInflater.Inflate(Resource.Layout.view_class_card, itemLayout, true);
+
+                    item.FindViewById<TextView>(Resource.Id.text_title).Text = course.Title;
+                    item.FindViewById<TextView>(Resource.Id.text_info).Text = $"{course.Code} - {course.Section}";
+                    item.FindViewById<TextView>(Resource.Id.text_location).Visibility = ViewStates.Gone;
+
+                    item.Click += (s, e) =>
+                    {
+                        var classModal = new Dialog(this);
+                        classModal.SetContentView(Resource.Layout.modal_class_information);
+
+                        classModal.FindViewById<TextView>(Resource.Id.text_title).Text = course.Title;
+                        classModal.FindViewById<TextView>(Resource.Id.text_info).Text = $"{course.Code} - {course.Section}";
+                        classModal.FindViewById<TextView>(Resource.Id.text_professor).Text = course.Professor;
+                        classModal.FindViewById<TextView>(Resource.Id.text_credits).Text = $"{course.Credits} crédito{(course.Credits == 1 ? "" : "s")}";
+                        classModal.FindViewById<TextView>(Resource.Id.text_id).Text = $"{course.NRC}";
+
+                        classModal.FindViewById<TableRow>(Resource.Id.row_location).Visibility = ViewStates.Gone;
+                        classModal.FindViewById<TableRow>(Resource.Id.row_hour).Visibility = ViewStates.Gone;
+
+                        classModal.Show();
+                    };
+
+                    virtualLayout.AddView(item);
+                }
+                agendaLayout.AddView(virtualLayout);
+            }
+
+            MainContent.AddView(agendaLayout);
         }
 
         async void SetupReports()

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/no_disponible" android:width="@dimen/projection_unavailable_icon_size" android:height="@dimen/projection_unavailable_icon_size"/>
+</layer-list>
