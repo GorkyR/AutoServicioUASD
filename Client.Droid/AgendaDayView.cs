@@ -14,8 +14,8 @@ namespace Client.Droid
             Inflate(context, Resource.Layout.view_item_agenda_day, this);
             SetPadding(0, 0, 0, Resources.GetDimensionPixelOffset(Resource.Dimension.agenda_gutters));
 
-            var textDay = FindViewById<TextView>(Resource.Id.text_day);
-            var textNothing = FindViewById<TextView>(Resource.Id.text_nothing);
+            var textDay         = FindViewById<TextView>(Resource.Id.text_day);
+            var textNothing     = FindViewById<TextView>(Resource.Id.text_nothing);
             var layoutClassList = FindViewById<LinearLayout>(Resource.Id.layout_class_list);
 
             textDay.Text = title;

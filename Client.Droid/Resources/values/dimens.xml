@@ -9,8 +9,8 @@
   <dimen name="logo_height">192dp</dimen>
   <dimen name="login_icon_size">24dp</dimen>
 
-  <dimen name="login_activity_vertical_margin">64dp</dimen>
-  <dimen name="login_activity_horizontal_margin">96dp</dimen>
+  <dimen name="login_activity_vertical_margin">96dp</dimen>
+  <dimen name="login_activity_horizontal_margin">80dp</dimen>
   <dimen name="login_activity_gutters">16dp</dimen>
   
   <dimen name="activity_margins">16dp</dimen>
@@ -27,7 +27,7 @@
   <dimen name="grade_status_image_width">34dp</dimen>
 
   <dimen name="projection_item_margin">8dp</dimen>
-  <dimen name="projection_unavailable_icon_size">128dp</dimen>
+  <dimen name="projection_unavailable_icon_size">132dp</dimen>
 
   <dimen name="about_padding">16dp</dimen>
 </resources>
