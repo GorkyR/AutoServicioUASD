@@ -307,8 +307,15 @@ namespace Client.Droid
         async void SetupProjection()
         {
             MainContent.RemoveAllViews();
-            var projection = await ClientStateService.ProjectionAsync();
-            MainContent.AddView( new ProjectionView(this, projection) );
+            try
+            {
+                var projection = await ClientStateService.ProjectionAsync();
+                MainContent.AddView(new ProjectionView(this, projection));
+            }
+            catch (NoProyectionAvailableException)
+            {
+                MainContent.AddView(new ProjectionView(this, new CourseCollection()));
+            }
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
