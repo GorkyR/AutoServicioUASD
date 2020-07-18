@@ -8,7 +8,7 @@ namespace Client.Droid
 {
     class ReportItemView : ConstraintLayout
     {
-        public ReportItemView(Context context, CourseGrade courseGrade) : base(context)
+        public ReportItemView(Context context, GradedCourse courseGrade) : base(context)
         {
             Inflate(context, Resource.Layout.view_item_report, this);
             SetPadding(0, 0, 0, Resources.GetDimensionPixelOffset(Resource.Dimension.grade_gutter));
@@ -24,13 +24,13 @@ namespace Client.Droid
             textCredits.Text = $"{courseGrade.Credits} crédito{(courseGrade.Credits == 1? "" : "s")}";
             switch(courseGrade.State)
             {
-                case CourseGrade.CourseState.NotPublished:
+                case GradedCourse.CourseState.NotPublished:
                     imageWaiting.Visibility = ViewStates.Visible;
                     break;
-                case CourseGrade.CourseState.Absent:
+                case GradedCourse.CourseState.Absent:
                     imageAbsent.Visibility = ViewStates.Visible;
                     break;
-                case CourseGrade.CourseState.Published:
+                case GradedCourse.CourseState.Published:
                     textGrade.Text       = $"{courseGrade.Grade}";
                     textGrade.Visibility = ViewStates.Visible;
                     break;

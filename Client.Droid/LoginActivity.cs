@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using Android.App;
-using Android.Content;
 using Android.OS;
-using Android.Runtime;
 using Android.Text.Method;
 using Android.Views;
 using Android.Widget;
@@ -60,27 +55,29 @@ namespace Client.Droid
                     return;
                 }
 
-                var toastFail   = Toast.MakeText(this, GetString(Resource.String.login_fail), ToastLength.Short);
+                var toastFail      = Toast.MakeText(this, GetString(Resource.String.login_fail)     , ToastLength.Short);
                 var toastException = Toast.MakeText(this, GetString(Resource.String.login_exception), ToastLength.Long);
 
                 try
                 {
                     progressSpinner.Visibility = ViewStates.Visible;
-                    await AutoServicio.LoginAsync(userEdit.Text, passwordEdit.Text);
+                    dataSource = fakeUsers.GetValueOrDefault(userID);
+                    if (dataSource == DataSource.Production)
+                        await AutoServicio.LoginAsync(userEdit.Text, passwordEdit.Text);
                     progressSpinner.Visibility = ViewStates.Gone;
                 }
-                catch (Exception error)
+                catch (Exception)
                 {
                     progressSpinner.Visibility = ViewStates.Gone;
                     toastException.Show();
                     return;
                 }
 
-                if (AutoServicio.IsLoggedIn) {
+                if (dataSource != DataSource.Production || AutoServicio.IsLoggedIn) {
                     StatePersistanceService.IsLoggedIn = true;
                     StatePersistanceService.LastIDUsed = userID;
                     StatePersistanceService.CurrentSession = new SessionInformation(
-                        AutoServicio.Username,
+                        dataSource == DataSource.Production ? AutoServicio.Username : "Usuario de Prueba",
                         userID, userPassword
                     );
                     SetResult(Result.Ok);

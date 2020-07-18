@@ -1,6 +1,6 @@
 ﻿namespace UASD
 {
-    public class CourseGrade : Course
+    public class GradedCourse : Course
     {
         public enum CourseState { Published, NotPublished, Absent }
 
