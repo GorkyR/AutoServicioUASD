@@ -7,6 +7,15 @@ using UASD;
 namespace Client.Droid {
     public static class ClientStateService
     {
+        public enum   DataSource { Production, Baked, Random };
+        public static DataSource dataSource = DataSource.Production;
+        public static Dictionary<string, DataSource> fakeUsers = new Dictionary<string, DataSource>() {
+            { "testuser"  , DataSource.Baked },
+            { "randomuser", DataSource.Random }
+        };
+
+        static Random random = new Random();
+
         public static UASD.Client AutoServicio { get; } = new UASD.Client();
 
         static CourseCollection schedule;
@@ -125,7 +134,20 @@ namespace Client.Droid {
 
         private static async Task CacheScheduleAsync()
         {
-            try { schedule = await AutoServicio?.FetchScheduleDetailAsync(); }
+            try {
+                switch(dataSource)
+                {
+                    case DataSource.Production:
+                        schedule = await AutoServicio?.FetchScheduleDetailAsync();
+                        break;
+                    case DataSource.Baked:
+                        schedule = TestEnvironment.TestData.fakePreloadedSchedule;
+                        break;
+                    case DataSource.Random:
+                        schedule = TestEnvironment.TestData.GenerateFakeCourseSchedule(random);
+                        break;
+                }
+            }
             catch (NotLoggedInException) { await ReLoginThen(CacheScheduleAsync); return;  }
             var updatedSession = StatePersistanceService.CurrentSession;
             updatedSession.Schedule = schedule;
@@ -133,7 +155,22 @@ namespace Client.Droid {
         }
         private static async Task CacheReportAsync()
         {
-            try { report = await AutoServicio?.FetchAcademicReportAsync(); }
+            try
+            {
+                switch (dataSource)
+                {
+                    case DataSource.Production:
+                        report = await AutoServicio?.FetchAcademicReportAsync();
+                        break;
+                    case DataSource.Baked:
+                        report = TestEnvironment.TestData.fakePreloadedAcademicReport;
+                        break;
+                    case DataSource.Random:
+                        await FetchScheduleAsync();
+                        report = TestEnvironment.TestData.GenerateFakeAcademicReport(random, schedule);
+                        break;
+                }
+            }
             catch (NotLoggedInException) { await ReLoginThen(CacheReportAsync); return; }
             report.Periods.Reverse();
             var updatedSession = StatePersistanceService.CurrentSession;
@@ -151,7 +188,19 @@ namespace Client.Droid {
         }
         private static async Task CacheProjectionAsync()
         {
-            try { projection = await AutoServicio?.FetchCourseProjectionAsync(); }
+            try {
+                switch(dataSource)
+                {
+                    case DataSource.Production:
+                        projection = await AutoServicio?.FetchCourseProjectionAsync();
+                        break;
+                    case DataSource.Baked:
+                        throw new NoProyectionAvailableException();
+                    case DataSource.Random:
+                        projection = TestEnvironment.TestData.GenerateFakeCourseProjection(random);
+                        break;
+                }
+            }
             catch(NotLoggedInException) { await ReLoginThen(CacheProjectionAsync); return; }
             var updatedSession = StatePersistanceService.CurrentSession;
             updatedSession.Projection = projection;
@@ -159,7 +208,21 @@ namespace Client.Droid {
         }
         private static async Task CacheCareerInformationAsync()
         {
-            try { information = await AutoServicio?.FetchCareerInformationAsync(); }
+            try {
+                switch(dataSource)
+                {
+                    case DataSource.Production:
+                        information = await AutoServicio?.FetchCareerInformationAsync();
+                        break;
+                    case DataSource.Baked:
+                        information = TestEnvironment.TestData.fakePreloadedCareerInformation;
+                        break;
+                    case DataSource.Random:
+                        await FetchReportAsync();
+                        information = TestEnvironment.TestData.GenerateFakeCareerInformation(random, report);
+                        break;
+                }
+            }
             catch(NotLoggedInException) { await ReLoginThen(CacheCareerInformationAsync); return; }
             var updatedSession = StatePersistanceService.CurrentSession;
             updatedSession.Information = information;
@@ -173,7 +236,9 @@ namespace Client.Droid {
                 var matricula = StatePersistanceService.CurrentSession.ID;
                 var nip = StatePersistanceService.CurrentSession.NIP;
 
-                if (await AutoServicio.LoginAsync(matricula, nip)) {
+                dataSource = fakeUsers.GetValueOrDefault(matricula);
+
+                if (dataSource != DataSource.Production || await AutoServicio.LoginAsync(matricula, nip)) {
                     await callback();
                     return;
                 }

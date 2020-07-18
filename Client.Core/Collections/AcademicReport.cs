@@ -11,7 +11,7 @@ namespace UASD
             {
                 var contables = new Dictionary<string, KeyValuePair<int, int>>();
                 foreach (AcademicPeriod periodo in this.Periods.Where(p => !p.IsActive && p.Credits > 0))
-                    foreach (CourseGrade course in periodo.Courses.Where(m => (m as CourseGrade).State == 0))
+                    foreach (GradedCourse course in periodo.Courses.Where(m => (m as GradedCourse).State == 0))
                         if (!contables.ContainsKey(course.Code))
                             contables.Add(course.Code, new KeyValuePair<int, int>(course.Grade, course.Credits));
 
@@ -62,7 +62,7 @@ namespace UASD
         {
             Dictionary<string, KeyValuePair<int, int>> materiasContadas = new Dictionary<string, KeyValuePair<int, int>>();
             foreach (AcademicPeriod periodo in this.Periods.Take(Periods.IndexOf(s) + 1).Where(p => !p.IsActive && p.Credits > 0))
-                foreach (CourseGrade course in periodo.Courses.Where(m => (m as CourseGrade).State == 0))
+                foreach (GradedCourse course in periodo.Courses.Where(m => (m as GradedCourse).State == 0))
                     if (!materiasContadas.ContainsKey(course.Code))
                         materiasContadas.Add(course.Code, new KeyValuePair<int, int>(course.Grade, course.Credits));
 

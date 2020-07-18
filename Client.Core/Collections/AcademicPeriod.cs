@@ -11,7 +11,7 @@ namespace UASD
             get
             {
                 float indice = 0, creditos = 0;
-                foreach (CourseGrade m in this.Courses.Where(m => (m as CourseGrade).State == 0))
+                foreach (GradedCourse m in this.Courses.Where(m => (m as GradedCourse).State == 0))
                 {
                         indice += m.Grade * m.Credits;
                         creditos += m.Credits;
@@ -24,14 +24,14 @@ namespace UASD
             get
             {
                 int creds = 0;
-                foreach (CourseGrade m in this.Courses.Where(m => (m as CourseGrade).State == 0))
+                foreach (GradedCourse m in this.Courses.Where(m => (m as GradedCourse).State == 0))
                         creds += m.Credits;
                 return creds;
             }
         }
         public bool IsActive {
             get =>
-                Courses.Any(c => ((CourseGrade)c).State == CourseGrade.CourseState.NotPublished);
+                Courses.Any(c => ((GradedCourse)c).State == GradedCourse.CourseState.NotPublished);
         }
         public bool IsSummerCourse { get; set; }
         public CourseCollection Courses { get; set; }

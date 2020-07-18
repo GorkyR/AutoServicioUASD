@@ -23,7 +23,7 @@ namespace Client.Droid
                 imageWaiting.Visibility = ViewStates.Visible;
             else
                 imageDone.Visibility    = ViewStates.Visible;
-            foreach(CourseGrade courseGrade in academicPeriod.Courses)
+            foreach(GradedCourse courseGrade in academicPeriod.Courses)
                 layoutGrades.AddView( new ReportItemView(context, courseGrade) );
         }
     }

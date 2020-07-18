@@ -61,7 +61,7 @@ namespace UASD
                             course.Schedule.Add(new CourseClass()
                             {
                                 Place     = rowCells[3],
-                                DayOfWeek   = Convert.Days[day],
+                                DayOfWeek = Convert.Days[day],
                                 StartTime = Convert.Time(hours[0]),
                                 EndTime   = Convert.Time(hours[1]),
                                 StartDate = Convert.Date(boundDates[0]),
@@ -155,7 +155,7 @@ namespace UASD
 							.GetElementsByClass("dddefault")
 							.Select(i => i.InnerText)
 							.ToArray();
-						CourseGrade course = new CourseGrade()
+						GradedCourse course = new GradedCourse()
 						{
 							Code = $"{data[0]} {data[1]}",
 							Title = data[4],
@@ -163,9 +163,9 @@ namespace UASD
 						};
 
 						if (data[5].Trim() == "AUS")
-							course.State = CourseGrade.CourseState.Absent;
+							course.State = GradedCourse.CourseState.Absent;
 						else if (string.IsNullOrWhiteSpace(data[5]))
-							course.State = CourseGrade.CourseState.NotPublished;
+							course.State = GradedCourse.CourseState.NotPublished;
 						else if (data[5].Trim()[0] == 'L')
 						{
 							course.Grade = Convert.Grade(data[5]);
@@ -194,12 +194,12 @@ namespace UASD
 							.GetElementsByClass("dddefault")
 							.Select(i => i.InnerText)
 							.ToArray();
-						periodo.Courses.Add(new CourseGrade()
+						periodo.Courses.Add(new GradedCourse()
 						{
 							Code = data[0] + ' ' + data[1],
 							Title = data[4],
 							Credits = Convert.Credits(data[5]),
-							State = CourseGrade.CourseState.NotPublished
+							State = GradedCourse.CourseState.NotPublished
 						});
 					}
 					if (!historial.Periods.Contains(periodo))
@@ -369,7 +369,7 @@ namespace UASD
 
             foreach (string[] materiaData in tableData)
             {
-                CourseGrade course = new CourseGrade()
+                GradedCourse course = new GradedCourse()
                 {
                     NRC = materiaData[0],
                     Code = materiaData[1] + ' ' + materiaData[2],
@@ -378,9 +378,9 @@ namespace UASD
                     Credits = Convert.Credits(materiaData[7])
                 };
                 if (materiaData[6].Trim() == "AUS")
-                    course.State = CourseGrade.CourseState.Absent;
+                    course.State = GradedCourse.CourseState.Absent;
                 else if (string.IsNullOrWhiteSpace(materiaData[6]))
-                    course.State = CourseGrade.CourseState.NotPublished;
+                    course.State = GradedCourse.CourseState.NotPublished;
                 else
                     course.Grade= Convert.Grade(materiaData[6]);
                 period.Courses.Add(course);

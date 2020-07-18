@@ -81,6 +81,7 @@
     <Compile Include="AgendaDayView.cs" />
     <Compile Include="AgendaItemView.cs" />
     <Compile Include="StatePersistanceService.cs" />
+    <Compile Include="TestEnvironment\TestData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

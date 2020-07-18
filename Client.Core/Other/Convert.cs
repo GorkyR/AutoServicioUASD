@@ -176,11 +176,11 @@ namespace UASD.Utilities
             { 'V', DayOfWeek.Friday    },
             { 'S', DayOfWeek.Saturday  }
         };
-        static public Dictionary<CourseGrade.CourseState, string> CourseStates = new Dictionary<CourseGrade.CourseState, string>
+        static public Dictionary<GradedCourse.CourseState, string> CourseStates = new Dictionary<GradedCourse.CourseState, string>
         {
-            { CourseGrade.CourseState.Absent, "Ausente" },
-            { CourseGrade.CourseState.Published, "Publicada" },
-            { CourseGrade.CourseState.NotPublished, "No publicada" }
+            { GradedCourse.CourseState.Absent, "Ausente" },
+            { GradedCourse.CourseState.Published, "Publicada" },
+            { GradedCourse.CourseState.NotPublished, "No publicada" }
         };
 
         static public string ShortWords(string phrase)

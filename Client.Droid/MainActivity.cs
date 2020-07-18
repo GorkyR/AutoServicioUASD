@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using Android;
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -16,9 +15,9 @@ using UASD;
 using UASD.Utilities;
 using Convert = UASD.Utilities.Convert;
 using System.Threading.Tasks;
-using Android.Support.V7.View.Menu;
 using Android.Text.Method;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Client.Droid
 {
@@ -94,11 +93,16 @@ namespace Client.Droid
             {
                 try
                 {
-                    await ClientStateService.AutoServicio.LoginAsync(
-                        StatePersistanceService.CurrentSession.ID,
-                        StatePersistanceService.CurrentSession.NIP
-                    );
-                    if (!ClientStateService.AutoServicio.IsLoggedIn)
+                    ClientStateService.dataSource = ClientStateService.fakeUsers.GetValueOrDefault(CurrentSession.ID);
+                    if (ClientStateService.dataSource == ClientStateService.DataSource.Production)
+                    {
+                        await ClientStateService.AutoServicio.LoginAsync(
+                            CurrentSession.ID,
+                            CurrentSession.NIP
+                        );
+                    }
+                    if (ClientStateService.dataSource == ClientStateService.DataSource.Production
+                        && !ClientStateService.AutoServicio.IsLoggedIn)
                     {
                         LogoutAndTryAgain();
                         return false;
@@ -165,7 +169,7 @@ namespace Client.Droid
             return base.OnOptionsItemSelected(item);
         }
 
-        public bool OnNavigationItemSelected(IMenuItem item)
+        public bool OnNavigationItemSelected(IMenuItem item) 
         {
             int id = item.ItemId;
 
