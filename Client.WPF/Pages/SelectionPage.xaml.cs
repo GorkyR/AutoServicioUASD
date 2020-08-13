@@ -56,7 +56,7 @@ namespace Client.WPF.Pages
         {
             Cursor = Cursors.AppStarting;
             try { Materias = await ClientStateService.AvailableCoursesAsync(); }
-            catch (NoDataReceivedException) {
+            catch {
                 GSeleccion.Visibility = Visibility.Collapsed;
                 SPUnavailable.Visibility = Visibility.Visible;
             }
