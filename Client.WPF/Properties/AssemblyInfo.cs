@@ -11,8 +11,8 @@ using System.Windows;
 [assembly: AssemblyDescription("Cliente / Interfaz del AutoServicio de la Universidad Autonoma de Santo Domingo")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Gorky Rojas")]
-[assembly: AssemblyProduct("Client.WPF")]
-[assembly: AssemblyCopyright("Copyright ©  2019 Gorky Rojas")]
+[assembly: AssemblyProduct("UASD.Client.Windows")]
+[assembly: AssemblyCopyright("Copyright ©  2020 Gorky Rojas")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -51,6 +51,6 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.9")]
-[assembly: AssemblyFileVersion("0.9.0.0")]
+[assembly: AssemblyVersion("0.10")]
+[assembly: AssemblyFileVersion("0.10.0.0")]
 [assembly: AssemblyInformationalVersion("0.9 Beta")]
