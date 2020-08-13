@@ -191,6 +191,10 @@ namespace Client.Droid
             {
                 SetupProjection();
             }
+            else if (id == Resource.Id.nav_selection)
+            {
+                SetupSelection();
+            }
 
             return true;
         }
@@ -207,13 +211,13 @@ namespace Client.Droid
                 var now = DateTime.Now;
                 var today = now.DayOfWeek;
                 var timeOfDay = now.TimeOfDay;
-                string title = "Hoy";
+                string title = "Próximas clases hoy";
 
                 if (today == DayOfWeek.Sunday)
                 {
                     today = DayOfWeek.Monday;
                     timeOfDay = new TimeSpan();
-                    title = "Mañana";
+                    title = "Clases de mañana";
                 }
 
                 var todaysCourses = schedule.FilterByDay(today);
@@ -319,6 +323,21 @@ namespace Client.Droid
             catch (NoProyectionAvailableException)
             {
                 MainContent.AddView(new ProjectionView(this, new CourseCollection()));
+            }
+        }
+
+        async void SetupSelection()
+        {
+            MainContent.RemoveAllViews();
+            try
+            {
+                var availableCourses = await ClientStateService.AvailableCoursesAsync();
+
+
+            }
+            catch (NoSelectionAvailableException e)
+            {
+                MainContent.AddView(new TextView(this) { Text = e.Message });
             }
         }
 

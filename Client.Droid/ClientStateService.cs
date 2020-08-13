@@ -18,15 +18,15 @@ namespace Client.Droid {
 
         public static UASD.Client AutoServicio { get; } = new UASD.Client();
 
-        static CourseCollection schedule;
-        static AcademicReport report;
-        static CourseCollection projection;
+        static AcademicReport    report;
+        static CourseCollection  schedule;
+        static CourseCollection  projection;
         static CareerInformation information;
 
         public static void ResetClientInformation()
         {
-            schedule    = null;
             report      = null;
+            schedule    = null;
             projection  = null;
             information = null;
             StatePersistanceService.ResetSession();

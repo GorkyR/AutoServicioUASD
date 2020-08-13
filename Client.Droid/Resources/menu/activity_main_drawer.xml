@@ -21,5 +21,9 @@
         android:id="@+id/nav_projection"
         android:icon="@drawable/icon_projection"
         android:title="@string/menu_projection" />
+      <item
+        android:id="@+id/nav_selection"
+        android:icon="@drawable/icon_selection"
+        android:title="@string/menu_selection" />
     </group>
 </menu>
