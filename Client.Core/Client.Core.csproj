@@ -43,7 +43,7 @@
     <Compile Include="CourseClass.cs" />
     <Compile Include="CareerInformation.cs" />
     <Compile Include="Course.cs" />
-    <Compile Include="CourseGrade.cs" />
+    <Compile Include="GradedCourse.cs" />
     <Compile Include="OpenCourse.cs" />
     <Compile Include="Other\Convert.cs" />
     <Compile Include="Other\Exceptions.cs" />

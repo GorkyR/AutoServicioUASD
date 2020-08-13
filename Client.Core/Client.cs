@@ -244,7 +244,8 @@ namespace UASD
 			dataString += $"&sel_camp={campus}";
 			dataString += Strings.BuscarClasesDummyParameters;
 
-			responsePage = await SubmitAsync(Strings.BuscarClasesUrl, dataString);
+			try { responsePage = await SubmitAsync(Strings.BuscarClasesUrl, dataString); }
+			catch (NoDataReceivedException) { throw new NoSelectionAvailableException(); }
 
 			foreach (HtmlNode curso in responsePage.GetElementsByClass("datadisplaytable"))
 			{
