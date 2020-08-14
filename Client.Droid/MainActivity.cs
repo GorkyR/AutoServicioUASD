@@ -18,10 +18,11 @@ using System.Threading.Tasks;
 using Android.Text.Method;
 using System.Linq;
 using System.Collections.Generic;
+using Android.Support.V7.Widget;
 
 namespace Client.Droid
 {
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
+    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true, ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class MainActivity : AppCompatActivity, NavigationView.IOnNavigationItemSelectedListener
     {
         public const string DatabaseName = "ClientState.bin";
@@ -30,6 +31,8 @@ namespace Client.Droid
 
         public LinearLayout MainContent;
         public DrawerLayout Drawer;
+
+        private NavigationView Navigation;
 
         protected override async void OnCreate(Bundle savedInstanceState)
         {
@@ -51,12 +54,12 @@ namespace Client.Droid
             Drawer.AddDrawerListener(toggle);
             toggle.SyncState();
 
-            NavigationView navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
-            navigationView.SetNavigationItemSelectedListener(this);
-            navigationView.SetCheckedItem(Resource.Id.nav_dashboard);
-            OnNavigationItemSelected(navigationView.Menu.FindItem(Resource.Id.nav_dashboard));
+            Navigation = FindViewById<NavigationView>(Resource.Id.nav_view);
+            Navigation.SetNavigationItemSelectedListener(this);
+            Navigation.SetCheckedItem(Resource.Id.nav_dashboard);
+            OnNavigationItemSelected(Navigation.Menu.FindItem(Resource.Id.nav_dashboard));
 
-            var textUsername = navigationView.GetHeaderView(0).FindViewById<TextView>(Resource.Id.text_username);
+            var textUsername = Navigation.GetHeaderView(0).FindViewById<TextView>(Resource.Id.text_username);
             textUsername.Text = CurrentSession.Username;
         }
 
@@ -78,15 +81,9 @@ namespace Client.Droid
                 setupGlobal(nameof(CurrentSession), null);
             }
 
-            void LogoutAndTryAgain()
-            {
-                ClientStateService.ResetClientInformation();
-                Recreate();
-            }
-
             if (!IsLoggedIn)
             {
-                StartActivityForResult(new Intent(this, typeof(LoginActivity)), 2705);
+                StartActivityForResult(new Intent(this, typeof(LoginActivity)), 1);
                 return false;
             }
             else
@@ -191,6 +188,10 @@ namespace Client.Droid
             {
                 SetupProjection();
             }
+            else if (id == Resource.Id.nav_selection)
+            {
+                SetupSelection();
+            }
 
             return true;
         }
@@ -198,114 +199,160 @@ namespace Client.Droid
         async void SetupDashboard()
         {
             MainContent.RemoveAllViews();
-            var information = await ClientStateService.CareerInformationAsync();
-            var schedule = await ClientStateService.ScheduleAsync();
-            var report = await ClientStateService.ReportAsync();
-
-            // Today's agenda
+            try
             {
-                var now = DateTime.Now;
-                var today = now.DayOfWeek;
-                var timeOfDay = now.TimeOfDay;
-                string title = "Hoy";
+                var schedule = await ClientStateService.ScheduleAsync();
+                var report = await ClientStateService.ReportAsync();
 
-                if (today == DayOfWeek.Sunday)
+                CardView makeLinearCard()
                 {
-                    today = DayOfWeek.Monday;
-                    timeOfDay = new TimeSpan();
-                    title = "Mañana";
+                    var card = new CardView(this) { CardElevation = 16 };
+                    var cardLayoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MatchParent, FrameLayout.LayoutParams.MatchParent);
+                    cardLayoutParams.SetMargins(16, 16, 16, Resources.GetDimensionPixelOffset(Resource.Dimension.dashboard_gutters));
+                    card.LayoutParameters = cardLayoutParams;
+                    card.SetContentPadding(16, 16, 16, 16);
+
+                    card.AddView(new LinearLayout(this) { Orientation = Orientation.Vertical });
+                    return card;
                 }
 
-                var todaysCourses = schedule.FilterByDay(today);
-                var upcomingClasses = todaysCourses.SkipWhile(courseInstance =>
-                    Math.Ceiling(courseInstance.Class.EndTime.TotalHours) <= timeOfDay.Hours
-                );
-                var agendaDayView = new AgendaDayView(this, title, upcomingClasses);
-                agendaDayView.SetPadding(0, 0, 0, Resources.GetDimensionPixelOffset(Resource.Dimension.dashboard_gutters));
-                MainContent.AddView(agendaDayView);
+                // Today's agenda
+                {
+                    var now = DateTime.Now;
+                    var today = now.DayOfWeek;
+                    var timeOfDay = now.TimeOfDay;
+                    string title = "Próximas clases hoy";
+
+                    if (today == DayOfWeek.Sunday)
+                    {
+                        today = DayOfWeek.Monday;
+                        timeOfDay = new TimeSpan();
+                        title = "Clases de mañana";
+                    }
+
+                    var todaysCourses = schedule.FilterByDay(today);
+                    var upcomingClasses = todaysCourses.SkipWhile(courseInstance =>
+                        Math.Ceiling(courseInstance.Class.EndTime.TotalHours) <= timeOfDay.Hours
+                    );
+                    var agendaDayView = new AgendaDayView(this, title, upcomingClasses);
+                    //agendaDayView.SetPadding(0, 0, 0, Resources.GetDimensionPixelOffset(Resource.Dimension.dashboard_gutters));
+
+                    var agendaCard = makeLinearCard();
+                    (agendaCard.GetChildAt(0) as LinearLayout).AddView(agendaDayView);
+                    MainContent.AddView(agendaCard);
+                }
+
+                // Current period's report
+                {
+                    var reportPeriodView = new ReportPeriodView(this, report.Periods.First());
+                    var activePeriodLayout = new LinearLayout(this) { Orientation = Orientation.Vertical };
+                    var titleText = new TextView(activePeriodLayout.Context) { Text = "Período Activo" };
+                    titleText.SetTextAppearance(Resource.Style.TextAppearance_AppCompat_Large);
+                    titleText.SetTextColor(Resources.GetColor(Resource.Color.material_grey_600));
+                    titleText.Typeface = Android.Graphics.Typeface.DefaultBold;
+                    activePeriodLayout.AddView(titleText);
+                    activePeriodLayout.AddView(reportPeriodView);
+
+                    var periodCard = makeLinearCard();
+                    (periodCard.GetChildAt(0) as LinearLayout).AddView(activePeriodLayout);
+                    MainContent.AddView(periodCard);
+                }
             }
-            // Carreer information
-            {
-                var informationView = new InformationView(this, information, report.GlobalIndex);
-                informationView.SetPadding(0, 0, 0, Resources.GetDimensionPixelOffset(Resource.Dimension.dashboard_gutters));
-                MainContent.AddView(informationView);
-            }
-            // Current period's report
-            {
-                var reportPeriodView = new ReportPeriodView(this, report.Periods.First());
-                var activePeriodLayout = new LinearLayout(this) { Orientation = Orientation.Vertical };
-                var titleText = new TextView(activePeriodLayout.Context) { Text = "Período Activo" } ;
-                titleText.SetTextAppearance(Resource.Style.TextAppearance_AppCompat_Large);
-                titleText.SetTextColor(Resources.GetColor(Resource.Color.material_grey_600));
-                titleText.Typeface = Android.Graphics.Typeface.DefaultBold;
-                activePeriodLayout.AddView( titleText );
-                activePeriodLayout.AddView( reportPeriodView );
-                MainContent.AddView(activePeriodLayout);
-            }
+            catch (NotLoggedInException) { LogoutAndTryAgain(); }
         }
 
         async void SetupAgenda()
         {
             MainContent.RemoveAllViews();
-            var schedule = await ClientStateService.ScheduleAsync();
-
-            var agendaLayout = new LinearLayout(this) { Orientation = Orientation.Vertical };
-            agendaLayout.SetDividerDrawable(Resources.GetDrawable(Resource.Drawable.divider));
-            agendaLayout.ShowDividers = ShowDividers.Middle;
-
-            var inPersonLayout = new LinearLayout(this) { Orientation = Orientation.Vertical };
-            foreach (DayOfWeek day in Convert.Days.Values)
+            try
             {
-                var coursesInDay = schedule.FilterByDay(day);
-                var title = Convert.Day(day);
-                inPersonLayout.AddView(new AgendaDayView(this, title, coursesInDay));
-            }
-            agendaLayout.AddView(inPersonLayout);
+                var schedule = await ClientStateService.ScheduleAsync();
 
-            var virtualCourses = schedule.Where(c => c.Schedule.Count == 0);
-            if (virtualCourses.Count() > 0)
-            {
-                var virtualLayout = new LinearLayout(this) { Orientation = Orientation.Vertical };
-                foreach (var course in virtualCourses)
+                var agendaLayout = new LinearLayout(this) { Orientation = Orientation.Vertical };
+                agendaLayout.SetDividerDrawable(Resources.GetDrawable(Resource.Drawable.divider));
+                agendaLayout.ShowDividers = ShowDividers.Middle;
+
+                var inPersonLayout = new LinearLayout(this) { Orientation = Orientation.Vertical };
+                foreach (DayOfWeek day in Convert.Days.Values)
                 {
-                    var itemLayout = new FrameLayout(this);
-                    var item = LayoutInflater.Inflate(Resource.Layout.view_class_card, itemLayout, true);
-
-                    item.FindViewById<TextView>(Resource.Id.text_title).Text = course.Title;
-                    item.FindViewById<TextView>(Resource.Id.text_info).Text = $"{course.Code} - {course.Section}";
-                    item.FindViewById<TextView>(Resource.Id.text_location).Visibility = ViewStates.Gone;
-
-                    item.Click += (s, e) =>
-                    {
-                        var classModal = new Dialog(this);
-                        classModal.SetContentView(Resource.Layout.modal_class_information);
-
-                        classModal.FindViewById<TextView>(Resource.Id.text_title).Text = course.Title;
-                        classModal.FindViewById<TextView>(Resource.Id.text_info).Text = $"{course.Code} - {course.Section}";
-                        classModal.FindViewById<TextView>(Resource.Id.text_professor).Text = course.Professor;
-                        classModal.FindViewById<TextView>(Resource.Id.text_credits).Text = $"{course.Credits} crédito{(course.Credits == 1 ? "" : "s")}";
-                        classModal.FindViewById<TextView>(Resource.Id.text_id).Text = $"{course.NRC}";
-
-                        classModal.FindViewById<TableRow>(Resource.Id.row_location).Visibility = ViewStates.Gone;
-                        classModal.FindViewById<TableRow>(Resource.Id.row_hour).Visibility = ViewStates.Gone;
-
-                        classModal.Show();
-                    };
-
-                    virtualLayout.AddView(item);
+                    var coursesInDay = schedule.FilterByDay(day);
+                    var title = Convert.Day(day);
+                    inPersonLayout.AddView(new AgendaDayView(this, title, coursesInDay));
                 }
-                agendaLayout.AddView(virtualLayout);
-            }
+                agendaLayout.AddView(inPersonLayout);
 
-            MainContent.AddView(agendaLayout);
+                var virtualCourses = schedule.Where(c => c.Schedule.Count == 0);
+                if (virtualCourses.Count() > 0)
+                {
+                    var virtualLayout = new LinearLayout(this) { Orientation = Orientation.Vertical };
+                    foreach (var course in virtualCourses)
+                    {
+                        var itemLayout = new FrameLayout(this);
+                        var item = LayoutInflater.Inflate(Resource.Layout.view_class_card, itemLayout, true);
+
+                        item.FindViewById<TextView>(Resource.Id.text_title).Text = course.Title;
+                        item.FindViewById<TextView>(Resource.Id.text_info).Text = $"{course.Code} - {course.Section}";
+                        item.FindViewById<TextView>(Resource.Id.text_location).Visibility = ViewStates.Gone;
+
+                        item.Click += (s, e) =>
+                        {
+                            var classModal = new Dialog(this);
+                            classModal.SetContentView(Resource.Layout.modal_class_information);
+
+                            classModal.FindViewById<TextView>(Resource.Id.text_title).Text = course.Title;
+                            classModal.FindViewById<TextView>(Resource.Id.text_info).Text = $"{course.Code} - {course.Section}";
+                            classModal.FindViewById<TextView>(Resource.Id.text_professor).Text = course.Professor;
+                            classModal.FindViewById<TextView>(Resource.Id.text_credits).Text = $"{course.Credits} crédito{(course.Credits == 1 ? "" : "s")}";
+                            classModal.FindViewById<TextView>(Resource.Id.text_id).Text = $"{course.NRC}";
+
+                            classModal.FindViewById<TableRow>(Resource.Id.row_location).Visibility = ViewStates.Gone;
+                            classModal.FindViewById<TableRow>(Resource.Id.row_hour).Visibility = ViewStates.Gone;
+
+                            classModal.Show();
+                        };
+
+                        virtualLayout.AddView(item);
+                    }
+                    agendaLayout.AddView(virtualLayout);
+                }
+
+                MainContent.AddView(agendaLayout);
+            }
+            catch (NotLoggedInException) { LogoutAndTryAgain(); }
+
         }
 
         async void SetupReports()
         {
             MainContent.RemoveAllViews();
-            var report = await ClientStateService.ReportAsync();
-            foreach (AcademicPeriod academicPeriod in report.Periods)
-                MainContent.AddView( new ReportPeriodView(this, academicPeriod) );
+            try
+            {
+                var report      = await ClientStateService.ReportAsync();
+                var information = await ClientStateService.CareerInformationAsync();
+
+                // Carreer information
+                {
+                    var informationView = new InformationView(this, information, report.GlobalIndex);
+                    informationView.SetPadding(0, 0, 0, Resources.GetDimensionPixelOffset(Resource.Dimension.dashboard_gutters));
+                    MainContent.AddView(informationView);
+                }
+                // Grades
+                {
+                    foreach (AcademicPeriod academicPeriod in report.Periods)
+                    {
+                        var card = new CardView(this) { CardElevation = 16 };
+                        var cardLayoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MatchParent, FrameLayout.LayoutParams.MatchParent);
+                        cardLayoutParams.SetMargins(16, 16, 16, 16);
+                        card.LayoutParameters = cardLayoutParams;
+                        card.SetContentPadding(16, 16, 16, 16);
+
+                        card.AddView(new ReportPeriodView(this, academicPeriod));
+
+                        MainContent.AddView(card);
+                    }
+                }
+            }
+            catch (NotLoggedInException) { LogoutAndTryAgain(); }
         }
 
         async void SetupProjection()
@@ -318,8 +365,27 @@ namespace Client.Droid
             }
             catch (NoProyectionAvailableException)
             {
-                MainContent.AddView(new ProjectionView(this, new CourseCollection()));
+                MainContent.AddView(new ProjectionView(this));
             }
+            catch (NotLoggedInException) { LogoutAndTryAgain(); }
+        }
+
+        async void SetupSelection()
+        {
+            MainContent.RemoveAllViews();
+            try
+            {
+                var availableCourses = await ClientStateService.AvailableCoursesAsync();
+                MainContent.AddView(new SelectionView(this, availableCourses, () => {
+                    Navigation.SetCheckedItem(Resource.Id.nav_dashboard);
+                    OnNavigationItemSelected(Navigation.Menu.FindItem(Resource.Id.nav_dashboard));
+                }));
+            }
+            catch (NoSelectionAvailableException)
+            {
+                MainContent.AddView(new SelectionView(this));
+            }
+            catch (NotLoggedInException) { LogoutAndTryAgain(); }
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
@@ -327,6 +393,13 @@ namespace Client.Droid
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+        private void LogoutAndTryAgain()
+        {
+            Toast.MakeText(this, Resource.String.not_logged_in_message, ToastLength.Long);
+            ClientStateService.ResetClientInformation();
+            Recreate();
         }
     }
 }

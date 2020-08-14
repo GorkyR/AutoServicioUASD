@@ -11,7 +11,7 @@ using IDs = Client.Droid.Resource.Id;
 
 namespace Client.Droid
 {
-    [Activity(Label = "@string/app_name", MainLauncher = false)]
+    [Activity(Label = "@string/app_name", MainLauncher = false, ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class LoginActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -76,8 +76,13 @@ namespace Client.Droid
                 if (dataSource != DataSource.Production || AutoServicio.IsLoggedIn) {
                     StatePersistanceService.IsLoggedIn = true;
                     StatePersistanceService.LastIDUsed = userID;
+                    var dataSourceToUsername = new[] {
+                        AutoServicio.Username,
+                        "Usuario Snapshot",
+                        "Usuario Aleatorio"
+                    };
                     StatePersistanceService.CurrentSession = new SessionInformation(
-                        dataSource == DataSource.Production ? AutoServicio.Username : "Usuario de Prueba",
+                        dataSourceToUsername[(int)dataSource],
                         userID, userPassword
                     );
                     SetResult(Result.Ok);

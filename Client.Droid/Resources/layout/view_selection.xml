@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/text_unavailable"
+        android:layout_width="256dp"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/no_disponible_sized"
+        android:drawablePadding="24dp"
+        android:text="@string/unavailable_selection"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/material_grey_600"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:visibility="invisible"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <LinearLayout
+            android:id="@+id/layout_selected_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+        <LinearLayout
+            android:id="@+id/layout_available_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+    </LinearLayout>
+
+</merge>

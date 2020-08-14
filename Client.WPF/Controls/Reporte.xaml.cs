@@ -39,9 +39,9 @@ namespace Client.WPF.Controls
             ));
 
 
-        public IEnumerable<CourseGrade> Notas { get => (IEnumerable<CourseGrade>)GetValue(NotasProperty); set => SetValue(NotasProperty, value); }
+        public IEnumerable<GradedCourse> Notas { get => (IEnumerable<GradedCourse>)GetValue(NotasProperty); set => SetValue(NotasProperty, value); }
         public static readonly DependencyProperty NotasProperty = DependencyProperty.Register(
-            "Notas", typeof(IEnumerable<CourseGrade>), typeof(Reporte), new PropertyMetadata());
+            "Notas", typeof(IEnumerable<GradedCourse>), typeof(Reporte), new PropertyMetadata());
 
 
         public Reporte()

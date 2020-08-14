@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -13,8 +13,7 @@
         android:layout_height="64dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@mipmap/app_icon_foreground"
-        app:srcCompat="@mipmap/app_icon_foreground" />
+        android:src="@mipmap/uasd_launcher"/>
 
     <TextView
         android:id="@+id/text_app_title"

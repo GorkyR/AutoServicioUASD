@@ -41,7 +41,15 @@ namespace UASD
         }
         private bool CheckStatus(HtmlDocument doc)
         {
-            IsLoggedIn = !doc.GetElementsByTagName("title").First().InnerText.Contains("Acceso");
+            try
+            {
+                IsLoggedIn = !doc.GetElementsByTagName("title").First().InnerText.Contains("Acceso");
+            }
+            catch
+            {
+                IsLoggedIn = false;
+                throw new NoDataReceivedException();
+            }
             return !IsLoggedIn;
         }
         private async Task<HtmlDocument> ReceiveAsync(Uri uri)

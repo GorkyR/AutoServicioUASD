@@ -718,7 +718,19 @@ namespace Client.Droid.TestEnvironment
 				Type      = course.Type
 			};
 
-		public static CourseCollection  GenerateFakeCourseSchedule(Random random)
+		public static OpenCourse ToOpenCourse(this Course course) =>
+			new OpenCourse()
+			{
+				Title     = course.Title,
+				Code      = course.Code,
+				Section   = course.Section,
+				NRC       = course.NRC,
+				Professor = course.Professor,
+				Credits   = course.Credits,
+				Type      = course.Type,
+			};
+
+		public static CourseCollection       GenerateFakeCourseSchedule(Random random)
 		{
 			var limits = new[]
 			{
@@ -757,7 +769,7 @@ namespace Client.Droid.TestEnvironment
 
 			return schedule;
 		}
-		public static CourseCollection  GenerateFakeCourseProjection(Random random)
+		public static CourseCollection       GenerateFakeCourseProjection(Random random)
 		{
 			CourseCollection projection = new CourseCollection("Proyección");
 			int number_of_courses_to_project = random.Next(3, 7);
@@ -765,7 +777,7 @@ namespace Client.Droid.TestEnvironment
 				projection.Add(GenerateRandomCourse(random));
 			return projection;
 		}
-		public static AcademicReport    GenerateFakeAcademicReport(Random random, CourseCollection mostRecent)
+		public static AcademicReport         GenerateFakeAcademicReport(Random random, CourseCollection mostRecent)
 		{
 			string[] period_title_prefixes = { "Primer Semestre ", "Segundo Semestre " };
 			AcademicReport report = new AcademicReport();
@@ -800,7 +812,7 @@ namespace Client.Droid.TestEnvironment
 			}
 			return report;
 		}
-		public static CareerInformation GenerateFakeCareerInformation(Random random, AcademicReport report)
+		public static CareerInformation      GenerateFakeCareerInformation(Random random, AcademicReport report)
 		{
 			var info = new CareerInformation()
 			{
@@ -811,6 +823,79 @@ namespace Client.Droid.TestEnvironment
 			};
 			info.RequiredCourses = info.Courses;
 			return info;
+		}
+		public static List<CourseCollection> GenerateFakeAvailableCourses(Random random)
+		{
+			var limits = new[]
+			{
+				new[] {  "7:00 AM",  "9:50 AM" },
+				new[] {  "7:00 AM",  "8:50 AM" },
+				new[] {  "8:00 AM",  "9:50 AM" },
+				new[] { "10:00 AM", "12:50 PM" },
+				new[] { "11:00 AM",  "1:50 PM" },
+				new[] {  "1:00 PM",  "2:50 PM" },
+				new[] {  "2:00 PM",  "2:50 PM" },
+				new[] {  "2:00 PM",  "3:50 PM" },
+				new[] {  "3:00 PM",  "5:50 PM" },
+				new[] {  "6:00 PM",  "7:50 PM" },
+				new[] {  "6:00 PM",  "8:50 PM" },
+				new[] {  "8:00 PM",  "9:50 PM" },
+			};
+
+			var availableCourses = new List<CourseCollection>();
+
+			int number_of_available_courses = random.Next(3, 6);
+
+			for (int i = 0; i < number_of_available_courses; i++)
+			{
+				Course templateCourse = null;
+				do
+				{
+					templateCourse = GenerateRandomCourse(random);
+				} while (availableCourses.Any(cc => cc.Name == templateCourse.Title));
+				CourseCollection collection = new CourseCollection(templateCourse.Title);
+
+				int number_of_open_courses_in_collection = random.Next(5, 25);
+				for (int j = 0; j < number_of_open_courses_in_collection; j++)
+				{
+					var openCourse = GenerateRandomCourse(random).ToOpenCourse();
+					openCourse.Title   = templateCourse.Title;
+					openCourse.Code    = templateCourse.Code;
+					openCourse.Credits = templateCourse.Credits;
+					openCourse.Type    = templateCourse.Type;
+
+					openCourse.Capacity = 50;
+					openCourse.Vacancy  = random.Next(1, 51);
+
+					int number_of_classes = random.Next(1, 4);
+					for (int k = 0; k < number_of_classes; k++)
+					{
+						CourseClass courseClass = null;
+						do
+						{
+							var limit = limits.Choose(random);
+							courseClass = new CourseClass()
+							{
+								Place     = $"{Convert.Places.Keys.Choose(random)} {random.Next(101, 400)}",
+								DayOfWeek = Convert.Days.Values.Choose(random),
+								StartTime = Convert.Time(limit[0]),
+								EndTime   = Convert.Time(limit[1]),
+								StartDate = Convert.Date("Ene 01, 2020"),
+								EndDate   = Convert.Date("Dic 31, 2020")
+							};
+						} while (openCourse.Schedule.Any(cc => cc.CollidesWith(courseClass)));
+						openCourse.Schedule.Add(courseClass);
+					}
+
+					openCourse.Schedule.Sort((a, b) => (int)(10 * (a.StartTime.TotalHours - b.StartTime.TotalHours)));
+					openCourse.Schedule.Sort((a, b) => (int)a.DayOfWeek - (int)b.DayOfWeek);
+					collection.Add(openCourse);
+				}
+
+				availableCourses.Add(collection);
+			}
+
+			return availableCourses;
 		}
 	}
 }

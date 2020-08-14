@@ -42,7 +42,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/text_course_code"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icon_absent" />
+        app:srcCompat="@drawable/icon_absent"
+        android:tooltipText="Ausente"/>
 
     <ImageView
         android:id="@+id/image_grade_waiting"
@@ -54,7 +55,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/text_course_code"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icon_waiting" />
+        app:srcCompat="@drawable/icon_waiting"
+        android:tooltipText="Sin publicar"/>
 
     <TextView
         android:id="@+id/text_course_grade"

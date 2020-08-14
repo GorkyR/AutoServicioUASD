@@ -8,8 +8,9 @@
 
   <string name="menu_dashboard">Dashboard</string>
   <string name="menu_schedule">Horario</string>
-  <string name="menu_reports">Reportes</string>
+  <string name="menu_reports">Calificaciones</string>
   <string name="menu_projection">Proyección</string>
+  <string name="menu_selection">Inscripción</string>
 
   <string name="login_user_placeholder">Matrícula</string>
   <string name="login_password_placeholder">NIP</string>
@@ -19,9 +20,14 @@
   <string name="login_exception">Error al intentar accesar</string>
 
   <string name="unavailable_projection">Su proyección no se encuentra disponible en estos momentos.</string>
+  <string name="unavailable_selection">No hay materias disponibles para inscripción en estos momentos.</string>
+
+  <string name="not_logged_in_message">Debe volver a ingresar al AutoServicio.</string>
 
   <string name="about_author">
-    by <a href="https://github.com/GorkyR">Gorky Rojas</a>
+    by <a href="https://github.com/GorkyR">Gorky Rojas</a>,\n
+    Perla Lucia Maldonado,\n
+    and Luis Emill Mendez.
   </string>
   
 </resources>

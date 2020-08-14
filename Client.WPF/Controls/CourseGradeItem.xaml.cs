@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UASD;
-using static UASD.CourseGrade;
+using static UASD.GradedCourse;
 
 namespace Client.WPF.Controls
 {

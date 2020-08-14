@@ -55,7 +55,7 @@ namespace Client.WPF.Pages
         {
             var collection = (CourseCollection)value;
             var enumerable = (IEnumerable<Course>)collection;
-            var source = enumerable.Cast<CourseGrade>();
+            var source = enumerable.Cast<GradedCourse>();
             return source;
         }
 

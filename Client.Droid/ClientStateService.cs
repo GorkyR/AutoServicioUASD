@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using UASD;
+using Java.Nio.Channels;
 
 namespace Client.Droid {
     public static class ClientStateService
@@ -18,15 +19,15 @@ namespace Client.Droid {
 
         public static UASD.Client AutoServicio { get; } = new UASD.Client();
 
-        static CourseCollection schedule;
-        static AcademicReport report;
-        static CourseCollection projection;
+        static AcademicReport    report;
+        static CourseCollection  schedule;
+        static CourseCollection  projection;
         static CareerInformation information;
 
         public static void ResetClientInformation()
         {
-            schedule    = null;
             report      = null;
+            schedule    = null;
             projection  = null;
             information = null;
             StatePersistanceService.ResetSession();
@@ -113,23 +114,27 @@ namespace Client.Droid {
 
         public static async Task<List<CourseCollection>> AvailableCoursesAsync()
         {
-            List<CourseCollection> availableCourses = null;
-            try {
-                availableCourses = await AutoServicio?.FetchAvailableCoursesAsync();
-            }
-            catch(NotLoggedInException) {
-                if (StatePersistanceService.IsLoggedIn)
+            switch (dataSource)
+            {
+                case DataSource.Production:
                 {
-                    var matricula = StatePersistanceService.CurrentSession.ID;
-                    var nip = StatePersistanceService.CurrentSession.NIP;
+                    try { return await AutoServicio?.FetchAvailableCoursesAsync(); }
+                    catch (NotLoggedInException)
+                    {
+                        var matricula = StatePersistanceService.CurrentSession.ID;
+                        var nip       = StatePersistanceService.CurrentSession.NIP;
 
-                    if (await AutoServicio.LoginAsync(matricula, nip))
-                        return await AvailableCoursesAsync();
+                        if (await AutoServicio.LoginAsync(matricula, nip))
+                            return await AvailableCoursesAsync();
+                        throw new NotLoggedInException();
+                    }
                 }
-                StatePersistanceService.IsLoggedIn = false;
-                throw new NotLoggedInException();
+                case DataSource.Baked:
+                    throw new NoSelectionAvailableException();
+                case DataSource.Random:
+                    return TestEnvironment.TestData.GenerateFakeAvailableCourses(random);
             }
-            return availableCourses;
+            throw new NoSelectionAvailableException();
         }
 
         private static async Task CacheScheduleAsync()
@@ -166,8 +171,7 @@ namespace Client.Droid {
                         report = TestEnvironment.TestData.fakePreloadedAcademicReport;
                         break;
                     case DataSource.Random:
-                        await FetchScheduleAsync();
-                        report = TestEnvironment.TestData.GenerateFakeAcademicReport(random, schedule);
+                        report = TestEnvironment.TestData.GenerateFakeAcademicReport(random, await ScheduleAsync());
                         break;
                 }
             }
@@ -218,8 +222,7 @@ namespace Client.Droid {
                         information = TestEnvironment.TestData.fakePreloadedCareerInformation;
                         break;
                     case DataSource.Random:
-                        await FetchReportAsync();
-                        information = TestEnvironment.TestData.GenerateFakeCareerInformation(random, report);
+                        information = TestEnvironment.TestData.GenerateFakeCareerInformation(random, await ReportAsync());
                         break;
                 }
             }
