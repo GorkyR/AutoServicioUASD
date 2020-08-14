@@ -10,25 +10,20 @@ using Android.Runtime;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
+using UASD;
+using static UASD.Utilities.Convert;
 
 namespace Client.Droid
 {
-    public class AvailableCourseItemClassView : View
+    public class AvailableCourseItemClassView : LinearLayout
     {
-        public AvailableCourseItemClassView(Context context, IAttributeSet attrs) :
-            base(context, attrs)
+        public AvailableCourseItemClassView(Context context, CourseClass courseClass) : base(context)
         {
-            Initialize();
-        }
+            Inflate(context, Resource.Layout.view_item_available_course_class, this);
 
-        public AvailableCourseItemClassView(Context context, IAttributeSet attrs, int defStyle) :
-            base(context, attrs, defStyle)
-        {
-            Initialize();
-        }
-
-        private void Initialize()
-        {
+            FindViewById<TextView>(Resource.Id.text_day).Text        = Day(courseClass.DayOfWeek);
+            FindViewById<TextView>(Resource.Id.text_hour_range).Text = $"{Time(courseClass.StartTime)} - {Time(courseClass.EndTime)} ({courseClass.Duration}h)";
+            FindViewById<TextView>(Resource.Id.text_place).Text      = Place(courseClass.Place);
         }
     }
 }

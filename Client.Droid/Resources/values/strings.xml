@@ -20,11 +20,14 @@
   <string name="login_exception">Error al intentar accesar</string>
 
   <string name="unavailable_projection">Su proyección no se encuentra disponible en estos momentos.</string>
+  <string name="unavailable_selection">No hay materias disponibles para inscripción en estos momentos.</string>
+
+  <string name="not_logged_in_message">Debe volver a ingresar al AutoServicio.</string>
 
   <string name="about_author">
     by <a href="https://github.com/GorkyR">Gorky Rojas</a>,\n
     Perla Lucia Maldonado,\n
-    y Luis Emill Mendez.
+    and Luis Emill Mendez.
   </string>
   
 </resources>

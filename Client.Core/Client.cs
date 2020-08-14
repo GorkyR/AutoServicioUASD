@@ -329,8 +329,7 @@ namespace UASD
 					dataString += $"RSTS_IN=RW&CRN_IN={nrc}&assoc_term_in=&start_date_in=&end_date_in=&";
 				dataString += $"regs_row={ hiddenInputs.Reverse().ToList()[2].GetAttribute("value") }&wait_row=0&add_row=10&REG_BTN=Enviar+Cambios";
 			}
-			catch (ArgumentOutOfRangeException)
-                { throw new NoSelectionAvailableException(); }
+			catch (ArgumentOutOfRangeException) { throw new NoSelectionAvailableException(); }
 
 			ResponsePage = await SubmitAsync(Strings.RegistroUrl, dataString);
 

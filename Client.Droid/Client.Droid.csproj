@@ -82,6 +82,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AgendaDayView.cs" />
     <Compile Include="AgendaItemView.cs" />
+    <Compile Include="SelectedCourseItemView.cs" />
+    <Compile Include="SelectionView.cs" />
     <Compile Include="StatePersistanceService.cs" />
     <Compile Include="TestEnvironment\TestData.cs" />
   </ItemGroup>
@@ -382,6 +384,18 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\uasd_launcher_background.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\view_selection.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\icon_add_sized.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\icon_remove_sized.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\left_border.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

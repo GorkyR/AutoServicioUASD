@@ -13,8 +13,7 @@
         android:layout_height="64dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@mipmap/uasd_launcher_foreground"
-        app:srcCompat="@mipmap/uasd_launcher_foreground" />
+        android:src="@mipmap/uasd_launcher"/>
 
     <TextView
         android:id="@+id/text_app_title"

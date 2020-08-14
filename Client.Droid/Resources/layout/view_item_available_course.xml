@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<merge
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,9 +8,10 @@
 
     <ImageButton
         android:id="@+id/button_add"
-        android:src="@drawable/agregar"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:src="@drawable/icon_add_sized"
+        android:background="@null"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="4dp"
@@ -70,12 +71,12 @@
 
     <LinearLayout
         android:id="@+id/layout_class_schedule"
+        android:orientation="vertical"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/text_nrc_label"
-        app:layout_constraintLeft_toRightOf="@+id/button_add"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="16dp"/>
+        app:layout_constraintLeft_toLeftOf="@+id/text_nrc_label"
+        app:layout_constraintRight_toRightOf="parent">
+    </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+</merge>
