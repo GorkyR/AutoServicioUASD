@@ -39,7 +39,11 @@
                 android:id="@+id/text_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lugar del Edificio (LOC) 101" />
+                android:text="Lugar del Edificio (LOC) 101"
+                android:layout_weight="1"
+                android:ellipsize="none"
+                android:scrollHorizontally="false"
+                android:maxLines="100"/>
         </TableRow>
 
         <TableRow
@@ -60,6 +64,11 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="14sp"/>
+            <TextView
+                android:minWidth="30px"
+                android:minHeight="30px"
+                xmlns="http://schemas.android.com/apk/res/android"
+                android:id="@+id/textView1" />
         </TableRow>
 
         <TableRow>

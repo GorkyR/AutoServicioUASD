@@ -3,8 +3,8 @@
   <string name="navigation_drawer_open">Abrir navegación</string>
   <string name="navigation_drawer_close">Cerrar navegación</string>
   <string name="action_about">Acerca de...</string>
-  <string name="action_logout">Logout</string>
-  <string name="action_login">Log In</string>
+  <string name="action_logout">Cerrar sesión</string>
+  <string name="action_login">Ingresar</string>
 
   <string name="menu_dashboard">Dashboard</string>
   <string name="menu_schedule">Horario</string>
@@ -26,8 +26,8 @@
 
   <string name="about_author">
     by <a href="https://github.com/GorkyR">Gorky Rojas</a>,\n
-    Perla Lucia Maldonado,\n
-    and Luis Emill Mendez.
+    Perla Maldonado,\n
+    and Luis Mendez.
   </string>
   
 </resources>
