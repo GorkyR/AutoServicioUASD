@@ -15,18 +15,24 @@
     <TextView
         android:id="@+id/text_day"
         android:layout_width="72dp"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="Miércoles"/>
 
     <TextView
         android:id="@+id/text_hour_range"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="7AM - 10PM (9h)"/>
 
     <TextView
         android:id="@+id/text_place"
+        android:paddingLeft="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAlignment="textEnd"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:text="EDF-101"/>
 
 </merge>

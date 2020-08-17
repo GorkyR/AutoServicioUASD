@@ -22,7 +22,7 @@ namespace Client.Droid
             Inflate(context, Resource.Layout.view_item_available_course_class, this);
 
             FindViewById<TextView>(Resource.Id.text_day).Text        = Day(courseClass.DayOfWeek);
-            FindViewById<TextView>(Resource.Id.text_hour_range).Text = $"{Time(courseClass.StartTime)} - {Time(courseClass.EndTime)} ({courseClass.Duration}h)";
+            FindViewById<TextView>(Resource.Id.text_hour_range).Text = $"{Time(courseClass.StartTime,true)} - {Time(courseClass.EndTime,true)} ({courseClass.Duration}h)";
             FindViewById<TextView>(Resource.Id.text_place).Text      = Place(courseClass.Place);
         }
     }

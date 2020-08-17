@@ -10,7 +10,7 @@ namespace Client.Droid
 {
     public class AgendaItemView : LinearLayout
     {
-        public AgendaItemView(Context context, CourseClassInstance courseInstance): base(context)
+        public AgendaItemView(Context context, CourseClassInstance courseInstance, bool ongoing = false): base(context)
         {
             Orientation = Orientation.Vertical;
             Inflate(context, Resource.Layout.view_item_agenda, this);
@@ -24,9 +24,9 @@ namespace Client.Droid
             var textLocation = FindViewById<TextView>(Resource.Id.text_location);
             var cardClass    = FindViewById<CardView>(Resource.Id.card_class);
 
-            textHour.Text     = Convert.Time(courseClass.StartTime);
             textTitle.Text    = course.Title;
             textInfo.Text     = $"{course.Code} - {course.Section}";
+            textHour.Text     = $"{(ongoing? "En Curso • " : "")}{Convert.Time(courseClass.StartTime)} - {Convert.Time(courseClass.EndTime)}";
             textLocation.Text = Convert.Place(courseClass.Place);
 
             cardClass.Click += (s, e) =>

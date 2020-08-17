@@ -34,6 +34,8 @@ namespace Client.Droid
 
         private NavigationView Navigation;
 
+	    private Android.Support.V7.Widget.Toolbar AppBar;
+
         protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -46,11 +48,11 @@ namespace Client.Droid
             SetContentView(Resource.Layout.activity_main);
             MainContent = FindViewById<LinearLayout>(Resource.Id.main_content);
 
-            Android.Support.V7.Widget.Toolbar toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
-            SetSupportActionBar(toolbar);
+            AppBar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
+            SetSupportActionBar(AppBar);
 
             Drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
-            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, Drawer, toolbar, Resource.String.navigation_drawer_open, Resource.String.navigation_drawer_close);
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, Drawer, AppBar, Resource.String.navigation_drawer_open, Resource.String.navigation_drawer_close);
             Drawer.AddDrawerListener(toggle);
             toggle.SyncState();
 
@@ -198,6 +200,7 @@ namespace Client.Droid
 
         async void SetupDashboard()
         {
+            AppBar.Title = "Autoservicio UASD";
             MainContent.RemoveAllViews();
             try
             {
@@ -227,14 +230,14 @@ namespace Client.Droid
                     {
                         today = DayOfWeek.Monday;
                         timeOfDay = new TimeSpan();
-                        title = "Clases de mañana";
+                        title = "Próximas clases mañana";
                     }
 
                     var todaysCourses = schedule.FilterByDay(today);
                     var upcomingClasses = todaysCourses.SkipWhile(courseInstance =>
                         Math.Ceiling(courseInstance.Class.EndTime.TotalHours) <= timeOfDay.Hours
                     );
-                    var agendaDayView = new AgendaDayView(this, title, upcomingClasses);
+                    var agendaDayView = new AgendaDayView(this, title, upcomingClasses, true);
                     //agendaDayView.SetPadding(0, 0, 0, Resources.GetDimensionPixelOffset(Resource.Dimension.dashboard_gutters));
 
                     var agendaCard = makeLinearCard();
@@ -263,6 +266,7 @@ namespace Client.Droid
 
         async void SetupAgenda()
         {
+            AppBar.Title = "Horario";
             MainContent.RemoveAllViews();
             try
             {
@@ -324,6 +328,7 @@ namespace Client.Droid
 
         async void SetupReports()
         {
+            AppBar.Title = "Calificaciones";
             MainContent.RemoveAllViews();
             try
             {
@@ -357,6 +362,7 @@ namespace Client.Droid
 
         async void SetupProjection()
         {
+            AppBar.Title = "Proyección";
             MainContent.RemoveAllViews();
             try
             {
@@ -372,6 +378,7 @@ namespace Client.Droid
 
         async void SetupSelection()
         {
+            AppBar.Title = "Inscripción";
             MainContent.RemoveAllViews();
             try
             {
