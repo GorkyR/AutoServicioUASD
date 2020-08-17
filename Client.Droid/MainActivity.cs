@@ -289,6 +289,13 @@ namespace Client.Droid
                 if (virtualCourses.Count() > 0)
                 {
                     var virtualLayout = new LinearLayout(this) { Orientation = Orientation.Vertical };
+                    var virtualTitle = new TextView(this) { Text = "Virtuales" };
+                    virtualTitle.SetTextAppearance(Resource.Style.TextAppearance_AppCompat_Large);
+                    virtualTitle.Typeface = Android.Graphics.Typeface.DefaultBold;
+                    virtualTitle.SetTextColor(Resources.GetColor(Resource.Color.material_grey_600));
+                    virtualTitle.SetPadding(0, 0, 0, 16);
+                    virtualLayout.AddView(virtualTitle);
+
                     foreach (var course in virtualCourses)
                     {
                         var itemLayout = new FrameLayout(this);
