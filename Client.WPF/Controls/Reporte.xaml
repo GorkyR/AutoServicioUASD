@@ -22,8 +22,8 @@
         
         <TextBlock Name="TBPeriodo" Text="{Binding Periodo}" FontSize="16" FontWeight="SemiBold"/>
         <local:SwitchableImage x:Name="SIEstado" Width="18"
-                               FirstSource="/Client.WPF;component/Resources/esperando.png"
-                               SecondSource="/Client.WPF;component/Resources/completo2.png"
+                               FirstSource="/UASD.Client.Windows;component/Resources/esperando.png"
+                               SecondSource="/UASD.Client.Windows;component/Resources/completo2.png"
                                Grid.Column="1"/>
         
         <ItemsControl Name="ICNotas" ItemsSource="{Binding Notas}"

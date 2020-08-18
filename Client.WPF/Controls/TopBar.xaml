@@ -30,7 +30,7 @@
                     ToolTip="Actualizar"
                     Click="Refresh">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="/Client.WPF;component/Resources/actualizar.png"
+                    <Image Source="/UASD.Client.Windows;component/Resources/actualizar.png"
                            Width="20" Margin="4, 2"/>
                     <!--<TextBlock Text="Actualizar"/>-->
                 </StackPanel>
@@ -40,7 +40,7 @@
                     ToolTip="Desconectar" 
                     Click="Logout">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="/Client.WPF;component/Resources/logout.png"
+                    <Image Source="/UASD.Client.Windows;component/Resources/logout.png"
                            Width="20" Margin="4, 2"/>
                     <!--<TextBlock Text="Desconectar"/>-->
                 </StackPanel>
@@ -50,7 +50,7 @@
                     ToolTip="Acerca de"
                     Click="ShowAbout">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="/Client.WPF;component/Resources/acerca de.png"
+                    <Image Source="/UASD.Client.Windows;component/Resources/acerca de.png"
                            Width="20" Margin="4, 2"/>
                     <!--<TextBlock Text="Acerca de"/>-->
                 </StackPanel>
