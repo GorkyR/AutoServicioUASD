@@ -55,7 +55,9 @@ namespace Client.WPF.Pages
         private async void DidLoad(object sender, RoutedEventArgs e)
         {
             Cursor = Cursors.AppStarting;
-            try { Materias = await ClientStateService.AvailableCoursesAsync(); }
+            try {
+                Materias = await ClientStateService.AvailableCoursesAsync();
+            }
             catch {
                 GSeleccion.Visibility = Visibility.Collapsed;
                 SPUnavailable.Visibility = Visibility.Visible;

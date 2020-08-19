@@ -32,4 +32,10 @@
   <dimen name="selection_button_icon_size">24dp</dimen>
 
   <dimen name="about_padding">16dp</dimen>
+
+  <dimen name="dashboard_icon_size">32dp</dimen>
+  <dimen name="dashboard_horizontal_gutter">8dp</dimen>
+  <dimen name="dashboard_horizontal_gutter_half">4dp</dimen>
+  <dimen name="information_icon_size">32dp</dimen>
+  <dimen name="selection_icon_size">24dp</dimen>
 </resources>

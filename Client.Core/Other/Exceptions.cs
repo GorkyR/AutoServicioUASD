@@ -21,4 +21,8 @@ namespace UASD
         public SeleccionErrorsException(string message): base(message) { }
         public SeleccionErrorsException(string message, Exception inner): base(message, inner) { }
     }
+    public class ExpiredLoginException: Exception
+    {
+        public ExpiredLoginException() : base(Properties.Strings.ExpiredLoginMessage) {}
+    }
 }

@@ -9,7 +9,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Título de la Clase"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -19,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/grade_title_separation"
         android:text="TST 1001"
+        android:typeface="monospace"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_course_title" />
 
@@ -65,9 +67,9 @@
         android:layout_marginEnd="6dp"
         android:layout_marginRight="6dp"
         android:text="99"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textStyle="bold"
         android:visibility="invisible"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/text_course_code"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

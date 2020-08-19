@@ -15,7 +15,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="4dp"
-        android:layout_marginLeft="4dp"
+        android:layout_marginLeft="2dp"
         android:tooltipText="Agregar a selección"/>
 
     <TextView
@@ -25,49 +25,52 @@
         android:text="NRC:"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/button_add"
-        android:layout_marginLeft="8dp"/>
+        android:layout_marginLeft="6dp"/>
 
     <TextView
         android:id="@+id/text_nrc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
         app:layout_constraintBottom_toBottomOf="@+id/text_nrc_label"
         app:layout_constraintLeft_toRightOf="@+id/text_nrc_label"
-        android:layout_marginLeft="8dp"/>
+        tools:text="00000" />
 
     <TextView
         android:id="@+id/text_section_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="64dp"
         android:text="Sección:"
-        app:layout_constraintLeft_toRightOf="@+id/text_nrc_label"
         app:layout_constraintBottom_toBottomOf="@+id/text_nrc_label"
-        android:layout_marginLeft="64dp"/>
+        app:layout_constraintLeft_toRightOf="@+id/text_nrc_label" />
 
     <TextView
         android:id="@+id/text_section"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@+id/text_section_label"
+        android:layout_marginLeft="2dp"
         app:layout_constraintBottom_toBottomOf="@+id/text_section_label"
-        android:layout_marginLeft="8dp"/>
+        app:layout_constraintLeft_toRightOf="@+id/text_section_label"
+        tools:text="00" />
 
     <TextView
         android:id="@+id/text_vacancy_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="42dp"
         android:text="Vacantes:"
-        app:layout_constraintLeft_toRightOf="@+id/text_section_label"
         app:layout_constraintBottom_toBottomOf="@+id/text_section_label"
-        android:layout_marginLeft="54dp"/>
+        app:layout_constraintLeft_toRightOf="@+id/text_section_label" />
 
     <TextView
         android:id="@+id/text_vacancy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@+id/text_vacancy_label"
+        android:layout_marginLeft="2dp"
         app:layout_constraintBottom_toBottomOf="@+id/text_vacancy_label"
-        android:layout_marginLeft="8dp"/>
+        app:layout_constraintLeft_toRightOf="@+id/text_vacancy_label"
+        tools:text="00" />
 
     <LinearLayout
         android:id="@+id/layout_class_schedule"

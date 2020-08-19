@@ -20,7 +20,10 @@ namespace UASD
             WebClient Client = new WebClient();
             Client.Cookies[0].Add(BaseUri, new Cookie("TESTID", "set"));
             string Response = await Client.UploadStringAsync(Properties.Strings.LoginUrl, $"sid={ID}&PIN={NIP}");
-            if (Response.Contains("<meta http-equiv=\"refresh\""))
+            if (Response.Contains("NIP ha expirado")) {
+                throw new ExpiredLoginException();
+            }
+            else if (Response.Contains("<meta http-equiv=\"refresh\""))
             {
                 this.Username = Convert.Username(Response);
                 this.SessionID = Client.Cookies;

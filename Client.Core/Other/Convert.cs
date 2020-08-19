@@ -13,6 +13,7 @@ namespace UASD.Utilities
         static Regex DateRegex     = new Regex(@"(\w{3})\s+(\d{1,2}),\s+(\d{4})");
         static Regex DateRegex2    = new Regex(@"(\d{2})[/](\d{2})");
         static Regex PlaceRegex    = new Regex(@"(.*)\s(.*)");
+        static Regex CreditsRegex  = new Regex(@"([0-9\.]+)(/.*)?");
 
         static public string Username(string loginresponse)
         {
@@ -26,7 +27,11 @@ namespace UASD.Utilities
         }
         static public int Credits(string creditoString)
         {
-            return (int)float.Parse(creditoString.Trim(), NumberStyles.Any, CultureInfo.InvariantCulture);
+            var creditsMatch = CreditsRegex.Match(creditoString);
+            if (creditsMatch.Success)
+                return (int)float.Parse(creditsMatch.Groups[1].Value, NumberStyles.Any, CultureInfo.InvariantCulture);
+            else
+                return 0;
         }
         static public int Grade(string notaString)
         {

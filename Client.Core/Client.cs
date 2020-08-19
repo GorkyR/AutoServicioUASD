@@ -278,6 +278,43 @@ namespace UASD
                 throw new NoDataReceivedException();
 			return secciones;
 		}
+
+		public class DateTimeRange
+		{
+			public DateTime StartDate;
+			public DateTime EndDate;
+		}
+
+		public async Task<List<DateTimeRange>>    FetchSelectionCalendarAsync()
+		{
+			HtmlDocument response = await ReceiveAsync(Strings.CalendarioSeleccionUrl);
+			response = await SelectActivePeriod(response, Strings.CalendarioSeleccionUrl);
+
+			IList<HtmlNode> tables = response.GetElementsByClass("datadisplaytable");
+			if (tables.Count < 2)
+				throw new NoSelectionAvailableException();
+
+			var dataRows = (from row in tables[0].GetElementsByTagName("tr")
+				            select (from cell in row.GetElementsByTagName("td")
+				            	    select cell.InnerText).ToArray()).Skip(1);
+
+			List<DateTimeRange> selectionCalendar = new List<DateTimeRange>();
+
+			foreach (var rowData in dataRows)
+			{
+				var startDate = Convert.Date(rowData[0]);
+				var startTime = Convert.Time(rowData[1]);
+				var endDate = Convert.Date(rowData[2]);
+				var endTime = Convert.Time(rowData[3]);
+
+				selectionCalendar.Add(new DateTimeRange() {
+					StartDate = new DateTime(startDate.Year, startDate.Month, startDate.Day, startTime.Hours, startTime.Minutes, startTime.Seconds),
+					EndDate   = new DateTime(endDate.Year, endDate.Month, endDate.Day, endTime.Hours, endTime.Minutes, endTime.Seconds)
+				});
+			}
+
+			return selectionCalendar;
+		}
 		public async Task<CareerInformation>      FetchCareerInformationAsync()
 		{
 			HtmlDocument ResponsePage = await SubmitAsync(Strings.EvaluacionSelectionUrl,

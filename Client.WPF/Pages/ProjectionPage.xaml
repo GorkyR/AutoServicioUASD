@@ -12,7 +12,7 @@
           DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}">
         <StackPanel Name="SPUnavailable" MaxWidth="200"
                     Visibility="Collapsed">
-            <Image Source="/Client.WPF;component/Resources/no_disponible.png"
+            <Image Source="/UASD.Client.Windows;component/Resources/no_disponible.png"
                    Width="128" Margin="8"/>
             <TextBlock Text="La proyección no está disponible en estos momentos."
                        TextAlignment="Center" TextWrapping="Wrap"
