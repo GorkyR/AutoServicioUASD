@@ -19,6 +19,7 @@ using Android.Text.Method;
 using System.Linq;
 using System.Collections.Generic;
 using Android.Support.V7.Widget;
+using Android.Util;
 
 namespace Client.Droid
 {
@@ -200,73 +201,23 @@ namespace Client.Droid
 
         async void SetupDashboard()
         {
-            AppBar.Title = "Autoservicio UASD";
+            AppBar.SetTitle(Resource.String.app_name);
             MainContent.RemoveAllViews();
             try
             {
-                var schedule = await ClientStateService.ScheduleAsync();
-                var report = await ClientStateService.ReportAsync();
+                var schedule    = await ClientStateService.ScheduleAsync();
+                var report      = await ClientStateService.ReportAsync();
+                var information = await ClientStateService.CareerInformationAsync();
+                var firstName   = CurrentSession.Username.Split().First();
 
-                CardView makeLinearCard()
-                {
-                    var card = new CardView(this) { CardElevation = 16 };
-                    var cardLayoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MatchParent, FrameLayout.LayoutParams.MatchParent);
-                    cardLayoutParams.SetMargins(16, 16, 16, Resources.GetDimensionPixelOffset(Resource.Dimension.dashboard_gutters));
-                    card.LayoutParameters = cardLayoutParams;
-                    card.SetContentPadding(16, 16, 16, 16);
-
-                    card.AddView(new LinearLayout(this) { Orientation = Orientation.Vertical });
-                    return card;
-                }
-
-                // Today's agenda
-                {
-                    var now = DateTime.Now;
-                    var today = now.DayOfWeek;
-                    var timeOfDay = now.TimeOfDay;
-                    string title = "Próximas clases hoy";
-
-                    if (today == DayOfWeek.Sunday)
-                    {
-                        today = DayOfWeek.Monday;
-                        timeOfDay = new TimeSpan();
-                        title = "Próximas clases mañana";
-                    }
-
-                    var todaysCourses = schedule.FilterByDay(today);
-                    var upcomingClasses = todaysCourses.SkipWhile(courseInstance =>
-                        Math.Ceiling(courseInstance.Class.EndTime.TotalHours) <= timeOfDay.Hours
-                    );
-                    var agendaDayView = new AgendaDayView(this, title, upcomingClasses, true);
-                    //agendaDayView.SetPadding(0, 0, 0, Resources.GetDimensionPixelOffset(Resource.Dimension.dashboard_gutters));
-
-                    var agendaCard = makeLinearCard();
-                    (agendaCard.GetChildAt(0) as LinearLayout).AddView(agendaDayView);
-                    MainContent.AddView(agendaCard);
-                }
-
-                // Current period's report
-                {
-                    var reportPeriodView = new ReportPeriodView(this, report.Periods.First());
-                    var activePeriodLayout = new LinearLayout(this) { Orientation = Orientation.Vertical };
-                    var titleText = new TextView(activePeriodLayout.Context) { Text = "Período Activo" };
-                    titleText.SetTextAppearance(Resource.Style.TextAppearance_AppCompat_Large);
-                    titleText.SetTextColor(Resources.GetColor(Resource.Color.material_grey_600));
-                    titleText.Typeface = Android.Graphics.Typeface.DefaultBold;
-                    activePeriodLayout.AddView(titleText);
-                    activePeriodLayout.AddView(reportPeriodView);
-
-                    var periodCard = makeLinearCard();
-                    (periodCard.GetChildAt(0) as LinearLayout).AddView(activePeriodLayout);
-                    MainContent.AddView(periodCard);
-                }
+                MainContent.AddView(new DashboardView(this, firstName, information, schedule, report));
             }
             catch (NotLoggedInException) { LogoutAndTryAgain(); }
         }
 
         async void SetupAgenda()
         {
-            AppBar.Title = "Horario";
+            AppBar.SetTitle(Resource.String.menu_schedule);
             MainContent.RemoveAllViews();
             try
             {
@@ -335,7 +286,7 @@ namespace Client.Droid
 
         async void SetupReports()
         {
-            AppBar.Title = "Calificaciones";
+            AppBar.SetTitle(Resource.String.menu_reports);
             MainContent.RemoveAllViews();
             try
             {
@@ -357,6 +308,7 @@ namespace Client.Droid
                         cardLayoutParams.SetMargins(16, 16, 16, 16);
                         card.LayoutParameters = cardLayoutParams;
                         card.SetContentPadding(16, 16, 16, 16);
+                        card.Radius = TypedValue.ApplyDimension(ComplexUnitType.Dip, 6, Resources.DisplayMetrics);
 
                         card.AddView(new ReportPeriodView(this, academicPeriod));
 
@@ -369,7 +321,7 @@ namespace Client.Droid
 
         async void SetupProjection()
         {
-            AppBar.Title = "Proyección";
+            AppBar.SetTitle(Resource.String.menu_projection);
             MainContent.RemoveAllViews();
             try
             {
@@ -385,7 +337,7 @@ namespace Client.Droid
 
         async void SetupSelection()
         {
-            AppBar.Title = "Inscripción";
+            AppBar.SetTitle(Resource.String.menu_selection);
             MainContent.RemoveAllViews();
             try
             {

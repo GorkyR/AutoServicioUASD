@@ -6,7 +6,7 @@
   <string name="action_logout">Cerrar sesión</string>
   <string name="action_login">Ingresar</string>
 
-  <string name="menu_dashboard">Dashboard</string>
+  <string name="menu_dashboard">Inicio</string>
   <string name="menu_schedule">Horario</string>
   <string name="menu_reports">Calificaciones</string>
   <string name="menu_projection">Proyección</string>
@@ -21,6 +21,20 @@
 
   <string name="unavailable_projection">Su proyección no se encuentra disponible en estos momentos.</string>
   <string name="unavailable_selection">No hay materias disponibles para inscripción en estos momentos.</string>
+
+  <string name="dashboard_greeting">Hola, {0}, esta es tu situación académica en la carrera de {1}.</string>
+  <string name="dashboard_next_courses_today">Próximas clases hoy</string>
+  <string name="dashboard_next_courses_tomorrow">Próximas clases mañana</string>
+  <string name="dashboard_active_period">Período activo</string>
+  <string name="information_caption">Información de Grado</string>
+  <string name="information_career_caption">Carrera:</string>
+  <string name="information_index_caption">Índice académico:</string>
+  <string name="information_credits_caption">Créditos:</string>
+  <string name="information_courses_caption">Materias:</string>
+  <string name="card_index_caption">Índice académico</string>
+  <string name="card_credits_caption">Créditos aprobados</string>
+  <string name="card_courses_caption">Materias cursadas</string>
+  <string name="selection_calendar_caption">Calendario de Selección</string>
 
   <string name="not_logged_in_message">Debe volver a ingresar al AutoServicio.</string>
 

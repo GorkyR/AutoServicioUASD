@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/icon_calendar"
+        android:width="@dimen/selection_icon_size"
+        android:height="@dimen/selection_icon_size"/>
+</layer-list>

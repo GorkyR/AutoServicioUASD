@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    app:cardElevation="2dp">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/text_caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/card_courses_caption"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/text_courses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginTop="2dp"
+            app:layout_constraintStart_toStartOf="@+id/text_caption"
+            app:layout_constraintEnd_toEndOf="@+id/text_caption"
+            app:layout_constraintTop_toBottomOf="@+id/text_caption" />
+
+        <TextView
+            android:id="@+id/text_required_courses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="125"
+            android:translationY="-5dp"
+            app:layout_constraintStart_toStartOf="@+id/text_courses"
+            app:layout_constraintEnd_toEndOf="@+id/text_courses"
+            app:layout_constraintTop_toBottomOf="@+id/text_courses" />
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>

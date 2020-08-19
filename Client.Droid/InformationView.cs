@@ -11,7 +11,7 @@ namespace Client.Droid
         {
             Inflate(context, Resource.Layout.view_information, this);
 
-            var textCarreer        = FindViewById<TextView>(Resource.Id.text_carreer);
+            var textCarreer        = FindViewById<TextView>(Resource.Id.text_career);
             var textIndex          = FindViewById<TextView>(Resource.Id.text_index);
             var textCredits        = FindViewById<TextView>(Resource.Id.text_credits);
             var textCourses        = FindViewById<TextView>(Resource.Id.text_courses);
@@ -25,12 +25,12 @@ namespace Client.Droid
             textIndex.Text = $"{globalIndex:N2}";
 
             textCredits.Text        = $"{information.Credits}/{information.RequiredCredits}";
-            textCreditsPercent.Text = $"({information.CreditsPercentage:N2}%)";
+            textCreditsPercent.Text = $"({information.CreditsPercentage:N1}%)";
             progressCredits.Max      = information.RequiredCredits;
             progressCredits.Progress = information.Credits;
 
             textCourses.Text        = $"{information.Courses}/{information.RequiredCourses}";
-            textCoursesPercent.Text = $"({information.CoursesPercentage:N2}%)";
+            textCoursesPercent.Text = $"({information.CoursesPercentage:N1}%)";
             progressCourses.Max      = information.RequiredCourses;
             progressCourses.Progress = information.Courses;
         }
