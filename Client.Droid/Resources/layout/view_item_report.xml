@@ -44,7 +44,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/text_course_code"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icon_absent"
+        app:srcCompat="@drawable/icon_ausente_sized"
         android:tooltipText="Ausente"/>
 
     <ImageView

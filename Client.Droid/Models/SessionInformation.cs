@@ -10,10 +10,11 @@ namespace Client.Droid.Models
         public string ID { get; set; }
         public string NIP { get; set;  }
 
-        public CourseCollection  Schedule { get; set; }
+        public CourseCollection           Schedule { get; set; }
         public IList<AcademicPeriodModel> Report { get; set; }
-        public CourseCollection  Projection { get; set; }
-        public CareerInformation Information { get; set; }
+        public CourseCollection           Projection { get; set; }
+        public CareerInformation          Information { get; set; }
+        public IList<DateTimeRange>       Calendar { get; set; }
 
         public SessionInformation() { }
         public SessionInformation(string username, string id, string nip)

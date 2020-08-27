@@ -23,8 +23,12 @@ namespace Client.Droid
                 textDay.Visibility = Android.Views.ViewStates.Gone;
             else
                 textDay.Text = title;
-            if (classes.Count() == 0)
+            if (classes == null || classes.Count() == 0)
+            {
                 textNothing.Visibility = Android.Views.ViewStates.Visible;
+                if (string.IsNullOrEmpty(title))
+                    textNothing.Text = "Día libre.";
+            }
             else
             {
                 foreach (CourseClassInstance classInstance in classes)

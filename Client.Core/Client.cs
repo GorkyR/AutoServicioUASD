@@ -20,7 +20,7 @@ namespace UASD
 			Task<HtmlDocument> response = ReceiveAsync(Strings.HorarioDetalleURL);
 			CourseCollection schedule = new CourseCollection("Current Schedule");
 			HtmlDocument responsePage = await response;
-            responsePage = await SelectActivePeriod(responsePage, Strings.HorarioDetalleURL, true);
+            responsePage = await SelectActivePeriod(responsePage, Strings.HorarioDetalleURL);
 
             IList<HtmlNode> displayTables = responsePage.GetElementsByClass("datadisplaytable");
             if (displayTables.Count < 2)
@@ -279,19 +279,13 @@ namespace UASD
 			return secciones;
 		}
 
-		public class DateTimeRange
-		{
-			public DateTime StartDate;
-			public DateTime EndDate;
-		}
-
 		public async Task<List<DateTimeRange>>    FetchSelectionCalendarAsync()
 		{
 			HtmlDocument response = await ReceiveAsync(Strings.CalendarioSeleccionUrl);
 			response = await SelectActivePeriod(response, Strings.CalendarioSeleccionUrl);
 
 			IList<HtmlNode> tables = response.GetElementsByClass("datadisplaytable");
-			if (tables.Count < 2)
+			if (tables.Count < 3)
 				throw new NoSelectionAvailableException();
 
 			var dataRows = (from row in tables[0].GetElementsByTagName("tr")
@@ -486,7 +480,7 @@ namespace UASD
 			return secciones;
 		}
 
-        private async Task<HtmlDocument> SelectActivePeriod(HtmlDocument page, string callbackURL, bool retry = false)
+        private async Task<HtmlDocument> SelectActivePeriod(HtmlDocument page, string callbackURL)
         {
             if (page.GetTitle().Contains("Period"))
             {
@@ -497,15 +491,14 @@ namespace UASD
                     .Where(i => i.LastOrDefault().IsEither('0', '5')).ToArray();
 
                 page = await SubmitAsync(callbackURL, $"term_in={periodCodes[0]}");
-
-                if (retry)
-                {
-                    IList<HtmlNode> displayTables = page.GetElementsByClass("datadisplaytable");
-                    if (displayTables.Count < 2)
-                        page = await SubmitAsync(callbackURL, $"term_in={periodCodes[1]}");
-                }
             }
             return page;
         }
+	}
+
+	public class DateTimeRange
+	{
+		public DateTime StartDate;
+		public DateTime EndDate;
 	}
 }

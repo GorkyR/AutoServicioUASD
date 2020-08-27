@@ -11,13 +11,19 @@ namespace Client.Droid
         {
             Inflate(context, Resource.Layout.view_projection, this);
 
-            var textUnavailable = FindViewById<TextView>(Resource.Id.text_unavailable);
-            textUnavailable.Visibility = ViewStates.Visible;
+            FindViewById<TextView>(Resource.Id.text_unavailable).Visibility = ViewStates.Visible; 
         }
 
         public ProjectionView(Context context, CourseCollection projection) : base(context)
         {
             Inflate(context, Resource.Layout.view_projection, this);
+
+            if (projection == null || projection.Count == 0)
+            {
+                var textUnavailable = FindViewById<TextView>(Resource.Id.text_unavailable);
+                textUnavailable.Text = "No tienes materias proyectadas.";
+                textUnavailable.Visibility = ViewStates.Visible;
+            }
 
             var layoutProjection = FindViewById<LinearLayout>(Resource.Id.layout_projection_list);
             foreach (Course course in projection)

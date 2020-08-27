@@ -37,7 +37,7 @@ namespace Client.Droid
                 FindViewById<TextView>(Resource.Id.text_index).Text = report.GlobalIndex.ToString("N2");
             }
 
-            { // Upcoming classes card
+            if (schedule != null) { // Upcoming classes card
                 var now = DateTime.Now;
                 var today = now.DayOfWeek;
                 var timeOfDay = now.TimeOfDay;
@@ -70,6 +70,9 @@ namespace Client.Droid
                 }
                 else
                     layoutNextCourses.AddView(new AgendaDayView(context, string.Empty, new CourseClassInstance[] { }));
+            } else {
+                var layoutNextCourses = FindViewById<LinearLayout>(Resource.Id.layout_next_courses);
+                layoutNextCourses.AddView(new AgendaDayView(context, string.Empty, new CourseClassInstance[] { }));
             }
 
             { // Active period card
