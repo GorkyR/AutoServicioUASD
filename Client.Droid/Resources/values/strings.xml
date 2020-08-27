@@ -3,6 +3,7 @@
   <string name="navigation_drawer_open">Abrir navegación</string>
   <string name="navigation_drawer_close">Cerrar navegación</string>
   <string name="action_about">Acerca de...</string>
+  <string name="action_refresh">Refrescar</string>
   <string name="action_logout">Cerrar sesión</string>
   <string name="action_login">Ingresar</string>
 
@@ -19,6 +20,7 @@
   <string name="login_fail">Matricula o NIP incorrecto</string>
   <string name="login_exception">Error al intentar accesar</string>
 
+  <string name="unavailable_schedule">No estas inscrito para el período en curso.</string>
   <string name="unavailable_projection">Su proyección no se encuentra disponible en estos momentos.</string>
   <string name="unavailable_selection">No hay materias disponibles para inscripción en estos momentos.</string>
 

@@ -12,6 +12,7 @@ using Android.Support.Annotation;
 using Android.Support.Constraints;
 using Android.Support.Design.Resources;
 using Android.Support.V7.Widget;
+using Android.Text;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
@@ -34,8 +35,15 @@ namespace Client.Droid
         {
             Inflate(context, Resource.Layout.view_selection, this);
 
-            var textUnavailable = FindViewById<TextView>(Resource.Id.text_unavailable);
-            textUnavailable.Visibility = ViewStates.Visible;
+            FindViewById<TextView>(Resource.Id.text_unavailable).Visibility = ViewStates.Visible;
+        }
+
+        public SelectionView(Context context, List<DateTimeRange> selectionCalendar) : base(context)
+        {
+            Inflate(context, Resource.Layout.view_selection, this);
+
+            var layoutCalendar = FindViewById<LinearLayout>(Resource.Id.layout_calendar);
+            layoutCalendar.AddView(new SelectionCalendarView(context, selectionCalendar));
         }
 
         public SelectionView(Context context, List<CourseCollection> availableCourses, Action onSelection) : base(context)
@@ -52,6 +60,56 @@ namespace Client.Droid
             UpdateLists();
         }
 
+        public SelectionView(Context context, List<CourseCollection> availableCourses, List<DateTimeRange> selectionCalendar, Action onSelection) : base(context)
+        {
+            Inflate(context, Resource.Layout.view_selection, this);
+
+            if (selectionCalendar == null && availableCourses == null)
+            {
+                FindViewById<TextView>(Resource.Id.text_unavailable).Visibility = ViewStates.Visible;
+            }
+            else
+            {
+                SelectedLinearLayout = FindViewById<LinearLayout>(Resource.Id.layout_selected_list);
+                AvailableLinearLayout = FindViewById<LinearLayout>(Resource.Id.layout_available_list);
+
+                var layoutCalendar = FindViewById<LinearLayout>(Resource.Id.layout_calendar);
+
+                if (selectionCalendar != null)
+                    layoutCalendar.AddView(new SelectionCalendarView(context, selectionCalendar));
+
+                if (availableCourses != null)
+                {
+                    AvailableCourses = availableCourses;
+
+                    UpdateLists();
+                }
+                else
+                {
+                    var textUnavailable = new TextView(context)
+                    {
+                        LayoutParameters = new FrameLayout.LayoutParams(
+                            this.DP(256),
+                            FrameLayout.LayoutParams.WrapContent
+                        )
+                        { Gravity = GravityFlags.Center },
+                        Gravity = GravityFlags.Center
+                    };
+                    textUnavailable.SetText(Resource.String.unavailable_selection);
+                    textUnavailable.SetCompoundDrawablesWithIntrinsicBounds(0, Resource.Drawable.no_disponible_sized, 0, 0);
+                    textUnavailable.CompoundDrawablePadding = this.DP(24);
+                    textUnavailable.SetTextAppearance(Resource.Style.TextAppearance_AppCompat_Large);
+                    textUnavailable.SetTextColor(Resources.GetColor(Resource.Color.material_grey_600));
+                    var frameUnavailable = new FrameLayout(context);
+                    frameUnavailable.AddView(textUnavailable);
+
+                    AvailableLinearLayout.AddView(frameUnavailable);
+                }
+
+                OnSelection = onSelection;
+            }
+        }
+
         private void UpdateLists()
         {
             SelectedLinearLayout.RemoveAllViews();
@@ -61,8 +119,7 @@ namespace Client.Droid
             if (SelectedCourses.Count() > 0)
             { // Selected
                 var titleText = new TextView(Context) { Text = "Selección" };
-                titleText.SetTextAppearance(Resource.Style.TextAppearance_AppCompat_Large);
-                titleText.SetTextColor(Resources.GetColor(Resource.Color.material_grey_800));
+                titleText.SetTextSize(ComplexUnitType.Sp, 18);
                 titleText.Typeface = Typeface.DefaultBold;
                 titleText.SetPadding(0, 0, 0, 16);
 
@@ -181,8 +238,7 @@ namespace Client.Droid
 
             { // Available
                 var titleText = new TextView(Context) { Text = "Disponibles" };
-                titleText.SetTextAppearance(Resource.Style.TextAppearance_AppCompat_Large);
-                titleText.SetTextColor(Resources.GetColor(Resource.Color.material_grey_800));
+                titleText.SetTextSize(ComplexUnitType.Sp, 18);
                 titleText.Typeface = Typeface.DefaultBold;
                 titleText.SetPadding(0, 0, 0, 16);
 
@@ -198,7 +254,10 @@ namespace Client.Droid
                                              where !SelectedCourses.Any(sc => sc.CollidesWith(course))
                                              select course as OpenCourse;
 
-                    var card = new CardView(Context) { CardElevation = 6 };
+                    var card = new CardView(Context) {
+                        CardElevation = 8,
+                        Radius = TypedValue.ApplyDimension(ComplexUnitType.Dip, 6, Resources.DisplayMetrics)
+                    };
                     card.SetContentPadding(16, 16, 16, 16);
                     var cardLayoutParams = new LinearLayout.LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent);
                     cardLayoutParams.SetMargins(16, 16, 16, 16);
@@ -207,7 +266,7 @@ namespace Client.Droid
                     var cardLayout = new LinearLayout(Context) { Orientation = Orientation.Vertical };
 
                     var textTitle = new TextView(Context) { Text = $"{collection.Name} ({filteredCollection.Count()}/{collection.Count})", };
-                    textTitle.SetTextAppearance(Resource.Style.TextAppearance_AppCompat_Medium);
+                    textTitle.SetTextSize(ComplexUnitType.Sp, 16);
                     textTitle.SetTextColor(Color.Black);
                     textTitle.Typeface = Typeface.DefaultBold;
                     textTitle.SetPadding(0, 0, 0, 16);

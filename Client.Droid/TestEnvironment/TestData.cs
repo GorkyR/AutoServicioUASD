@@ -661,7 +661,7 @@ namespace Client.Droid.TestEnvironment
 		}
 		};
 
-		public static string[] carreras = {
+        public static string[] carreras = {
 			"Informática",
 			"Contabilidad",
 			"Economía"
@@ -730,7 +730,7 @@ namespace Client.Droid.TestEnvironment
 				Type      = course.Type,
 			};
 
-		public static CourseCollection       GenerateFakeCourseSchedule(Random random)
+		public static CourseCollection                GenerateFakeCourseSchedule(Random random)
 		{
 			var limits = new[]
 			{
@@ -769,7 +769,7 @@ namespace Client.Droid.TestEnvironment
 
 			return schedule;
 		}
-		public static CourseCollection       GenerateFakeCourseProjection(Random random)
+		public static CourseCollection                GenerateFakeCourseProjection(Random random)
 		{
 			CourseCollection projection = new CourseCollection("Proyección");
 			int number_of_courses_to_project = random.Next(3, 7);
@@ -777,7 +777,7 @@ namespace Client.Droid.TestEnvironment
 				projection.Add(GenerateRandomCourse(random));
 			return projection;
 		}
-		public static AcademicReport         GenerateFakeAcademicReport(Random random, CourseCollection mostRecent)
+		public static AcademicReport                  GenerateFakeAcademicReport(Random random, CourseCollection mostRecent)
 		{
 			string[] period_title_prefixes = { "Primer Semestre ", "Segundo Semestre " };
 			AcademicReport report = new AcademicReport();
@@ -812,7 +812,7 @@ namespace Client.Droid.TestEnvironment
 			}
 			return report;
 		}
-		public static CareerInformation      GenerateFakeCareerInformation(Random random, AcademicReport report)
+		public static CareerInformation               GenerateFakeCareerInformation(Random random, AcademicReport report)
 		{
 			var info = new CareerInformation()
 			{
@@ -824,7 +824,7 @@ namespace Client.Droid.TestEnvironment
 			info.RequiredCourses = info.Courses;
 			return info;
 		}
-		public static List<CourseCollection> GenerateFakeAvailableCourses(Random random)
+		public static List<CourseCollection>          GenerateFakeAvailableCourses(Random random)
 		{
 			var limits = new[]
 			{
@@ -896,6 +896,29 @@ namespace Client.Droid.TestEnvironment
 			}
 
 			return availableCourses;
+		}
+		public static List<DateTimeRange>             GenerateFakeSelectionCalendar()
+		{
+			var now = DateTime.Now;
+			var nextWeek = (new DateTime(now.Year, now.Month, now.Day)).AddDays(7);
+
+			var selectionCalendar = new List<DateTimeRange>();
+			selectionCalendar.Add(new DateTimeRange()
+			{
+				StartDate = nextWeek.AddHours(10),
+				EndDate   = nextWeek.AddHours(13)
+			});
+
+			for (int i = 0; i < 5; i++)
+			{
+				selectionCalendar.Add(new DateTimeRange()
+				{
+					StartDate = nextWeek.AddDays(i).AddHours(12+7),
+					EndDate   = nextWeek.AddDays(i).AddHours(24+7)
+				});
+			}
+
+			return selectionCalendar;
 		}
 	}
 }

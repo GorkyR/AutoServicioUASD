@@ -29,7 +29,7 @@
   <dimen name="projection_item_margin">8dp</dimen>
   <dimen name="projection_unavailable_icon_size">132dp</dimen>
 
-  <dimen name="selection_button_icon_size">24dp</dimen>
+  <dimen name="selection_button_icon_size">18dp</dimen>
 
   <dimen name="about_padding">16dp</dimen>
 

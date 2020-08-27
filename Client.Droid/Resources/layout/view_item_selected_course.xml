@@ -2,8 +2,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <ImageButton
         android:id="@+id/button_remove"
@@ -21,53 +21,53 @@
         android:id="@+id/text_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Título de la Materia"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="#000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/button_remove"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/button_remove"
-        android:layout_marginLeft="8dp"/>
+        android:layout_marginLeft="6dp"/>
 
-    <TextView
-        android:id="@+id/text_nrc_label"
+    <LinearLayout
+        android:id="@+id/layout_info"
+        android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="NRC:"
-        app:layout_constraintTop_toBottomOf="@+id/text_title"
-        app:layout_constraintLeft_toLeftOf="@+id/text_title"/>
+        app:layout_constraintTop_toBottomOf="@id/text_title"
+        app:layout_constraintLeft_toLeftOf="@id/text_title">
 
-    <TextView
-        android:id="@+id/text_nrc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/text_nrc_label"
-        app:layout_constraintLeft_toRightOf="@+id/text_nrc_label"
-        android:layout_marginLeft="8dp"/>
+        <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="NRC:"/>
 
-    <TextView
-        android:id="@+id/text_section_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sección:"
-        app:layout_constraintLeft_toRightOf="@+id/text_nrc_label"
-        app:layout_constraintBottom_toBottomOf="@+id/text_nrc_label"
-        android:layout_marginLeft="64dp"/>
+       <TextView
+           android:id="@+id/text_nrc"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginLeft="2dp"
+           android:text="00000"/>
 
-    <TextView
-        android:id="@+id/text_section"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@+id/text_section_label"
-        app:layout_constraintBottom_toBottomOf="@+id/text_section_label"
-        android:layout_marginLeft="8dp"/>
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginLeft="8dp"
+           android:text="Sección:"/>
+
+       <TextView
+           android:id="@+id/text_section"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginLeft="2dp"
+           android:text="00"/>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layout_class_schedule"
         android:orientation="vertical"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/text_nrc_label"
-        app:layout_constraintLeft_toLeftOf="@+id/text_title"
+        app:layout_constraintTop_toBottomOf="@id/layout_info"
+        app:layout_constraintLeft_toLeftOf="@id/layout_info"
         app:layout_constraintRight_toRightOf="parent">
     </LinearLayout>
 

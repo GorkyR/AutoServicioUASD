@@ -165,6 +165,35 @@ namespace Client.Droid
                 Toast.MakeText(this, "Sesión terminada", ToastLength.Short).Show();
                 Recreate();
             }
+            else if (id == Resource.Id.action_refresh)
+            {
+                // TODO: refresh data
+                var nav = Navigation.CheckedItem.ItemId;
+                if (nav == Resource.Id.nav_dashboard)
+                {
+                    ClientStateService.ForgetSchedule();
+                    ClientStateService.ForgetReport();
+                    ClientStateService.ForgetCareerInformation();
+                }
+                else if (nav == Resource.Id.nav_agenda)
+                {
+                    ClientStateService.ForgetSchedule();
+                }
+                else if (nav == Resource.Id.nav_reports)
+                {
+                    ClientStateService.ForgetReport();
+                    ClientStateService.ForgetCareerInformation();
+                }
+                else if (nav == Resource.Id.nav_projection)
+                {
+                    ClientStateService.ForgetProjection();
+                }
+                else if (nav == Resource.Id.nav_selection)
+                {
+                    ClientStateService.ForgetSelectionCalendar();
+                }
+                OnNavigationItemSelected(Navigation.CheckedItem);
+            }
 
             return base.OnOptionsItemSelected(item);
         }
@@ -203,16 +232,29 @@ namespace Client.Droid
         {
             AppBar.SetTitle(Resource.String.app_name);
             MainContent.RemoveAllViews();
+
+            CourseCollection  schedule    = null;
+            AcademicReport    report      = null;
+            CareerInformation information = null;
+            var firstName = CurrentSession.Username.Split().First();
+
             try
             {
-                var schedule    = await ClientStateService.ScheduleAsync();
-                var report      = await ClientStateService.ReportAsync();
-                var information = await ClientStateService.CareerInformationAsync();
-                var firstName   = CurrentSession.Username.Split().First();
-
-                MainContent.AddView(new DashboardView(this, firstName, information, schedule, report));
+                schedule = await ClientStateService.ScheduleAsync();
             }
             catch (NotLoggedInException) { LogoutAndTryAgain(); }
+            catch (NoDataReceivedException) { }
+            catch { }
+
+            try
+            {
+                report = await ClientStateService.ReportAsync();
+                information = await ClientStateService.CareerInformationAsync();
+            }
+            catch (NotLoggedInException) { LogoutAndTryAgain(); }
+            catch { }
+
+            MainContent.AddView(new DashboardView(this, firstName, information, schedule, report));
         }
 
         async void SetupAgenda()
@@ -240,7 +282,7 @@ namespace Client.Droid
                 if (virtualCourses.Count() > 0)
                 {
                     var virtualLayout = new LinearLayout(this) { Orientation = Orientation.Vertical };
-                    var virtualTitle = new TextView(this) { Text = "Virtuales" };
+                    var virtualTitle  = new TextView(this)     { Text = "Virtuales" };
                     virtualTitle.SetTextAppearance(Resource.Style.TextAppearance_AppCompat_Large);
                     virtualTitle.Typeface = Android.Graphics.Typeface.DefaultBold;
                     virtualTitle.SetTextColor(Resources.GetColor(Resource.Color.material_grey_600));
@@ -281,7 +323,25 @@ namespace Client.Droid
                 MainContent.AddView(agendaLayout);
             }
             catch (NotLoggedInException) { LogoutAndTryAgain(); }
-
+            catch (NoDataReceivedException)
+            {
+                var textUnavailable = new TextView(this) {
+                    LayoutParameters = new FrameLayout.LayoutParams(
+                        DP(256),
+                        FrameLayout.LayoutParams.WrapContent
+                    )
+                    { Gravity = GravityFlags.Center },
+                    Gravity = GravityFlags.Center
+                };
+                textUnavailable.SetText(Resource.String.unavailable_schedule);
+                textUnavailable.SetCompoundDrawablesWithIntrinsicBounds(0, Resource.Drawable.no_disponible_sized, 0, 0);
+                textUnavailable.CompoundDrawablePadding = DP(24);
+                textUnavailable.SetTextAppearance(Resource.Style.TextAppearance_AppCompat_Large);
+                textUnavailable.SetTextColor(Resources.GetColor(Resource.Color.material_grey_600));
+                var frameUnavailable = new FrameLayout(this);
+                frameUnavailable.AddView(textUnavailable);
+                MainContent.AddView(frameUnavailable);
+            }
         }
 
         async void SetupReports()
@@ -308,7 +368,7 @@ namespace Client.Droid
                         cardLayoutParams.SetMargins(16, 16, 16, 16);
                         card.LayoutParameters = cardLayoutParams;
                         card.SetContentPadding(16, 16, 16, 16);
-                        card.Radius = TypedValue.ApplyDimension(ComplexUnitType.Dip, 6, Resources.DisplayMetrics);
+                        card.Radius = DP(6);
 
                         card.AddView(new ReportPeriodView(this, academicPeriod));
 
@@ -328,30 +388,39 @@ namespace Client.Droid
                 var projection = await ClientStateService.ProjectionAsync();
                 MainContent.AddView(new ProjectionView(this, projection));
             }
+            catch (NotLoggedInException) { LogoutAndTryAgain(); }
             catch (NoProyectionAvailableException)
             {
                 MainContent.AddView(new ProjectionView(this));
             }
-            catch (NotLoggedInException) { LogoutAndTryAgain(); }
         }
 
         async void SetupSelection()
         {
             AppBar.SetTitle(Resource.String.menu_selection);
             MainContent.RemoveAllViews();
+
+            List<DateTimeRange>    selectionCalendar = null;
+            List<CourseCollection> availableCourses  = null;
+
             try
             {
-                var availableCourses = await ClientStateService.AvailableCoursesAsync();
-                MainContent.AddView(new SelectionView(this, availableCourses, () => {
-                    Navigation.SetCheckedItem(Resource.Id.nav_dashboard);
-                    OnNavigationItemSelected(Navigation.Menu.FindItem(Resource.Id.nav_dashboard));
-                }));
-            }
-            catch (NoSelectionAvailableException)
-            {
-                MainContent.AddView(new SelectionView(this));
+                selectionCalendar = await ClientStateService.SelectionCalendarAsync();
             }
             catch (NotLoggedInException) { LogoutAndTryAgain(); }
+            catch { }
+
+            try
+            {
+                availableCourses = await ClientStateService.AvailableCoursesAsync();
+            }
+            catch (NotLoggedInException) { LogoutAndTryAgain(); }
+            catch (Exception e) { }
+
+            MainContent.AddView(new SelectionView(this, availableCourses, selectionCalendar, () => {
+                //Navigation.SetCheckedItem(Resource.Id.nav_dashboard);
+                //OnNavigationItemSelected(Navigation.Menu.FindItem(Resource.Id.nav_dashboard));
+            }));
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
@@ -363,10 +432,16 @@ namespace Client.Droid
 
         private void LogoutAndTryAgain()
         {
-            Toast.MakeText(this, Resource.String.not_logged_in_message, ToastLength.Long);
+            Toast.MakeText(this, Resource.String.not_logged_in_message, ToastLength.Long).Show();
             ClientStateService.ResetClientInformation();
             Recreate();
         }
+
+        private int DP(float value) => (int)TypedValue.ApplyDimension(ComplexUnitType.Dip, value, Resources.DisplayMetrics);
+    }
+
+    public static class Utilities
+    {
+        public static int DP(this View view, float value) => (int)TypedValue.ApplyDimension(ComplexUnitType.Dip, value, view.Resources.DisplayMetrics);
     }
 }
-

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using UASD;
 using Java.Nio.Channels;
+using Android.Text;
 
 namespace Client.Droid {
     public static class ClientStateService
@@ -19,10 +20,11 @@ namespace Client.Droid {
 
         public static UASD.Client AutoServicio { get; } = new UASD.Client();
 
-        static AcademicReport    report;
-        static CourseCollection  schedule;
-        static CourseCollection  projection;
-        static CareerInformation information;
+        static AcademicReport      report;
+        static CourseCollection    schedule;
+        static CourseCollection    projection;
+        static CareerInformation   information;
+        static List<DateTimeRange> calendar;
 
         public static void ResetClientInformation()
         {
@@ -112,23 +114,39 @@ namespace Client.Droid {
             return information;
         }
 
+        public static async Task<List<DateTimeRange>> SelectionCalendarAsync()
+        {
+            if (calendar != null)
+                return calendar;
+            calendar = StatePersistanceService.CurrentSession.Calendar.ToList();
+            if (calendar != null)
+                return calendar;
+            await CacheSelectionCalendarAsync();
+            return calendar;
+        }
+        public static async Task<List<DateTimeRange>> FetchSelectionCalendarAsync()
+        {
+            await CacheSelectionCalendarAsync();
+            return calendar;
+        }
+
         public static async Task<List<CourseCollection>> AvailableCoursesAsync()
         {
             switch (dataSource)
             {
                 case DataSource.Production:
-                {
-                    try { return await AutoServicio?.FetchAvailableCoursesAsync(); }
-                    catch (NotLoggedInException)
                     {
-                        var matricula = StatePersistanceService.CurrentSession.ID;
-                        var nip       = StatePersistanceService.CurrentSession.NIP;
+                        try { return await AutoServicio?.FetchAvailableCoursesAsync(); }
+                        catch (NotLoggedInException)
+                        {
+                            var matricula = StatePersistanceService.CurrentSession.ID;
+                            var nip = StatePersistanceService.CurrentSession.NIP;
 
-                        if (await AutoServicio.LoginAsync(matricula, nip))
-                            return await AvailableCoursesAsync();
-                        throw new NotLoggedInException();
+                            if (await AutoServicio.LoginAsync(matricula, nip))
+                                return await AvailableCoursesAsync();
+                            throw new NotLoggedInException();
+                        }
                     }
-                }
                 case DataSource.Baked:
                     throw new NoSelectionAvailableException();
                 case DataSource.Random:
@@ -229,6 +247,63 @@ namespace Client.Droid {
             catch(NotLoggedInException) { await ReLoginThen(CacheCareerInformationAsync); return; }
             var updatedSession = StatePersistanceService.CurrentSession;
             updatedSession.Information = information;
+            StatePersistanceService.CurrentSession = updatedSession;
+        }
+        private static async Task CacheSelectionCalendarAsync()
+        {
+            try
+            {
+                switch (dataSource)
+                {
+                    case DataSource.Production:
+                        calendar = await AutoServicio?.FetchSelectionCalendarAsync();
+                        break;
+                    case DataSource.Baked:
+                        throw new NoSelectionAvailableException();
+                    case DataSource.Random:
+                        calendar = TestEnvironment.TestData.GenerateFakeSelectionCalendar();
+                        break;
+                }
+            }
+            catch (NotLoggedInException) { await ReLoginThen(CacheSelectionCalendarAsync); return; }
+            var updatedSession = StatePersistanceService.CurrentSession;
+            updatedSession.Calendar = calendar;
+            StatePersistanceService.CurrentSession = updatedSession;
+        }
+
+        public static void ForgetSchedule()
+        {
+            schedule = null;
+            var updatedSession = StatePersistanceService.CurrentSession;
+            updatedSession.Schedule = null;
+            StatePersistanceService.CurrentSession = updatedSession;
+        }
+        public static void ForgetReport()
+        {
+            report = null;
+            var updatedSession = StatePersistanceService.CurrentSession;
+            updatedSession.Report = null;
+            StatePersistanceService.CurrentSession = updatedSession;
+        }
+        public static void ForgetProjection()
+        {
+            projection = null;
+            var updatedSession = StatePersistanceService.CurrentSession;
+            updatedSession.Projection = null;
+            StatePersistanceService.CurrentSession = updatedSession;
+        }
+        public static void ForgetCareerInformation()
+        {
+            information = null;
+            var updatedSession = StatePersistanceService.CurrentSession;
+            updatedSession.Information = null;
+            StatePersistanceService.CurrentSession = updatedSession;
+        }
+        public static void ForgetSelectionCalendar()
+        {
+            calendar = null;
+            var updatedSession = StatePersistanceService.CurrentSession;
+            updatedSession.Calendar = null;
             StatePersistanceService.CurrentSession = updatedSession;
         }
 
