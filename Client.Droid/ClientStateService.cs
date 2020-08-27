@@ -118,7 +118,7 @@ namespace Client.Droid {
         {
             if (calendar != null)
                 return calendar;
-            calendar = StatePersistanceService.CurrentSession.Calendar.ToList();
+            calendar = StatePersistanceService.CurrentSession.Calendar?.ToList();
             if (calendar != null)
                 return calendar;
             await CacheSelectionCalendarAsync();
