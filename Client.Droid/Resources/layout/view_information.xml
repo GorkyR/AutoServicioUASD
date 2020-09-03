@@ -4,8 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/image1"
@@ -26,11 +25,11 @@
         android:text="@string/information_caption"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/image1"
+        app:layout_constraintBottom_toBottomOf="@id/image1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/image1"
-        app:layout_constraintTop_toTopOf="@+id/image1" />
+        app:layout_constraintStart_toEndOf="@id/image1"
+        app:layout_constraintTop_toTopOf="@id/image1" />
 
     <TextView
         android:id="@+id/text_caption1"
@@ -48,8 +47,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/information_index_caption"
-        app:layout_constraintStart_toStartOf="@+id/text_caption1"
-        app:layout_constraintTop_toBottomOf="@+id/text_caption1" />
+        app:layout_constraintStart_toStartOf="@id/text_caption1"
+        app:layout_constraintTop_toBottomOf="@id/text_caption1" />
 
     <TextView
         android:id="@+id/text_caption3"
@@ -57,8 +56,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/information_credits_caption"
-        app:layout_constraintStart_toStartOf="@+id/text_caption2"
-        app:layout_constraintTop_toBottomOf="@+id/text_caption2" />
+        app:layout_constraintStart_toStartOf="@id/text_caption2"
+        app:layout_constraintTop_toBottomOf="@id/text_caption2" />
 
     <TextView
         android:id="@+id/text_caption4"
@@ -66,8 +65,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/information_courses_caption"
-        app:layout_constraintStart_toStartOf="@+id/text_caption3"
-        app:layout_constraintTop_toBottomOf="@+id/text_caption3" />
+        app:layout_constraintStart_toStartOf="@id/text_caption3"
+        app:layout_constraintTop_toBottomOf="@id/text_caption3" />
 
     <TextView
         android:id="@+id/text_career"
@@ -77,7 +76,7 @@
         android:text="Informática"
         android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@id/text_caption1"
-        app:layout_constraintStart_toEndOf="@+id/text_caption2" />
+        app:layout_constraintStart_toEndOf="@id/text_caption2" />
 
     <TextView
         android:id="@+id/text_index"
@@ -88,50 +87,63 @@
         android:textStyle="bold"
         android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@id/text_caption2"
-        app:layout_constraintEnd_toEndOf="@+id/text_career"
+        app:layout_constraintEnd_toEndOf="@id/text_career"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/text_caption2" />
+        app:layout_constraintStart_toEndOf="@id/text_caption2" />
+
+    <android.support.constraint.Barrier
+        android:id="@+id/barrier1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="end"
+        app:constraint_referenced_ids="text_caption3,text_caption4"/>
 
     <TextView
         android:id="@+id/text_credits"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         android:text="100/125"
         android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@id/text_caption3"
-        app:layout_constraintEnd_toStartOf="@+id/text_credits_percent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/text_caption4" />
+        app:layout_constraintStart_toEndOf="@id/barrier1" />
 
     <TextView
         android:id="@+id/text_courses"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:text="80/100"
         android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@id/text_caption4"
-        app:layout_constraintEnd_toStartOf="@+id/text_courses_percent"
+        app:layout_constraintEnd_toEndOf="@id/text_credits"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/text_caption4" />
+        app:layout_constraintStart_toEndOf="@id/text_caption4" />
 
     <TextView
         android:id="@+id/text_credits_percent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:text="(80%)"
         app:layout_constraintBaseline_toBaselineOf="@id/text_credits"
-        app:layout_constraintEnd_toEndOf="@+id/text_index" />
+        app:layout_constraintStart_toEndOf="@+id/text_credits" />
 
     <TextView
         android:id="@+id/text_courses_percent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:text="(80%)"
         app:layout_constraintBaseline_toBaselineOf="@id/text_courses"
-        app:layout_constraintEnd_toEndOf="@+id/text_credits_percent" />
+        app:layout_constraintStart_toEndOf="@id/text_courses" />
+
+    <android.support.constraint.Barrier
+        android:id="@+id/barrier2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="end"
+        app:constraint_referenced_ids="text_credits_percent,text_courses_percent"/>
 
     <ProgressBar
         android:id="@+id/progress_credits"
@@ -140,10 +152,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/text_credits_percent"
+        app:layout_constraintBottom_toBottomOf="@id/text_credits_percent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/text_credits_percent"
-        app:layout_constraintTop_toTopOf="@+id/text_credits_percent" />
+        app:layout_constraintStart_toEndOf="@id/barrier2"
+        app:layout_constraintTop_toTopOf="@id/text_credits_percent" />
 
     <ProgressBar
         android:id="@+id/progress_courses"
@@ -152,8 +164,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/text_courses_percent"
+        app:layout_constraintBottom_toBottomOf="@id/text_courses_percent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/text_courses_percent"
-        app:layout_constraintTop_toTopOf="@+id/text_courses_percent" />
+        app:layout_constraintStart_toEndOf="@id/barrier2"
+        app:layout_constraintTop_toTopOf="@id/text_courses_percent" />
+
 </merge>

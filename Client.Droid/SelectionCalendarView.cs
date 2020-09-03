@@ -17,7 +17,7 @@ namespace Client.Droid
             {
                 string[] months = new[] { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" };
 
-                return $"{months[date.Month].Substring(0, 3)} {date.Day:00}, {date.Year}, {Time(date.TimeOfDay, shorten: true)}";
+                return $"{months[date.Month - 1].Substring(0, 3)} {date.Day:00}, {date.Year}, {Time(date.TimeOfDay, shorten: true)}";
             }
 
             var layoutStartDate = FindViewById<LinearLayout>(Resource.Id.layout_start_date);
