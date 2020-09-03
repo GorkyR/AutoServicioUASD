@@ -32,6 +32,7 @@ namespace Client.Droid {
             schedule    = null;
             projection  = null;
             information = null;
+            calendar    = null;
             StatePersistanceService.ResetSession();
             StatePersistanceService.IsLoggedIn = false;
         }

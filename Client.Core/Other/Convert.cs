@@ -42,20 +42,32 @@ namespace UASD.Utilities
         static public string Time(TimeSpan hora, bool shorten = false)
         {
             if (shorten) {
-                int hour = (int)Math.Ceiling(hora.TotalHours);
-                return (hour > 11)
-                    ? ((hour == 12)
-                        ? "12 PM"
-                        : $"{hour - 12} PM")
-                    : $"{hour} AM";
-            } else { 
+                int hour = (int)Math.Round(hora.TotalHours);
+                if (hour == 0)
+                    return "12 AM";
+                else if (hour > 11)
+                {
+                    if (hour == 12)
+                        return "12 PM";
+                    else
+                        return $"{hour - 12} PM";
+                }
+                else
+                    return $"{hour} AM";
+            } else {
                 int hours = hora.Hours;
                 int minutes = hora.Minutes;
-                return (hours > 11)
-                    ? ((hours == 12)
-                        ? $"12:{minutes:D2} PM"
-                        : $"{hours - 12:D2}:{minutes:D2} PM")
-                    : $"{hours:D2}:{minutes:D2} AM";
+                if (hours == 0)
+                    return $"12:{minutes:D2} AM";
+                else if (hours > 11)
+                {
+                    if (hours == 12)
+                        return $"12:{minutes:D2} PM";
+                    else
+                        return $"{hours - 12:D2}:{minutes:D2} PM";
+                }
+                else
+                    return $"{hours:D2}:{minutes:D2} AM";
             }
         }
         static public TimeSpan Time(string horaString)
@@ -63,9 +75,12 @@ namespace UASD.Utilities
             var match = TimeRegex.Match(horaString.Trim());
             if (match.Success)
             {
+                string meridian = match.Groups[3].Value.ToLower();
                 int hours = int.Parse(match.Groups[1].Value, NumberStyles.Any, CultureInfo.InvariantCulture);
-                if (match.Groups[3].Value.ToLower() == "pm" && hours < 12)
+                if (hours < 12 && meridian == "pm")
                     hours += 12;
+                else if (hours == 12 && meridian == "am")
+                    hours = 0;
                 return new TimeSpan(hours, int.Parse(match.Groups[2].Value, NumberStyles.Any, CultureInfo.InvariantCulture), 0);
             }
             else
