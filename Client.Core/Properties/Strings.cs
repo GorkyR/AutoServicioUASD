@@ -24,5 +24,6 @@
         public const string NoProyectionMessage         = "Su proyeccion no esta disponible en este momento.";
         public const string NoSelectionMessage          = "No es posible seleccionar en estos momentos.";
         public const string ExpiredLoginMessage         = "Su NIP ha expirado. Proceda al portal web del autoservicio para cambiarlo.";
+        public const string NetworkErrorMessage         = "No fue posible conectar con el Autoservicio.";
     }
 }
