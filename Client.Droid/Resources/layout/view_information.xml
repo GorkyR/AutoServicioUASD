@@ -87,8 +87,6 @@
         android:textStyle="bold"
         android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@id/text_caption2"
-        app:layout_constraintEnd_toEndOf="@id/text_career"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@id/text_caption2" />
 
     <android.support.constraint.Barrier

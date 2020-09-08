@@ -244,7 +244,11 @@ namespace Client.Droid
             }
             catch (NotLoggedInException) { LogoutAndTryAgain(); }
             catch (NoDataReceivedException) { }
-            catch { }
+            catch (NetworkErrorException) { NotifyNetworkError(); }
+            catch (Exception ex)
+            {
+                var mes = ex.Message;
+            }
 
             try
             {
@@ -252,7 +256,10 @@ namespace Client.Droid
                 information = await ClientStateService.CareerInformationAsync();
             }
             catch (NotLoggedInException) { LogoutAndTryAgain(); }
-            catch { }
+            catch (NetworkErrorException) { NotifyNetworkError(); }
+            catch (Exception ex) {
+                var mes = ex.Message;
+            }
 
             MainContent.AddView(new DashboardView(this, firstName, information, schedule, report));
         }
@@ -342,6 +349,10 @@ namespace Client.Droid
                 frameUnavailable.AddView(textUnavailable);
                 MainContent.AddView(frameUnavailable);
             }
+            catch (NetworkErrorException) { NotifyNetworkError(); }
+            catch (Exception ex) {
+                var mes = ex.Message;
+            }
         }
 
         async void SetupReports()
@@ -377,6 +388,10 @@ namespace Client.Droid
                 }
             }
             catch (NotLoggedInException) { LogoutAndTryAgain(); }
+            catch (NetworkErrorException) { NotifyNetworkError(); }
+            catch (Exception ex) {
+                var mes = ex.Message;
+            }
         }
 
         async void SetupProjection()
@@ -393,6 +408,10 @@ namespace Client.Droid
             {
                 MainContent.AddView(new ProjectionView(this));
             }
+            catch (NetworkErrorException) { NotifyNetworkError(); }
+            catch (Exception ex) {
+                var mes = ex.Message;
+            }
         }
 
         async void SetupSelection()
@@ -408,14 +427,20 @@ namespace Client.Droid
                 selectionCalendar = await ClientStateService.SelectionCalendarAsync();
             }
             catch (NotLoggedInException) { LogoutAndTryAgain(); }
-            catch { }
+            catch (NetworkErrorException) { NotifyNetworkError(); }
+            catch (Exception ex) {
+                var mes = ex.Message;
+            }
 
             try
             {
                 availableCourses = await ClientStateService.AvailableCoursesAsync();
             }
             catch (NotLoggedInException) { LogoutAndTryAgain(); }
-            catch (Exception e) { }
+            catch (NetworkErrorException) { NotifyNetworkError(); }
+            catch (Exception ex) {
+                var mes = ex.Message;
+            }
 
             MainContent.AddView(new SelectionView(this, availableCourses, selectionCalendar, () => {
                 //Navigation.SetCheckedItem(Resource.Id.nav_dashboard);
@@ -435,6 +460,10 @@ namespace Client.Droid
             Toast.MakeText(this, Resource.String.not_logged_in_message, ToastLength.Long).Show();
             ClientStateService.ResetClientInformation();
             Recreate();
+        }
+        private void NotifyNetworkError()
+        {
+            Toast.MakeText(this, UASD.Properties.Strings.NetworkErrorMessage, ToastLength.Short).Show();
         }
 
         private int DP(float value) => (int)TypedValue.ApplyDimension(ComplexUnitType.Dip, value, Resources.DisplayMetrics);
