@@ -58,7 +58,10 @@ namespace UASD
         private async Task<HtmlDocument> ReceiveAsync(Uri uri)
         {
             HtmlDocument Response = new HtmlDocument();
-            Response.LoadHtml(await GetClient().DownloadStringAsync(uri));
+            try { 
+                Response.LoadHtml(await GetClient().DownloadStringAsync(uri));
+            }
+            catch { throw new NetworkErrorException(); }
             if (CheckStatus(Response)) throw new NotLoggedInException();
             return Response;
         }

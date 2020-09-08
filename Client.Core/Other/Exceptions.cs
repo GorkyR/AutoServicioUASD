@@ -25,4 +25,8 @@ namespace UASD
     {
         public ExpiredLoginException() : base(Properties.Strings.ExpiredLoginMessage) {}
     }
+    public class NetworkErrorException: Exception
+    {
+        public NetworkErrorException() : base(Properties.Strings.NetworkErrorMessage) { }
+    }
 }

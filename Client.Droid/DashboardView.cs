@@ -60,10 +60,12 @@ namespace Client.Droid
 
                 if (upcomingClasses.Count() > 0)
                 {
+                    now = DateTime.Now;
+                    today = now.DayOfWeek;
                     foreach (CourseClassInstance classInstance in upcomingClasses)
                     {
                         var instance = classInstance.Class;
-                        bool ongoing = (today == instance.DayOfWeek && instance.StartTime.Hours < now.Hour && instance.EndTime.Hours > now.Hour);
+                        bool ongoing = (today == instance.DayOfWeek) && (instance.StartTime.TotalHours <= now.TimeOfDay.TotalHours);
 
                         layoutNextCourses.AddView(new AgendaItemView(context, classInstance, ongoing));
                     }
