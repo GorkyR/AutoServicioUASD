@@ -39,42 +39,47 @@ namespace Client.Droid {
 
         public static async Task<CourseCollection> ScheduleAsync()
         {
-            if (schedule != null)
-                return schedule;
-            schedule = StatePersistanceService.CurrentSession.Schedule;
-            if (schedule != null)
-                return schedule;
-            await CacheScheduleAsync();
+            if (schedule is null)
+                schedule = StatePersistanceService.CurrentSession.Schedule;
+            if (schedule is null)
+                await CacheScheduleAsync();
+
+            // If you're not registered for the current period, we still cache an empty schedule
+            // so that we don't have to go to the network to ask for it every time, but here we
+            // make sure to communicate the fact that the schedule was null.
+            if (schedule.Count == 0)
+                throw new NoDataReceivedException();
+
             return schedule;
         }
         public static async Task<CourseCollection> FetchScheduleAsync()
         {
             await CacheScheduleAsync();
+            if (schedule.Count == 0)
+                throw new NoDataReceivedException();
             return schedule;
         }
 
         public static async Task<AcademicReport> ReportAsync()
         {
-            if (!(report is null))
-                return report;
-            var p = StatePersistanceService.CurrentSession.Report;
-            if (!(p is null)) {
-                var rep = new AcademicReport();
-                foreach (var period in p) {
-                    var courseCollection = new CourseCollection();
-                    foreach (var course in period.Courses)
-                        courseCollection.Add(course);
-                    rep.Periods.Add(
-                        new AcademicPeriod() {
-                            Title = period.Title,
-                            Courses = courseCollection
-                        }
-                    );
+            if (report is null)
+            {
+                var p = StatePersistanceService.CurrentSession.Report;
+                if (p != null)
+                {
+                    var rep = new AcademicReport();
+                    foreach (var period in p)
+                    {
+                        var courseCollection = new CourseCollection();
+                        foreach (var course in period.Courses)
+                            courseCollection.Add(course);
+                        rep.Periods.Add(new AcademicPeriod() { Title = period.Title, Courses = courseCollection });
+                    }
+                    report = rep;
                 }
-                report = rep;
-                return report;
             }
-            await CacheReportAsync();
+            if (report is null)
+                await CacheReportAsync();
             return report;
         }
         public static async Task<AcademicReport> FetchReportAsync()
@@ -85,28 +90,33 @@ namespace Client.Droid {
 
         public static async Task<CourseCollection> ProjectionAsync()
         {
-            if (!(projection is null))
-                return projection;
-            projection = StatePersistanceService.CurrentSession.Projection;
-            if (!(projection is null))
-                return projection;
-            await CacheProjectionAsync();
+            if (projection is null)
+                projection = StatePersistanceService.CurrentSession.Projection;
+            if (projection is null)
+                await CacheProjectionAsync();
+
+            // If your course projection is not available, we still cache an empty course collection
+            // so that we don't have to go to the network to ask for it every time, but here we make
+            // sure to communicate the fact that the projection was unavailable.
+            if (projection.Count == 0)
+                throw new NoProyectionAvailableException();
+
             return projection;
         }
         public static async Task<CourseCollection> FetchProjectionAsync()
         {
             await CacheProjectionAsync();
+            if (projection.Count == 0)
+                throw new NoProyectionAvailableException();
             return projection;
         }
 
         public static async Task<CareerInformation> CareerInformationAsync()
         {
-            if (!(information is null))
-                return information;
-            information = StatePersistanceService.CurrentSession.Information;
-            if (!(information is null))
-                return information;
-            await CacheCareerInformationAsync();
+            if (information is null)
+                information = StatePersistanceService.CurrentSession.Information;
+            if (information is null)
+                await CacheCareerInformationAsync();
             return information;
         }
         public static async Task<CareerInformation> FetchCareerInformationAsync()
@@ -117,12 +127,10 @@ namespace Client.Droid {
 
         public static async Task<List<DateTimeRange>> SelectionCalendarAsync()
         {
-            if (calendar != null)
-                return calendar;
-            calendar = StatePersistanceService.CurrentSession.Calendar?.ToList();
-            if (calendar != null)
-                return calendar;
-            await CacheSelectionCalendarAsync();
+            if (calendar is null)
+                calendar = StatePersistanceService.CurrentSession.Calendar?.ToList();
+            if (calendar is null)
+                await CacheSelectionCalendarAsync();
             return calendar;
         }
         public static async Task<List<DateTimeRange>> FetchSelectionCalendarAsync()
@@ -173,6 +181,7 @@ namespace Client.Droid {
                 }
             }
             catch (NotLoggedInException) { await ReLoginThen(CacheScheduleAsync); return;  }
+            catch (NoDataReceivedException) { schedule = new CourseCollection("No Inscrito"); }
             var updatedSession = StatePersistanceService.CurrentSession;
             updatedSession.Schedule = schedule;
             StatePersistanceService.CurrentSession = updatedSession;
@@ -187,7 +196,10 @@ namespace Client.Droid {
                         report = await AutoServicio?.FetchAcademicReportAsync();
                         break;
                     case DataSource.Baked:
-                        report = TestEnvironment.TestData.fakePreloadedAcademicReport;
+                        var rep = TestEnvironment.TestData.fakePreloadedAcademicReport;
+                        report = new AcademicReport();
+                        foreach (var period in rep.Periods)
+                            report.Periods.Add(period);
                         break;
                     case DataSource.Random:
                         report = TestEnvironment.TestData.GenerateFakeAcademicReport(random, await ScheduleAsync());
@@ -225,6 +237,7 @@ namespace Client.Droid {
                 }
             }
             catch(NotLoggedInException) { await ReLoginThen(CacheProjectionAsync); return; }
+            catch(NoProyectionAvailableException) { projection = new CourseCollection("No disponible"); }
             var updatedSession = StatePersistanceService.CurrentSession;
             updatedSession.Projection = projection;
             StatePersistanceService.CurrentSession = updatedSession;

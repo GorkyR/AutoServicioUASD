@@ -228,10 +228,21 @@ namespace Client.Droid
             return true;
         }
 
+        void ClearContentAndWait()
+        {
+            MainContent.RemoveAllViews();
+            MainContent.AddView(new ProgressBar(this, null, Android.Resource.Attribute.ProgressBarStyleLarge) { Indeterminate = true });
+        }
+
+        void ClearContent()
+        {
+            MainContent.RemoveAllViews();
+        }
+
         async void SetupDashboard()
         {
             AppBar.SetTitle(Resource.String.app_name);
-            MainContent.RemoveAllViews();
+            ClearContentAndWait();
 
             CourseCollection  schedule    = null;
             AcademicReport    report      = null;
@@ -261,13 +272,14 @@ namespace Client.Droid
                 var mes = ex.Message;
             }
 
+            ClearContent();
             MainContent.AddView(new DashboardView(this, firstName, information, schedule, report));
         }
 
         async void SetupAgenda()
         {
             AppBar.SetTitle(Resource.String.menu_schedule);
-            MainContent.RemoveAllViews();
+            ClearContentAndWait();
             try
             {
                 var schedule = await ClientStateService.ScheduleAsync();
@@ -327,6 +339,7 @@ namespace Client.Droid
                     agendaLayout.AddView(virtualLayout);
                 }
 
+                ClearContent();
                 MainContent.AddView(agendaLayout);
             }
             catch (NotLoggedInException) { LogoutAndTryAgain(); }
@@ -347,6 +360,7 @@ namespace Client.Droid
                 textUnavailable.SetTextColor(Resources.GetColor(Resource.Color.material_grey_600));
                 var frameUnavailable = new FrameLayout(this);
                 frameUnavailable.AddView(textUnavailable);
+                ClearContent();
                 MainContent.AddView(frameUnavailable);
             }
             catch (NetworkErrorException) { NotifyNetworkError(); }
@@ -358,12 +372,14 @@ namespace Client.Droid
         async void SetupReports()
         {
             AppBar.SetTitle(Resource.String.menu_reports);
-            MainContent.RemoveAllViews();
+            ClearContentAndWait();
+
             try
             {
                 var report      = await ClientStateService.ReportAsync();
                 var information = await ClientStateService.CareerInformationAsync();
 
+                ClearContent();
                 // Carreer information
                 {
                     var informationView = new InformationView(this, information, report.GlobalIndex);
@@ -397,15 +413,18 @@ namespace Client.Droid
         async void SetupProjection()
         {
             AppBar.SetTitle(Resource.String.menu_projection);
-            MainContent.RemoveAllViews();
+            ClearContentAndWait();
+
             try
             {
                 var projection = await ClientStateService.ProjectionAsync();
+                ClearContent();
                 MainContent.AddView(new ProjectionView(this, projection));
             }
             catch (NotLoggedInException) { LogoutAndTryAgain(); }
             catch (NoProyectionAvailableException)
             {
+                ClearContent();
                 MainContent.AddView(new ProjectionView(this));
             }
             catch (NetworkErrorException) { NotifyNetworkError(); }
@@ -417,7 +436,7 @@ namespace Client.Droid
         async void SetupSelection()
         {
             AppBar.SetTitle(Resource.String.menu_selection);
-            MainContent.RemoveAllViews();
+            ClearContentAndWait();
 
             List<DateTimeRange>    selectionCalendar = null;
             List<CourseCollection> availableCourses  = null;
@@ -442,6 +461,7 @@ namespace Client.Droid
                 var mes = ex.Message;
             }
 
+            ClearContent();
             MainContent.AddView(new SelectionView(this, availableCourses, selectionCalendar, () => {
                 //Navigation.SetCheckedItem(Resource.Id.nav_dashboard);
                 //OnNavigationItemSelected(Navigation.Menu.FindItem(Resource.Id.nav_dashboard));
