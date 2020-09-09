@@ -42,9 +42,9 @@ namespace Client.Droid
                 var today = now.DayOfWeek;
                 var timeOfDay = now.TimeOfDay;
 
-                if (today == DayOfWeek.Sunday)
+                if (timeOfDay.Hours >= 22 || today == DayOfWeek.Sunday)
                 {
-                    today = DayOfWeek.Monday;
+                    today = now.AddDays(1).DayOfWeek;
                     timeOfDay = new TimeSpan();
 
                     FindViewById<TextView>(Resource.Id.text_caption_next_classes)
@@ -60,12 +60,11 @@ namespace Client.Droid
 
                 if (upcomingClasses.Count() > 0)
                 {
-                    now = DateTime.Now;
-                    today = now.DayOfWeek;
+                    today = DateTime.Now.DayOfWeek;
                     foreach (CourseClassInstance classInstance in upcomingClasses)
                     {
                         var instance = classInstance.Class;
-                        bool ongoing = (today == instance.DayOfWeek) && (instance.StartTime.TotalHours <= now.TimeOfDay.TotalHours);
+                        bool ongoing = (today == instance.DayOfWeek) && (instance.StartTime.TotalHours <= timeOfDay.TotalHours);
 
                         layoutNextCourses.AddView(new AgendaItemView(context, classInstance, ongoing));
                     }

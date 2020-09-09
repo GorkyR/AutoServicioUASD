@@ -734,17 +734,30 @@ namespace Client.Droid.TestEnvironment
 		{
 			var limits = new[]
 			{
-				new[] {  "8:00 AM", "9:50 AM" },
-				new[] { "10:00 AM", "1:00 PM" },
-				new[] {  "3:00 PM", "6:50 PM" },
-				new[] {  "8:00 PM", "9:50 PM" }
+				new[] {  "7:00 AM",  "9:50 AM" },
+				new[] {  "7:00 AM",  "8:50 AM" },
+				new[] {  "8:00 AM",  "9:50 AM" },
+				new[] { "10:00 AM", "12:50 PM" },
+				new[] { "11:00 AM",  "1:50 PM" },
+				new[] {  "1:00 PM",  "2:50 PM" },
+				new[] {  "2:00 PM",  "2:50 PM" },
+				new[] {  "2:00 PM",  "3:50 PM" },
+				new[] {  "3:00 PM",  "5:50 PM" },
+				new[] {  "6:00 PM",  "7:50 PM" },
+				new[] {  "6:00 PM",  "8:50 PM" },
+				new[] {  "8:00 PM",  "9:50 PM" },
 			};
 
 			CourseCollection schedule = new CourseCollection("Fake Schedule");
-			int number_of_courses_in_schedule = random.Next(2, 5);
+			int number_of_courses_in_schedule = random.Next(3, 6);
 			for (int i = 0; i < number_of_courses_in_schedule; i++)
 			{
-				Course course = GenerateRandomCourse(random);
+				Course course = null;
+				do
+				{
+					course = GenerateRandomCourse(random);
+				} while (schedule.Any(sc => sc.Title == course.Title));
+
 				int number_of_classes = random.Next(1, 4);
 				for (int j = 0; j < number_of_classes; j++)
 				{
@@ -761,7 +774,8 @@ namespace Client.Droid.TestEnvironment
 							StartDate = Convert.Date("Ene 01, 2020"),
 							EndDate   = Convert.Date("Dic 31, 2020")
 						};
-					} while (course.Schedule.Any(cc => cc.CollidesWith(courseClass)));
+					} while (course.Schedule.Any(cc => cc.CollidesWith(courseClass))
+						|| schedule.Any(sc => sc.Schedule.Any(scc => scc.CollidesWith(courseClass))));
 					course.Schedule.Add(courseClass);
 				}
 				schedule.Add(course);
@@ -772,9 +786,15 @@ namespace Client.Droid.TestEnvironment
 		public static CourseCollection                GenerateFakeCourseProjection(Random random)
 		{
 			CourseCollection projection = new CourseCollection("Proyección");
-			int number_of_courses_to_project = random.Next(3, 7);
+			int number_of_courses_to_project = random.Next(4, 9);
 			for (int i = 0; i < number_of_courses_to_project; i++)
-				projection.Add(GenerateRandomCourse(random));
+			{
+				Course course = null;
+				do {
+					course = GenerateRandomCourse(random);
+				} while (projection.Any(pc => pc.Title == course.Title));
+				projection.Add(course);
+			}
 			return projection;
 		}
 		public static AcademicReport                  GenerateFakeAcademicReport(Random random, CourseCollection mostRecent)
